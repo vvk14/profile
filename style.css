@@ -2059,7 +2059,32 @@
   
   
   }
+  @media(max-width:1249px){
+        /**
+       * active status blink
+       */
   
+  .active-status {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: #39ff14;
+    animation: 1.5s pulse infinite ease-in-out;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 #39ff14;
+    }
+  
+    100% {
+      box-shadow: 0 0 0 14px #69ffa800;
+    }
+  }
+  }
     /**
        * Toast
        */
