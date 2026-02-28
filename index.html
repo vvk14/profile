@@ -10,17 +10,18 @@
 <meta property="og:url" content="https://vvkdev.in/">
 <meta property="og:title" content="Vivek Patel — Shopify Developer">
 <meta property="og:description" content="Custom Shopify solutions and high-performance theme development. Check out my latest projects.">
-<meta property="og:image" content="https://vvkdev.in/og-image.jpg"> <meta property="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://vvkdev.in/og-image.jpg">
+<meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://vvkdev.in/">
 <meta property="twitter:title" content="Vivek Patel — Shopify Developer">
 <meta property="twitter:description" content="Expert Shopify development and theme customization services.">
 <meta property="twitter:image" content="https://vvkdev.in/og-image.jpg">
 
 <link rel="canonical" href="https://vvkdev.in/">
-
 <link rel="icon" type="image/png" href="/images/Fav icon vk.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
-<title>Vivek Patel — Shopify Developer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 /* ═══════════ CSS VARIABLES ═══════════ */
 :root {
@@ -81,7 +82,6 @@ body {
   transition: background 0.35s ease, color 0.35s ease;
 }
 
-/* Typography Overrides to ensure correct fonts load everywhere */
 h1, h2, .nav-logo-wrap, .nav-name, .ss-title, .exp-co, .proj-title, .edu-deg, .cta-h, .footer-brand, .ld-logo, .stat-num, .fc-val, .imp-val, .pm-val {
   font-family: 'Fraunces', serif !important;
 }
@@ -210,35 +210,58 @@ body::after {
 .btn-nav:hover::before { opacity:1; }
 .btn-nav:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(150,191,72,0.35); }
 
-/* Hamburger */
-.ham { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; border-radius:8px; transition:background 0.2s; }
+/* ── Hamburger ── */
+.ham {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+}
 .ham:hover { background: rgba(128,128,128,0.1); }
 .ham span { display:block; width:20px; height:1.5px; background:var(--t1); border-radius:2px; transition:all 0.3s; }
 .ham.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
 .ham.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
 .ham.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
 
-/* Mobile Nav */
+/* ── Mobile Nav — FIXED: visible by default (hidden via transform), transition always works ── */
 .mob-nav {
-  display:none; position:fixed;
-  top:60px; left:0; right:0;
+  position: fixed;
+  top: 60px; left: 0; right: 0;
   background: var(--nav-bg);
-  backdrop-filter:blur(28px) saturate(180%);
-  -webkit-backdrop-filter:blur(28px);
-  border-bottom:1px solid var(--b0);
-  z-index:899; padding:12px 16px 20px;
-  flex-direction:column; gap:2px;
-  transform:translateY(-100%); opacity:0;
-  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 1px solid var(--b0);
+  z-index: 899;
+  padding: 12px 16px 20px;
+  display: flex;           /* always flex — use transform/opacity to show/hide */
+  flex-direction: column;
+  gap: 2px;
+  transform: translateY(-110%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s, visibility 0.3s;
 }
-.mob-nav.open { display:flex; transform:translateY(0); opacity:1; }
+.mob-nav.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .mob-nav a {
   font-size:12px;
   color:var(--t2); text-decoration:none; padding:13px 16px;
   border-radius:10px; letter-spacing:0.5px;
   transition:all 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
-.mob-nav a:hover { background:rgba(150,191,72,0.08); color:var(--g); }
+.mob-nav a:hover, .mob-nav a:active { background:rgba(150,191,72,0.08); color:var(--g); }
 
 /* ═══════════ HERO ═══════════ */
 #hero {
@@ -650,152 +673,162 @@ footer { position:relative; z-index:1; background:var(--bg0); border-top:1px sol
 .revR { opacity:0; transform:translateX(24px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
 .revR.on { opacity:1; transform:none; }
 
-/* ═══════════════════════════════════════
-   RESPONSIVE — MOBILE FIRST APP FEEL
-   ═══════════════════════════════════════ */
+/* ═══════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════ */
 
-/* ── Tablet 1024px ── */
-@media(max-width:1100px) {
+/* ── Tablet 1100px ── */
+@media (max-width: 1100px) {
   .hero-right { display:none; }
-  #hero { padding:80px 40px 60px; }
-  .skills-grid { grid-template-columns:repeat(2,1fr); }
-  .sec { padding:50px 40px; }
+  #hero { padding: 80px 40px 60px; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .sec { padding: 50px 40px; }
 }
 
-/* ── Small Tablet 768px ── */
-@media(max-width:900px) {
-  .testi-grid { grid-template-columns:repeat(2,1fr); }
-  .exp-grid { grid-template-columns:1fr; }
-  .edu-layout { grid-template-columns:1fr; }
+/* ── Small Tablet 900px ── */
+@media (max-width: 900px) {
+  .testi-grid { grid-template-columns: repeat(2, 1fr); }
+  .exp-grid { grid-template-columns: 1fr; }
+  .edu-layout { grid-template-columns: 1fr; }
 }
 
 /* ── Mobile 768px ── */
-@media(max-width:768px) {
+@media (max-width: 768px) {
+
   /* NAV */
-  .nav { padding:0 16px; height:56px; }
-  .nav-pill { display:none; }
-  .nav-avail { display:none; }
-  .ham { display:flex; }
-  .mob-nav { top:56px; }
+  .nav { padding: 0 16px; height: 56px; }
+  .nav-pill { display: none; }
+  .nav-avail { display: none; }
+  .ham { display: flex; }
+  .mob-nav { top: 56px; }
 
   /* HERO */
   #hero {
-    padding: 72px 20px 48px;
+    padding: 88px 20px 48px;
     min-height: auto;
-    align-items:flex-start;
-    padding-top: 88px;
+    align-items: flex-start;
   }
-  .hero-badge { font-size:9px; padding:6px 12px; margin-bottom:20px; }
-  .hero-h1 { font-size:clamp(52px, 14vw, 72px); letter-spacing:-2.5px; margin-bottom:6px; }
-  .hero-role { font-size:9px; letter-spacing:2px; margin-bottom:18px; }
-  .hero-p { font-size:14px; line-height:1.8; margin-bottom:28px; }
+  .hero-badge { font-size: 9px; padding: 6px 12px; margin-bottom: 20px; }
+  .hero-h1 {
+    font-size: clamp(52px, 14vw, 72px);
+    letter-spacing: -2.5px;
+    margin-bottom: 6px;
+  }
+  .hero-role { font-size: 9px; letter-spacing: 2px; margin-bottom: 18px; }
+  .hero-p { font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
   .hero-btns {
-    flex-direction:column; gap:10px; margin-bottom:36px;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 36px;
   }
-  .btn-primary, .btn-outline, .btn-ghost2 {
-    width:100%; justify-content:center; padding:14px 20px;
-    border-radius:12px; font-size:14px;
+  .btn-primary,
+  .btn-outline,
+  .btn-ghost2 {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 14px;
   }
+
+  /* HERO STATS — 2×2 grid */
   .hero-stats {
-    flex-wrap:wrap; gap:0;
-    padding-top:24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--b0);
   }
   .stat {
-    min-width:calc(50% - 14px);
-    flex:none;
-    border-right:none;
-    border-bottom:1px solid var(--b0);
-    padding:0 0 16px;
-    margin:0 0 16px;
+    padding: 16px;
+    margin: 0;
+    border-right: none;
+    border: none;
   }
-  .stat:nth-child(1), .stat:nth-child(2) { border-right:1px solid var(--b0); }
-  .stat:nth-child(odd) { padding-right:14px; }
-  .stat:nth-child(even) { padding-left:14px; border-right:none; }
-  .stat:last-child { border-bottom:none; }
-  .stat-num { font-size:36px; letter-spacing:-1.5px; }
+  .stat:nth-child(1) { border-right: 1px solid var(--b0) !important; border-bottom: 1px solid var(--b0) !important; }
+  .stat:nth-child(2) { border-bottom: 1px solid var(--b0) !important; }
+  .stat:nth-child(3) { border-right: 1px solid var(--b0) !important; }
+  .stat-num { font-size: 36px; letter-spacing: -1.5px; }
 
   /* TICKER */
-  .ticker { padding:10px 0; }
-  .tick-item { font-size:10px; padding:0 20px; }
+  .ticker { padding: 10px 0; }
+  .tick-item { font-size: 10px; padding: 0 20px; }
 
   /* SECTIONS */
-  .sec { padding:40px 20px; }
-  .sec-h2 { font-size:clamp(30px,8vw,44px); letter-spacing:-1.5px; margin-bottom:36px; }
+  .sec { padding: 40px 20px; }
+  .sec-h2 { font-size: clamp(30px, 8vw, 44px); letter-spacing: -1.5px; margin-bottom: 36px; }
 
   /* SKILLS */
-  .shopify-strip { flex-direction:column; align-items:flex-start; gap:14px; padding:18px; }
-  .skills-grid { grid-template-columns:1fr; gap:12px; }
-  .sk-card { padding:20px; }
+  .shopify-strip { flex-direction: column; align-items: flex-start; gap: 14px; padding: 18px; }
+  .skills-grid { grid-template-columns: 1fr; gap: 12px; }
+  .sk-card { padding: 20px; }
 
   /* PLAYGROUND */
-  .pg-wrap { grid-template-columns:1fr; }
-  .pg-output-wrap { border-left:none; border-top:1px solid var(--b0); }
-  textarea#pg-code { height:220px; font-size:11px; }
-  .pg-output { min-height:200px; font-size:11px; }
-  .pg-presets { gap:6px; }
+  .pg-wrap { grid-template-columns: 1fr; }
+  .pg-output-wrap { border-left: none; border-top: 1px solid var(--b0); }
+  textarea#pg-code { height: 220px; font-size: 11px; }
+  .pg-output { min-height: 200px; font-size: 11px; }
+  .pg-presets { gap: 6px; }
 
   /* EXPERIENCE */
-  .exp-grid { grid-template-columns:1fr; gap:14px; }
-  .exp-card { padding:24px; }
-  .exp-co { font-size:19px; }
-  .exp-impact { gap:8px; }
-  .imp-val { font-size:15px; }
+  .exp-grid { grid-template-columns: 1fr; gap: 14px; }
+  .exp-card { padding: 24px; }
+  .exp-co { font-size: 19px; }
+  .exp-impact { gap: 8px; }
+  .imp-val { font-size: 15px; }
 
   /* PROJECTS */
-  .proj-grid { grid-template-columns:1fr; gap:14px; }
-  .proj-banner { height:160px; }
-  .proj-body { padding:20px; }
-  .proj-title { font-size:19px; }
+  .proj-grid { grid-template-columns: 1fr; gap: 14px; }
+  .proj-banner { height: 160px; }
+  .proj-body { padding: 20px; }
+  .proj-title { font-size: 19px; }
 
   /* TESTIMONIALS */
-  .testi-grid { grid-template-columns:1fr; gap:12px; }
+  .testi-grid { grid-template-columns: 1fr; gap: 12px; }
 
   /* EDUCATION */
-  .edu-layout { grid-template-columns:1fr; gap:14px; }
-  .edu-card { padding:24px; }
-  .cert-card { padding:16px; }
+  .edu-layout { grid-template-columns: 1fr; gap: 14px; }
+  .edu-card { padding: 24px; }
+  .cert-card { padding: 16px; }
 
   /* CTA */
-  .cta-sec { padding:70px 20px; }
-  .cta-h { font-size:clamp(34px,9vw,52px); }
-  .cta-btns { flex-direction:column; align-items:center; gap:10px; }
-  .cta-btns .btn-primary, .cta-btns .btn-outline { width:100%; max-width:300px; justify-content:center; }
-  .social-row { gap:8px; }
-  .soc-btn { padding:9px 14px; font-size:9px; }
+  .cta-sec { padding: 70px 20px; }
+  .cta-h { font-size: clamp(34px, 9vw, 52px); }
+  .cta-btns { flex-direction: column; align-items: center; gap: 10px; }
+  .cta-btns .btn-primary,
+  .cta-btns .btn-outline { width: 100%; max-width: 300px; justify-content: center; }
+  .social-row { gap: 8px; }
+  .soc-btn { padding: 9px 14px; font-size: 9px; }
 
   /* FOOTER */
-  footer { padding:20px; }
-  .footer-links { display:none; }
-  .footer-copy { font-size:8px; }
+  footer { padding: 20px; }
+  .footer-links { display: none; }
+  .footer-copy { font-size: 8px; }
 }
 
 /* ── Very Small Mobile 480px ── */
-@media(max-width:480px) {
-  .hero-h1 { font-size:clamp(46px,13vw,58px); }
-  .hero-badge { display:none; }
-  .nav-name { font-size:15px; }
-  .stat-num { font-size:32px; }
+@media (max-width: 480px) {
+  .hero-badge { display: none; }
+  .nav-name { font-size: 15px; }
+  .hero-h1 { font-size: clamp(46px, 13vw, 58px); }
 
-  .exp-impact { grid-template-columns:repeat(3,1fr); }
-  .proj-metrics { gap:0; }
-
-  /* Stack stats cleanly */
-  .hero-stats { flex-direction:row; flex-wrap:wrap; }
-  .stat {
-    flex:1; min-width:80px;
-    border-right:1px solid var(--b0) !important;
-    border-bottom:none !important;
-    padding:0 !important;
-    margin:0 !important;
-    text-align:center;
+  /* Stats: single row of 3 */
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
   }
-  .stat:last-child { border-right:none !important; }
-  .stat-num { font-size:28px; letter-spacing:-1px; }
-  .stat-lbl { font-size:7px; }
+  .stat { text-align: center; padding: 12px 6px !important; }
+  .stat:nth-child(1) { border-right: 1px solid var(--b0) !important; border-bottom: none !important; }
+  .stat:nth-child(2) { border-right: 1px solid var(--b0) !important; border-bottom: none !important; }
+  .stat:nth-child(3) { border-right: none !important; }
+  .stat-num { font-size: 28px; letter-spacing: -1px; }
+  .stat-lbl { font-size: 7px; }
+
+  .exp-impact { grid-template-columns: repeat(3, 1fr); }
+  .proj-metrics { gap: 0; }
 }
 
-/* ── Safe area for notch phones ── */
-@supports(padding-top:env(safe-area-inset-top)) {
+/* ── Safe area (notch phones) ── */
+@supports (padding-top: env(safe-area-inset-top)) {
   .nav {
     padding-top: env(safe-area-inset-top);
     height: calc(60px + env(safe-area-inset-top));
@@ -804,14 +837,30 @@ footer { position:relative; z-index:1; background:var(--bg0); border-top:1px sol
   footer { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
 }
 
-/* Smooth tap highlights for mobile */
-@media (hover:none) {
-  .btn-primary:active { transform:scale(0.97); opacity:0.9; }
-  .btn-outline:active, .btn-ghost2:active { transform:scale(0.97); }
-  .sk-card:active, .proj-card:active, .exp-card:active { transform:scale(0.99); }
+/* ── Tap highlights ── */
+@media (hover: none) {
+  .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
+  .btn-outline:active, .btn-ghost2:active { transform: scale(0.97); }
+  .sk-card:active, .proj-card:active, .exp-card:active { transform: scale(0.99); }
   * { -webkit-tap-highlight-color: transparent; }
 }
 </style>
+
+<script>
+/* ── DARK MODE: Set BEFORE page renders to avoid flash ──
+   Always default to dark. Only switch to light if user
+   previously chose light (stored in localStorage). Never
+   auto-switch based on system preference. */
+(function() {
+  var saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -860,19 +909,20 @@ footer { position:relative; z-index:1; background:var(--bg0); border-top:1px sol
       <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Resume
     </a>
-    <div class="ham" id="ham" onclick="toggleMob(this)">
+    <!-- FIXED: button element instead of div for better touch/click handling -->
+    <button class="ham" id="ham" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </div>
 </nav>
 
 <div class="mob-nav" id="mobNav">
   <a href="#hero"        onclick="closeMob()">🏠 Home</a>
   <a href="#skills"      onclick="closeMob()">⚡ Skills</a>
-  <a href="#playground" onclick="closeMob()">🧪 Liquid Playground</a>
-  <a href="#experience" onclick="closeMob()">💼 Experience</a>
-  <a href="#projects"   onclick="closeMob()">🛍 Projects</a>
-  <a href="#education"  onclick="closeMob()">🎓 Education</a>
+  <a href="#playground"  onclick="closeMob()">🧪 Liquid Playground</a>
+  <a href="#experience"  onclick="closeMob()">💼 Experience</a>
+  <a href="#projects"    onclick="closeMob()">🛍 Projects</a>
+  <a href="#education"   onclick="closeMob()">🎓 Education</a>
   <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" onclick="closeMob()">⬇ Download Resume</a>
 </div>
 
@@ -1261,7 +1311,7 @@ Slug: {{ product_title | handleize }}</textarea>
     <p class="cta-p">Looking for a Shopify developer who delivers fast, conversion-focused stores? I bring 3+ years of hands-on OS 2.0 experience, clean Liquid code, and obsessive attention to performance.</p>
     <div class="cta-btns">
       <a href="mailto:vikupatel2001@gmail.com" class="btn-primary">Send a Message &nbsp;→</a>
-    <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" onclick="closeMob()" class="btn-outline">
+      <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" class="btn-outline">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Download Resume
       </a>
@@ -1310,249 +1360,272 @@ var ldFill = document.querySelector('.ld-fill');
 var loaderEl = document.getElementById('loader');
 
 function updateLoader() {
-  // Calculates an increment that slows down as it approaches 100
-  var increment = (100 - pct) * 0.08; 
+  var increment = (100 - pct) * 0.08;
   pct += Math.max(increment, 0.1);
-
   if (pct < 99.9) {
     ldPct.textContent = Math.floor(pct) + '%';
-    if(ldFill) ldFill.style.width = pct + '%';
+    if (ldFill) ldFill.style.width = pct + '%';
     requestAnimationFrame(updateLoader);
   }
 }
-
-// Start the animation
 requestAnimationFrame(updateLoader);
 
-// Fire the real load event
 window.addEventListener('load', function() {
   pct = 100;
   ldPct.textContent = '100%';
-  if(ldFill) ldFill.style.width = '100%';
-  
-  // Let the bar sit at 100% for a tiny fraction of a second, then fade out
+  if (ldFill) ldFill.style.width = '100%';
   setTimeout(function() {
     loaderEl.classList.add('gone');
-    
-    // Trigger terminal after loader starts fading
-    setTimeout(function() {
-      buildTerminal();
-    }, 400);
+    setTimeout(buildTerminal, 400);
   }, 450);
 });
 
 /* ── THEME TOGGLE ── */
 var html = document.documentElement;
-var btn = document.getElementById('themeToggle');
-var isDark = true;
-function setTheme(dark) {
-  isDark = dark;
-  html.setAttribute('data-theme', dark ? 'dark' : 'light');
-  btn.textContent = dark ? '☀' : '🌙';
-  localStorage.setItem('theme', dark ? 'dark' : 'light');
+var themeBtn = document.getElementById('themeToggle');
+
+function getCurrentTheme() {
+  return html.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
 }
-btn.addEventListener('click', function(){ setTheme(!isDark); });
-// Restore saved theme
-var saved = localStorage.getItem('theme');
-if(saved) setTheme(saved === 'dark');
-else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) setTheme(false);
+
+function setTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  themeBtn.textContent = theme === 'dark' ? '☀' : '🌙';
+  localStorage.setItem('theme', theme);
+}
+
+/* Sync button icon with current theme on load */
+setTheme(getCurrentTheme());
+
+themeBtn.addEventListener('click', function() {
+  setTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+});
 
 /* ── SCROLL PROGRESS ── */
-window.addEventListener('scroll', function(){
+window.addEventListener('scroll', function() {
   var sp = document.getElementById('scroll-progress');
   var p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
   sp.style.width = p + '%';
-}, {passive:true});
+}, { passive: true });
 
 /* ── CANVAS PARTICLES ── */
 var cvs = document.getElementById('bgCanvas');
 var ctx2 = cvs.getContext('2d');
 var W, H;
-function resizeCanvas(){ W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+function resizeCanvas() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
 resizeCanvas();
-window.addEventListener('resize', resizeCanvas, {passive:true});
+window.addEventListener('resize', resizeCanvas, { passive: true });
+
 var dots = [];
-for(var di=0; di<70; di++){
-  var colors=['150,191,72','0,128,96','88,166,255'];
-  var ci=Math.random()<0.55?0:Math.random()<0.6?1:2;
-  dots.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.2+0.2,vx:(Math.random()-0.5)*0.35,vy:(Math.random()-0.5)*0.35,a:Math.random()*0.4+0.07,c:colors[ci]});
+for (var di = 0; di < 70; di++) {
+  var colors = ['150,191,72', '0,128,96', '88,166,255'];
+  var ci = Math.random() < 0.55 ? 0 : Math.random() < 0.6 ? 1 : 2;
+  dots.push({ x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, r: Math.random() * 1.2 + 0.2, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, a: Math.random() * 0.4 + 0.07, c: colors[ci] });
 }
-(function drawCanvas(){
-  ctx2.clearRect(0,0,W,H);
-  var isLight = !isDark;
-  for(var i=0;i<dots.length;i++){
-    var d=dots[i];
-    ctx2.beginPath(); ctx2.arc(d.x,d.y,d.r,0,Math.PI*2);
-    ctx2.fillStyle='rgba('+d.c+','+(isLight?d.a*0.4:d.a)+')'; ctx2.fill();
-    d.x+=d.vx; d.y+=d.vy;
-    if(d.x<0||d.x>W)d.vx*=-1; if(d.y<0||d.y>H)d.vy*=-1;
+(function drawCanvas() {
+  ctx2.clearRect(0, 0, W, H);
+  var isLight = getCurrentTheme() === 'light';
+  for (var i = 0; i < dots.length; i++) {
+    var d = dots[i];
+    ctx2.beginPath(); ctx2.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    ctx2.fillStyle = 'rgba(' + d.c + ',' + (isLight ? d.a * 0.4 : d.a) + ')'; ctx2.fill();
+    d.x += d.vx; d.y += d.vy;
+    if (d.x < 0 || d.x > W) d.vx *= -1;
+    if (d.y < 0 || d.y > H) d.vy *= -1;
   }
-  for(var i=0;i<dots.length;i++){
-    for(var j=i+1;j<dots.length;j++){
-      var dx=dots[i].x-dots[j].x,dy=dots[i].y-dots[j].y;
-      var dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){
+  for (var i = 0; i < dots.length; i++) {
+    for (var j = i + 1; j < dots.length; j++) {
+      var dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
         ctx2.beginPath();
-        ctx2.strokeStyle='rgba(150,191,72,'+(isLight?0.03:0.06)*(1-dist/120)+')';
-        ctx2.lineWidth=0.5;
-        ctx2.moveTo(dots[i].x,dots[i].y); ctx2.lineTo(dots[j].x,dots[j].y); ctx2.stroke();
+        ctx2.strokeStyle = 'rgba(150,191,72,' + (isLight ? 0.03 : 0.06) * (1 - dist / 120) + ')';
+        ctx2.lineWidth = 0.5;
+        ctx2.moveTo(dots[i].x, dots[i].y); ctx2.lineTo(dots[j].x, dots[j].y); ctx2.stroke();
       }
     }
   }
   requestAnimationFrame(drawCanvas);
 })();
 
-/* ── NAV ── */
+/* ── NAV SCROLL ACTIVE ── */
 var mainNav = document.getElementById('mainNav');
 var navAs = document.querySelectorAll('.nav-pill a');
-var sections = ['hero','skills','playground','experience','projects','education'];
-window.addEventListener('scroll', function(){
-  if(window.scrollY>40) mainNav.classList.add('scrolled'); else mainNav.classList.remove('scrolled');
-  var cur='hero';
-  for(var i=0;i<sections.length;i++){
-    var s=document.getElementById(sections[i]);
-    if(s&&window.scrollY>=s.offsetTop-150) cur=sections[i];
-  }
-  for(var i=0;i<navAs.length;i++){
-    navAs[i].className=navAs[i].getAttribute('href')==='#'+cur?'active':'';
-  }
-}, {passive:true});
+var sections = ['hero', 'skills', 'playground', 'experience', 'projects', 'education'];
 
-/* ── MOBILE NAV ── */
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 40) mainNav.classList.add('scrolled'); else mainNav.classList.remove('scrolled');
+  var cur = 'hero';
+  for (var i = 0; i < sections.length; i++) {
+    var s = document.getElementById(sections[i]);
+    if (s && window.scrollY >= s.offsetTop - 150) cur = sections[i];
+  }
+  for (var i = 0; i < navAs.length; i++) {
+    navAs[i].className = navAs[i].getAttribute('href') === '#' + cur ? 'active' : '';
+  }
+}, { passive: true });
+
+/* ── MOBILE NAV — FIXED ── */
 var hamOpen = false;
-function toggleMob(hamEl){
+var hamEl = document.getElementById('ham');
+var mobNavEl = document.getElementById('mobNav');
+
+hamEl.addEventListener('click', function() {
   hamOpen = !hamOpen;
-  if(hamEl) hamEl.classList.toggle('open', hamOpen);
-  var mn = document.getElementById('mobNav');
-  mn.classList.toggle('open', hamOpen);
+  hamEl.classList.toggle('open', hamOpen);
+  hamEl.setAttribute('aria-expanded', hamOpen);
+  mobNavEl.classList.toggle('open', hamOpen);
+});
+
+function closeMob() {
+  hamOpen = false;
+  hamEl.classList.remove('open');
+  hamEl.setAttribute('aria-expanded', 'false');
+  mobNavEl.classList.remove('open');
 }
-function closeMob(){
-  hamOpen=false;
-  document.getElementById('ham').classList.remove('open');
-  document.getElementById('mobNav').classList.remove('open');
-}
+
+/* Close mobile nav when clicking outside */
+document.addEventListener('click', function(e) {
+  if (hamOpen && !hamEl.contains(e.target) && !mobNavEl.contains(e.target)) {
+    closeMob();
+  }
+});
 
 /* ── SCROLL REVEAL ── */
 var revEls = document.querySelectorAll('.rev,.revL,.revR');
-var revObs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('on'); });
-},{threshold:0.07});
-revEls.forEach(function(el){ revObs.observe(el); });
+var revObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.07 });
+revEls.forEach(function(el) { revObs.observe(el); });
 
 /* ── SKILL BARS ── */
-var barObs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting) e.target.querySelectorAll('.br-fill').forEach(function(f){ f.classList.add('on'); }); });
-},{threshold:0.15});
-document.querySelectorAll('.sk-card').forEach(function(c){ barObs.observe(c); });
+var barObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.querySelectorAll('.br-fill').forEach(function(f) { f.classList.add('on'); }); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.sk-card').forEach(function(c) { barObs.observe(c); });
 
 /* ── COUNTERS ── */
-function animCount(el, target){
-  var start=null, dur=1500;
-  (function step(ts){ if(!start) start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3); el.textContent=Math.floor(e*target); if(p<1)requestAnimationFrame(step); else el.textContent=target; })(0);
+function animCount(el, target) {
+  var start = null, dur = 1500;
+  (function step(ts) { if (!start) start = ts; var p = Math.min((ts - start) / dur, 1), e2 = 1 - Math.pow(1 - p, 3); el.textContent = Math.floor(e2 * target); if (p < 1) requestAnimationFrame(step); else el.textContent = target; })(0);
 }
-var cntObs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){ if(e.isIntersecting){ e.target.querySelectorAll('[data-count]').forEach(function(el){ animCount(el,parseInt(el.dataset.count)); }); cntObs.unobserve(e.target); }});
-},{threshold:0.3});
-var heroEl=document.getElementById('hero'); if(heroEl) cntObs.observe(heroEl);
+var cntObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.querySelectorAll('[data-count]').forEach(function(el) { animCount(el, parseInt(el.dataset.count)); }); cntObs.unobserve(e.target); } });
+}, { threshold: 0.3 });
+var heroEl = document.getElementById('hero');
+if (heroEl) cntObs.observe(heroEl);
 
 /* ── BENTO GLOW ── */
-document.querySelectorAll('.sk-card').forEach(function(card){
-  card.addEventListener('mousemove', function(e){
-    var r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+document.querySelectorAll('.sk-card').forEach(function(card) {
+  card.addEventListener('mousemove', function(e) {
+    var r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
   });
 });
 
 /* ── TICKER ── */
-var tickItems=['Shopify OS 2.0','Liquid Templating','Metafields','Metaobjects','Dawn Theme','JSON Templates','DTC eCommerce','Core Web Vitals','Page Speed 97+','Custom Sections','Schema Settings','Shopify Flow','Responsive Design','CRO Optimization','BabyOrgano','Alian Software'];
-var tickerEl=document.getElementById('tickerInner');
-if(tickerEl){
-  var h='';
-  for(var ti=0;ti<2;ti++) for(var tii=0;tii<tickItems.length;tii++){
-    var t=tickItems[tii], hi2=t.indexOf('97')!==-1||t.indexOf('OS')!==-1||t.indexOf('Liquid')!==-1;
-    h+='<div class="tick-item"><div class="tick-dot"></div>'+(hi2?'<span>'+t+'</span>':t)+'</div>';
+var tickItems = ['Shopify OS 2.0','Liquid Templating','Metafields','Metaobjects','Dawn Theme','JSON Templates','DTC eCommerce','Core Web Vitals','Page Speed 97+','Custom Sections','Schema Settings','Shopify Flow','Responsive Design','CRO Optimization','BabyOrgano','Alian Software'];
+var tickerEl = document.getElementById('tickerInner');
+if (tickerEl) {
+  var h = '';
+  for (var ti = 0; ti < 2; ti++) for (var tii = 0; tii < tickItems.length; tii++) {
+    var t = tickItems[tii], hi2 = t.indexOf('97') !== -1 || t.indexOf('OS') !== -1 || t.indexOf('Liquid') !== -1;
+    h += '<div class="tick-item"><div class="tick-dot"></div>' + (hi2 ? '<span>' + t + '</span>' : t) + '</div>';
   }
-  tickerEl.innerHTML=h;
+  tickerEl.innerHTML = h;
 }
 
 /* ── TERMINAL ── */
-var termLines=[
-  {type:'prompt',content:'assign dev = vivek_patel'},
-  {type:'out',content:'→ Developer loaded ✓'},
-  {type:'kv',key:'name:',val:'"Vivek Patel"'},
-  {type:'kv',key:'role:',val:'"Shopify Dev"'},
-  {type:'kv',key:'version:',val:'"OS 2.0"'},
-  {type:'kv',key:'liquid:',val:'true'},
-  {type:'kv',key:'metafields:',val:'true'},
-  {type:'kv',key:'years_exp:',val:'3'},
-  {type:'kv',key:'stores:',val:'"10+"'},
-  {type:'kv',key:'status:',val:'"available"'},
-  {type:'cursor'}
+var termLines = [
+  { type: 'prompt', content: 'assign dev = vivek_patel' },
+  { type: 'out', content: '→ Developer loaded ✓' },
+  { type: 'kv', key: 'name:', val: '"Vivek Patel"' },
+  { type: 'kv', key: 'role:', val: '"Shopify Dev"' },
+  { type: 'kv', key: 'version:', val: '"OS 2.0"' },
+  { type: 'kv', key: 'liquid:', val: 'true' },
+  { type: 'kv', key: 'metafields:', val: 'true' },
+  { type: 'kv', key: 'years_exp:', val: '3' },
+  { type: 'kv', key: 'stores:', val: '"10+"' },
+  { type: 'kv', key: 'status:', val: '"available"' },
+  { type: 'cursor' }
 ];
-function buildTerminal(){
-  var body=document.getElementById('termBody'); if(!body)return;
-  body.innerHTML=''; var delay=0;
-  for(var i=0;i<termLines.length;i++){
-    (function(line,d){ setTimeout(function(){
-      var h='';
-      if(line.type==='prompt') h='<div class="term-line"><span class="tp">{% </span><span style="color:var(--t1)">'+line.content+'</span><span class="tp"> %}</span></div>';
-      else if(line.type==='out') h='<div class="tout">'+line.content+'</div>';
-      else if(line.type==='kv') h='<div class="term-line"><span class="tk">'+line.key+'</span><span class="tv"> '+line.val+'</span></div>';
-      else if(line.type==='cursor') h='<div class="term-line"><span class="tp">$</span><span class="tcursor" style="margin-left:6px"></span></div>';
-      body.innerHTML+=h;
-    },d); })(termLines[i], delay);
-    delay+=i===0?500:150;
+function buildTerminal() {
+  var body = document.getElementById('termBody'); if (!body) return;
+  body.innerHTML = ''; var delay = 0;
+  for (var i = 0; i < termLines.length; i++) {
+    (function(line, d) {
+      setTimeout(function() {
+        var h = '';
+        if (line.type === 'prompt') h = '<div class="term-line"><span class="tp">{% </span><span style="color:var(--t1)">' + line.content + '</span><span class="tp"> %}</span></div>';
+        else if (line.type === 'out') h = '<div class="tout">' + line.content + '</div>';
+        else if (line.type === 'kv') h = '<div class="term-line"><span class="tk">' + line.key + '</span><span class="tv"> ' + line.val + '</span></div>';
+        else if (line.type === 'cursor') h = '<div class="term-line"><span class="tp">$</span><span class="tcursor" style="margin-left:6px"></span></div>';
+        body.innerHTML += h;
+      }, d);
+    })(termLines[i], delay);
+    delay += i === 0 ? 500 : 150;
   }
 }
 
 /* ── LIQUID PLAYGROUND ── */
-var PRESETS={
-  product:'{% assign product_title = "Organic Baby Serum" %}\n{% assign price = 24.99 %}\n{% assign vendor = "BabyOrgano" %}\n{% assign in_stock = true %}\n{% assign tags = "organic, baby, serum, natural" %}\n\n{% if in_stock %}\n  {{ product_title }} — Available\n{% else %}\n  {{ product_title }} — Out of Stock\n{% endif %}\n\n{% assign tag_array = tags | split: ", " %}\n{% for tag in tag_array %}\n  #{{ tag }}\n{% endfor %}\n\nPrice: ${{ price | round: 2 }}\nVendor: {{ vendor | upcase }}\nSlug: {{ product_title | handleize }}',
-  metafield:'{% assign metafield_ingredients = "Aloe Vera, Vitamin C, Jojoba Oil" %}\n{% assign metafield_age_range = "0-12 months" %}\n{% assign metafield_is_organic = true %}\n\n== Product Metafields ==\nIngredients: {{ metafield_ingredients }}\nAge Range:   {{ metafield_age_range }}\n\n{% if metafield_is_organic %}\nCertified Organic: Yes\n{% endif %}\n\n{% assign ingredient_list = metafield_ingredients | split: ", " %}\n{% for ingredient in ingredient_list %}\n  * {{ ingredient }}\n{% endfor %}',
-  loop:'{% assign collection_title = "Baby Skincare" %}\n{% assign products = "Serum,Lotion,Body Wash,Shampoo,Sunscreen" %}\n{% assign product_list = products | split: "," %}\n\n== {{ collection_title }} Collection ==\nTotal Products: {{ product_list | size }}\n\n{% for product in product_list %}\n  {{ forloop_index }}. {{ product | strip | upcase }}\n{% endfor %}',
-  filter:'{% assign title = "baby organic serum v2" %}\n{% assign price = 24.9900 %}\n{% assign description = "  Natural skincare for babies  " %}\n\nCapitalize:  {{ title | capitalize }}\nUpcase:      {{ title | upcase }}\nHandleize:   {{ title | handleize }}\nStrip:       |{{ description | strip }}|\nTruncate 20: {{ title | truncate: 20 }}\nPrice:       ${{ price | round: 2 }}\nPlus 10:     ${{ price | plus: 10 | round: 2 }}\nTimes 3:     ${{ price | times: 3 | round: 2 }}',
-  cart:'{% assign cart_items = "Serum,Lotion,Shampoo" %}\n{% assign item_list = cart_items | split: "," %}\n\n== Shopping Cart ==\n\n{% for item in item_list %}\n  {{ forloop_index }}. {{ item | strip }}\n{% endfor %}\n\nSubtotal: ${{ 24.99 | plus: 14.99 | plus: 9.99 | round: 2 }}\nItems: {{ item_list | size }}\n\n{% if item_list.size >= 3 %}\n  Free shipping unlocked!\n{% endif %}'
+var PRESETS = {
+  product: '{% assign product_title = "Organic Baby Serum" %}\n{% assign price = 24.99 %}\n{% assign vendor = "BabyOrgano" %}\n{% assign in_stock = true %}\n{% assign tags = "organic, baby, serum, natural" %}\n\n{% if in_stock %}\n  {{ product_title }} — Available\n{% else %}\n  {{ product_title }} — Out of Stock\n{% endif %}\n\n{% assign tag_array = tags | split: ", " %}\n{% for tag in tag_array %}\n  #{{ tag }}\n{% endfor %}\n\nPrice: ${{ price | round: 2 }}\nVendor: {{ vendor | upcase }}\nSlug: {{ product_title | handleize }}',
+  metafield: '{% assign metafield_ingredients = "Aloe Vera, Vitamin C, Jojoba Oil" %}\n{% assign metafield_age_range = "0-12 months" %}\n{% assign metafield_is_organic = true %}\n\n== Product Metafields ==\nIngredients: {{ metafield_ingredients }}\nAge Range:   {{ metafield_age_range }}\n\n{% if metafield_is_organic %}\nCertified Organic: Yes\n{% endif %}\n\n{% assign ingredient_list = metafield_ingredients | split: ", " %}\n{% for ingredient in ingredient_list %}\n  * {{ ingredient }}\n{% endfor %}',
+  loop: '{% assign collection_title = "Baby Skincare" %}\n{% assign products = "Serum,Lotion,Body Wash,Shampoo,Sunscreen" %}\n{% assign product_list = products | split: "," %}\n\n== {{ collection_title }} Collection ==\nTotal Products: {{ product_list | size }}\n\n{% for product in product_list %}\n  {{ forloop_index }}. {{ product | strip | upcase }}\n{% endfor %}',
+  filter: '{% assign title = "baby organic serum v2" %}\n{% assign price = 24.9900 %}\n{% assign description = "  Natural skincare for babies  " %}\n\nCapitalize:  {{ title | capitalize }}\nUpcase:      {{ title | upcase }}\nHandleize:   {{ title | handleize }}\nStrip:       |{{ description | strip }}|\nTruncate 20: {{ title | truncate: 20 }}\nPrice:       ${{ price | round: 2 }}\nPlus 10:     ${{ price | plus: 10 | round: 2 }}\nTimes 3:     ${{ price | times: 3 | round: 2 }}',
+  cart: '{% assign cart_items = "Serum,Lotion,Shampoo" %}\n{% assign item_list = cart_items | split: "," %}\n\n== Shopping Cart ==\n\n{% for item in item_list %}\n  {{ forloop_index }}. {{ item | strip }}\n{% endfor %}\n\nSubtotal: ${{ 24.99 | plus: 14.99 | plus: 9.99 | round: 2 }}\nItems: {{ item_list | size }}\n\n{% if item_list.size >= 3 %}\n  Free shipping unlocked!\n{% endif %}'
 };
-function loadPreset(key,btn2){ var ce=document.getElementById('pg-code'); if(!ce||!PRESETS[key])return; ce.value=PRESETS[key]; document.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); }); if(btn2)btn2.classList.add('active'); runLiquid(); }
-function runLiquid(){ var code=document.getElementById('pg-code').value, out=document.getElementById('pg-output'); try{ out.innerHTML=highlight(simulateLiquid(code)); }catch(e){ out.innerHTML='<span style="color:#ff7b7b">Error: '+e.message+'</span>'; } }
 
-function simulateLiquid(code){
-  var vars={},output='',lines=code.split('\n'),skipUntil=null,forVar='',forItems=[],forBody=[],inFor=false;
-  for(var i=0;i<lines.length;i++){
-    var line=lines[i],trimmed=line.trim();
-    if(trimmed.indexOf('{%')!==-1&&trimmed.indexOf('comment')!==-1)continue;
-    if(trimmed.indexOf('endcomment')!==-1)continue;
-    var aMatch=trimmed.match(/\{%-?\s*assign\s+(\w+)\s*=\s*([\s\S]+?)\s*-?%\}/);
-    if(aMatch){vars[aMatch[1]]=evalFilter(aMatch[2].trim(),vars);continue;}
-    var fMatch=trimmed.match(/\{%-?\s*for\s+(\w+)\s+in\s+(\w+(?:\.\w+)?)\s*-?%\}/);
-    if(fMatch){inFor=true;forVar=fMatch[1];var src=getDeep(vars,fMatch[2]);forItems=Array.isArray(src)?src:String(src||'').split(',');forBody=[];continue;}
-    if(trimmed.match(/\{%-?\s*endfor\s*-?%\}/)){inFor=false;for(var fi=0;fi<forItems.length;fi++){var lv=shallowCopy(vars);lv[forVar]=String(forItems[fi]).trim();lv.forloop_index=fi+1;lv.forloop_index0=fi;lv.forloop_first=fi===0;lv.forloop_last=fi===forItems.length-1;lv.forloop_size=forItems.length;for(var li=0;li<forBody.length;li++)output+=processLine(forBody[li],lv);}continue;}
-    if(inFor){forBody.push(line);continue;}
-    var ifMatch=trimmed.match(/\{%-?\s*if\s+([\s\S]+?)\s*-?%\}/);
-    if(ifMatch){skipUntil=evalCondition(ifMatch[1],vars)?null:'else';continue;}
-    var eiMatch=trimmed.match(/\{%-?\s*elsif\s+([\s\S]+?)\s*-?%\}/);
-    if(eiMatch){if(skipUntil==='else')skipUntil=evalCondition(eiMatch[1],vars)?null:'else';else if(!skipUntil)skipUntil='endif';continue;}
-    if(trimmed.match(/\{%-?\s*else\s*-?%\}/)){skipUntil=(skipUntil==='else')?null:'endif';continue;}
-    if(trimmed.match(/\{%-?\s*endif\s*-?%\}/)){skipUntil=null;continue;}
-    if(skipUntil)continue;
-    output+=processLine(line,vars);
-  }
-  return output.replace(/^\n+|\n+$/,'');
+function loadPreset(key, btn2) {
+  var ce = document.getElementById('pg-code');
+  if (!ce || !PRESETS[key]) return;
+  ce.value = PRESETS[key];
+  document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn2) btn2.classList.add('active');
+  runLiquid();
 }
-function shallowCopy(obj){var o={};for(var k in obj)o[k]=obj[k];return o;}
-function getDeep(vars,path){var parts=path.split('.'),v=vars[parts[0]];for(var i=1;i<parts.length;i++)v=v?v[parts[i]]:undefined;return v;}
-function processLine(line,vars){return line.replace(/forloop\.index0/g,'forloop_index0').replace(/forloop\.index/g,'forloop_index').replace(/forloop\.first/g,'forloop_first').replace(/forloop\.last/g,'forloop_last').replace(/forloop\.size/g,'forloop_size').replace(/\{\{([\s\S]+?)\}\}/g,function(m,expr){return evalFilter(expr.trim(),vars);})+'\n';}
-function splitPipes(expr){var parts=[],cur='',inQ=false,qCh='';for(var i=0;i<expr.length;i++){var ch=expr[i];if(!inQ&&(ch==='"'||ch==="'")){inQ=true;qCh=ch;cur+=ch;}else if(inQ&&ch===qCh){inQ=false;qCh='';cur+=ch;}else if(!inQ&&ch==='|'){parts.push(cur.trim());cur='';}else{cur+=ch;}}if(cur.trim())parts.push(cur.trim());return parts;}
-function stripQuotes(s){s=String(s).trim();if((s.charAt(0)==='"'&&s.charAt(s.length-1)==='"')||(s.charAt(0)==="'"&&s.charAt(s.length-1)==="'"))return s.slice(1,-1);return s;}
-function evalFilter(expr,vars){var parts=splitPipes(expr),val=evalVal(parts[0],vars);for(var i=1;i<parts.length;i++){var f=parts[i].trim(),ci=f.indexOf(':'),fName=ci!==-1?f.slice(0,ci).trim():f.trim(),fArg=ci!==-1?stripQuotes(f.slice(ci+1).trim()):'';if(fName==='upcase')val=String(val).toUpperCase();else if(fName==='downcase')val=String(val).toLowerCase();else if(fName==='capitalize')val=String(val).charAt(0).toUpperCase()+String(val).slice(1);else if(fName==='strip')val=String(val).trim();else if(fName==='handleize')val=String(val).toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');else if(fName==='size')val=Array.isArray(val)?val.length:String(val).length;else if(fName==='first')val=Array.isArray(val)?val[0]:String(val).charAt(0);else if(fName==='last')val=Array.isArray(val)?val[val.length-1]:String(val).charAt(String(val).length-1);else if(fName==='join')val=Array.isArray(val)?val.join(fArg||', '):String(val);else if(fName==='split')val=String(val).split(fArg||',');else if(fName==='append')val=String(val)+fArg;else if(fName==='prepend')val=fArg+String(val);else if(fName==='remove')val=String(val).split(fArg).join('');else if(fName==='truncate'){var tl=parseInt(fArg)||50;val=String(val).length>tl?String(val).slice(0,tl)+'...':String(val);}else if(fName==='round'){var rd=parseInt(fArg);rd=isNaN(rd)?0:rd;val=parseFloat(val).toFixed(rd);}else if(fName==='ceil')val=Math.ceil(parseFloat(val));else if(fName==='floor')val=Math.floor(parseFloat(val));else if(fName==='abs')val=Math.abs(parseFloat(val));else if(fName==='plus')val=parseFloat(val)+(parseFloat(fArg)||0);else if(fName==='minus')val=parseFloat(val)-(parseFloat(fArg)||0);else if(fName==='times')val=parseFloat(val)*(parseFloat(fArg)||1);else if(fName==='divided_by')val=parseFloat(val)/(parseFloat(fArg)||1);else if(fName==='modulo')val=parseFloat(val)%(parseFloat(fArg)||1);else if(fName==='default'){if(val===''||val===null||val===undefined||val===false)val=fArg;}else if(fName==='url_encode')val=encodeURIComponent(String(val));else if(fName==='escape')val=String(val).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}return Array.isArray(val)?val.join(', '):String(val);}
-function evalVal(expr,vars){if(!expr)return '';expr=expr.trim();if(expr==='true')return true;if(expr==='false')return false;if(expr==='nil'||expr==='null'||expr==='blank')return '';if((expr.charAt(0)==='"'&&expr.charAt(expr.length-1)==='"')||(expr.charAt(0)==="'"&&expr.charAt(expr.length-1)==="'"))return expr.slice(1,-1);if(expr!==''&&!isNaN(Number(expr)))return Number(expr);var am=expr.match(/^(\w+)\[(\d+)\]$/);if(am){var av=vars[am[1]];return Array.isArray(av)?av[parseInt(am[2])]:'';} var dm=expr.match(/^(\w+)\.size$/);if(dm){var dv=vars[dm[1]];return Array.isArray(dv)?dv.length:String(dv||'').length;}return vars[expr]!==undefined?vars[expr]:expr;}
-function evalCondition(cond,vars){cond=cond.trim();if(cond.indexOf(' contains ')!==-1){var cp=cond.split(' contains ');return String(evalVal(cp[0].trim(),vars)).indexOf(String(evalVal(cp[1].trim(),vars)))!==-1;}if(cond.indexOf('!=')!==-1){var p=cond.split('!=');return String(evalVal(p[0].trim(),vars))!==String(evalVal(p[1].trim(),vars));}if(cond.indexOf('==')!==-1){var p=cond.split('==');return String(evalVal(p[0].trim(),vars))===String(evalVal(p[1].trim(),vars));}if(cond.indexOf('>=')!==-1){var p=cond.split('>=');return +evalVal(p[0].trim(),vars)>=+evalVal(p[1].trim(),vars);}if(cond.indexOf('<=')!==-1){var p=cond.split('<=');return +evalVal(p[0].trim(),vars)<=+evalVal(p[1].trim(),vars);}if(cond.indexOf('>')!==-1){var p=cond.split('>');return +evalVal(p[0].trim(),vars)>+evalVal(p[1].trim(),vars);}if(cond.indexOf('<')!==-1){var p=cond.split('<');return +evalVal(p[0].trim(),vars)<+evalVal(p[1].trim(),vars);}var v=evalVal(cond,vars);return v!==false&&v!==null&&v!==''&&v!==0&&v!=='false';}
-function highlight(text){return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(#\w+)/g,'<span class="out-val">$1</span>').replace(/(\$[\d.]+)/g,'<span class="out-num">$1</span>').replace(/(== [^\n]+ ==)/g,'<span class="out-key">$1</span>');}
-window.addEventListener('load',function(){ setTimeout(runLiquid,200); });
 
-/* ── RESUME DOWNLOAD ── */
-function dlResume(e){ e.preventDefault(); var lines=['VIVEK PATEL — SHOPIFY DEVELOPER','================================================','Email:    vikupatel2001@gmail.com','Phone:    8658458987','Location: Ahmedabad, Gujarat, India','','SUMMARY','-------','Shopify Frontend Developer with 3+ years experience building, customizing,','and optimizing OS 2.0 themes for DTC eCommerce brands.','','SKILLS','------','Shopify:  Liquid, JSON Templates, Metafields, OS 2.0, Dawn, Shopify CLI','Frontend: HTML5, CSS3, JavaScript, jQuery, Tailwind CSS','Tools:    GitHub, Figma, ClickUp, VS Code','Optimize: Core Web Vitals, SEO, CRO, Performance','','EXPERIENCE','----------','BabyOrgano — Shopify Developer','Oct 2024 – Present | Ahmedabad, India','• Website optimization (97+ PageSpeed scores)','• UX optimization, responsive design, custom theme development','• Speed optimization, SEO improvements, QA testing','','Alian Software — Shopify Frontend Developer','Oct 2022 – Aug 2024 | Anand, India','• Dawn theme customization for multiple clients','• Custom sections, metafields, responsive design','• Third-party app integrations, page speed optimization','','PROJECTS','--------','M2M Store — Dec 2023','Full store redevelopment on Dawn theme, AU eCommerce','','Habibi NY — Feb–Apr 2024','DTC store build with custom UX for DTC Garage','','EDUCATION','----------','BSc Computer Science — Sambalpur University (2019–2022)','','CERTIFICATES','• Shopify Theme Development: OS 2.0 + Tailwind CSS','• LinkedIn HTML & CSS Skill Assessment']; var blob=new Blob([lines.join('\n')],{type:'text/plain'}); var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='Vivek_Patel'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); var btn3=e.currentTarget; if(btn3){var orig=btn3.innerHTML; btn3.innerHTML='✓ Downloaded!'; setTimeout(function(){btn3.innerHTML=orig;},2200);} }
+function runLiquid() {
+  var code = document.getElementById('pg-code').value, out = document.getElementById('pg-output');
+  try { out.innerHTML = highlight(simulateLiquid(code)); } catch (e) { out.innerHTML = '<span style="color:#ff7b7b">Error: ' + e.message + '</span>'; }
+}
+
+function simulateLiquid(code) {
+  var vars = {}, output = '', lines = code.split('\n'), skipUntil = null, forVar = '', forItems = [], forBody = [], inFor = false;
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i], trimmed = line.trim();
+    if (trimmed.indexOf('{%') !== -1 && trimmed.indexOf('comment') !== -1) continue;
+    if (trimmed.indexOf('endcomment') !== -1) continue;
+    var aMatch = trimmed.match(/\{%-?\s*assign\s+(\w+)\s*=\s*([\s\S]+?)\s*-?%\}/);
+    if (aMatch) { vars[aMatch[1]] = evalFilter(aMatch[2].trim(), vars); continue; }
+    var fMatch = trimmed.match(/\{%-?\s*for\s+(\w+)\s+in\s+(\w+(?:\.\w+)?)\s*-?%\}/);
+    if (fMatch) { inFor = true; forVar = fMatch[1]; var src = getDeep(vars, fMatch[2]); forItems = Array.isArray(src) ? src : String(src || '').split(','); forBody = []; continue; }
+    if (trimmed.match(/\{%-?\s*endfor\s*-?%\}/)) { inFor = false; for (var fi = 0; fi < forItems.length; fi++) { var lv = shallowCopy(vars); lv[forVar] = String(forItems[fi]).trim(); lv.forloop_index = fi + 1; lv.forloop_index0 = fi; lv.forloop_first = fi === 0; lv.forloop_last = fi === forItems.length - 1; lv.forloop_size = forItems.length; for (var li = 0; li < forBody.length; li++) output += processLine(forBody[li], lv); } continue; }
+    if (inFor) { forBody.push(line); continue; }
+    var ifMatch = trimmed.match(/\{%-?\s*if\s+([\s\S]+?)\s*-?%\}/);
+    if (ifMatch) { skipUntil = evalCondition(ifMatch[1], vars) ? null : 'else'; continue; }
+    var eiMatch = trimmed.match(/\{%-?\s*elsif\s+([\s\S]+?)\s*-?%\}/);
+    if (eiMatch) { if (skipUntil === 'else') skipUntil = evalCondition(eiMatch[1], vars) ? null : 'else'; else if (!skipUntil) skipUntil = 'endif'; continue; }
+    if (trimmed.match(/\{%-?\s*else\s*-?%\}/)) { skipUntil = (skipUntil === 'else') ? null : 'endif'; continue; }
+    if (trimmed.match(/\{%-?\s*endif\s*-?%\}/)) { skipUntil = null; continue; }
+    if (skipUntil) continue;
+    output += processLine(line, vars);
+  }
+  return output.replace(/^\n+|\n+$/, '');
+}
+
+function shallowCopy(obj) { var o = {}; for (var k in obj) o[k] = obj[k]; return o; }
+function getDeep(vars, path) { var parts = path.split('.'), v = vars[parts[0]]; for (var i = 1; i < parts.length; i++) v = v ? v[parts[i]] : undefined; return v; }
+function processLine(line, vars) { return line.replace(/forloop\.index0/g,'forloop_index0').replace(/forloop\.index/g,'forloop_index').replace(/forloop\.first/g,'forloop_first').replace(/forloop\.last/g,'forloop_last').replace(/forloop\.size/g,'forloop_size').replace(/\{\{([\s\S]+?)\}\}/g, function(m, expr) { return evalFilter(expr.trim(), vars); }) + '\n'; }
+function splitPipes(expr) { var parts = [], cur = '', inQ = false, qCh = ''; for (var i = 0; i < expr.length; i++) { var ch = expr[i]; if (!inQ && (ch === '"' || ch === "'")) { inQ = true; qCh = ch; cur += ch; } else if (inQ && ch === qCh) { inQ = false; qCh = ''; cur += ch; } else if (!inQ && ch === '|') { parts.push(cur.trim()); cur = ''; } else { cur += ch; } } if (cur.trim()) parts.push(cur.trim()); return parts; }
+function stripQuotes(s) { s = String(s).trim(); if ((s.charAt(0) === '"' && s.charAt(s.length - 1) === '"') || (s.charAt(0) === "'" && s.charAt(s.length - 1) === "'")) return s.slice(1, -1); return s; }
+function evalFilter(expr, vars) { var parts = splitPipes(expr), val = evalVal(parts[0], vars); for (var i = 1; i < parts.length; i++) { var f = parts[i].trim(), ci = f.indexOf(':'), fName = ci !== -1 ? f.slice(0, ci).trim() : f.trim(), fArg = ci !== -1 ? stripQuotes(f.slice(ci + 1).trim()) : ''; if (fName === 'upcase') val = String(val).toUpperCase(); else if (fName === 'downcase') val = String(val).toLowerCase(); else if (fName === 'capitalize') val = String(val).charAt(0).toUpperCase() + String(val).slice(1); else if (fName === 'strip') val = String(val).trim(); else if (fName === 'handleize') val = String(val).toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''); else if (fName === 'size') val = Array.isArray(val) ? val.length : String(val).length; else if (fName === 'first') val = Array.isArray(val) ? val[0] : String(val).charAt(0); else if (fName === 'last') val = Array.isArray(val) ? val[val.length - 1] : String(val).charAt(String(val).length - 1); else if (fName === 'join') val = Array.isArray(val) ? val.join(fArg || ', ') : String(val); else if (fName === 'split') val = String(val).split(fArg || ','); else if (fName === 'append') val = String(val) + fArg; else if (fName === 'prepend') val = fArg + String(val); else if (fName === 'remove') val = String(val).split(fArg).join(''); else if (fName === 'truncate') { var tl = parseInt(fArg) || 50; val = String(val).length > tl ? String(val).slice(0, tl) + '...' : String(val); } else if (fName === 'round') { var rd = parseInt(fArg); rd = isNaN(rd) ? 0 : rd; val = parseFloat(val).toFixed(rd); } else if (fName === 'ceil') val = Math.ceil(parseFloat(val)); else if (fName === 'floor') val = Math.floor(parseFloat(val)); else if (fName === 'abs') val = Math.abs(parseFloat(val)); else if (fName === 'plus') val = parseFloat(val) + (parseFloat(fArg) || 0); else if (fName === 'minus') val = parseFloat(val) - (parseFloat(fArg) || 0); else if (fName === 'times') val = parseFloat(val) * (parseFloat(fArg) || 1); else if (fName === 'divided_by') val = parseFloat(val) / (parseFloat(fArg) || 1); else if (fName === 'modulo') val = parseFloat(val) % (parseFloat(fArg) || 1); else if (fName === 'default') { if (val === '' || val === null || val === undefined || val === false) val = fArg; } else if (fName === 'url_encode') val = encodeURIComponent(String(val)); else if (fName === 'escape') val = String(val).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); } return Array.isArray(val) ? val.join(', ') : String(val); }
+function evalVal(expr, vars) { if (!expr) return ''; expr = expr.trim(); if (expr === 'true') return true; if (expr === 'false') return false; if (expr === 'nil' || expr === 'null' || expr === 'blank') return ''; if ((expr.charAt(0) === '"' && expr.charAt(expr.length - 1) === '"') || (expr.charAt(0) === "'" && expr.charAt(expr.length - 1) === "'")) return expr.slice(1, -1); if (expr !== '' && !isNaN(Number(expr))) return Number(expr); var am = expr.match(/^(\w+)\[(\d+)\]$/); if (am) { var av = vars[am[1]]; return Array.isArray(av) ? av[parseInt(am[2])] : ''; } var dm = expr.match(/^(\w+)\.size$/); if (dm) { var dv = vars[dm[1]]; return Array.isArray(dv) ? dv.length : String(dv || '').length; } return vars[expr] !== undefined ? vars[expr] : expr; }
+function evalCondition(cond, vars) { cond = cond.trim(); if (cond.indexOf(' contains ') !== -1) { var cp = cond.split(' contains '); return String(evalVal(cp[0].trim(), vars)).indexOf(String(evalVal(cp[1].trim(), vars))) !== -1; } if (cond.indexOf('!=') !== -1) { var p = cond.split('!='); return String(evalVal(p[0].trim(), vars)) !== String(evalVal(p[1].trim(), vars)); } if (cond.indexOf('==') !== -1) { var p = cond.split('=='); return String(evalVal(p[0].trim(), vars)) === String(evalVal(p[1].trim(), vars)); } if (cond.indexOf('>=') !== -1) { var p = cond.split('>='); return +evalVal(p[0].trim(), vars) >= +evalVal(p[1].trim(), vars); } if (cond.indexOf('<=') !== -1) { var p = cond.split('<='); return +evalVal(p[0].trim(), vars) <= +evalVal(p[1].trim(), vars); } if (cond.indexOf('>') !== -1) { var p = cond.split('>'); return +evalVal(p[0].trim(), vars) > +evalVal(p[1].trim(), vars); } if (cond.indexOf('<') !== -1) { var p = cond.split('<'); return +evalVal(p[0].trim(), vars) < +evalVal(p[1].trim(), vars); } var v = evalVal(cond, vars); return v !== false && v !== null && v !== '' && v !== 0 && v !== 'false'; }
+function highlight(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(#\w+)/g,'<span class="out-val">$1</span>').replace(/(\$[\d.]+)/g,'<span class="out-num">$1</span>').replace(/(== [^\n]+ ==)/g,'<span class="out-key">$1</span>'); }
+
+window.addEventListener('load', function() { setTimeout(runLiquid, 200); });
 </script>
 </body>
 </html>
