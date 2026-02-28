@@ -1,412 +1,1528 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/images/profile_image-removebg-preview.png" type="image/png">
-  <title>Vivek Patel | Portfolio</title>
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vivek Patel — Shopify Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════ CSS VARIABLES ═══════════ */
+:root {
+  --g: #96bf48;
+  --g2: #b3d97e;
+  --teal: #008060;
+  --dark: #004c3f;
+  --orange: #f4a742;
+  --blue: #58a6ff;
+  --purple: #bc8cff;
+
+  /* DARK THEME (default) */
+  --bg0: #030508;
+  --bg1: #080d11;
+  --bg2: #0e141b;
+  --bg3: #141c24;
+  --bg4: #1a2430;
+  --b0: rgba(48,62,76,0.85);
+  --b1: rgba(99,118,133,0.35);
+  --t0: #f0f6fc;
+  --t1: #cdd6e0;
+  --t2: #8b9aaa;
+  --t3: #4a5563;
+  --card-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 24px 64px rgba(0,0,0,0.75);
+  --glow: 0 0 80px rgba(150,191,72,0.1);
+  --nav-bg: rgba(3,5,8,0.8);
+  --theme-icon: '☀';
+}
+
+[data-theme="light"] {
+  --bg0: #f5f7fa;
+  --bg1: #edf0f4;
+  --bg2: #ffffff;
+  --bg3: #f0f3f7;
+  --bg4: #e8ecf1;
+  --b0: rgba(180,192,210,0.7);
+  --b1: rgba(140,160,180,0.3);
+  --t0: #0d1117;
+  --t1: #1c2633;
+  --t2: #4a5568;
+  --t3: #8a96a6;
+  --card-shadow: 0 0 0 1px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.12);
+  --glow: 0 0 60px rgba(0,128,96,0.08);
+  --nav-bg: rgba(245,247,250,0.85);
+  --theme-icon: '🌙';
+}
+
+/* ═══════════ RESET & TYPOGRAPHY ═══════════ */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body {
+  background: var(--bg0);
+  color: var(--t1);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* Typography Overrides to ensure correct fonts load everywhere */
+h1, h2, .nav-logo-wrap, .nav-name, .ss-title, .exp-co, .proj-title, .edu-deg, .cta-h, .footer-brand, .ld-logo, .stat-num, .fc-val, .imp-val, .pm-val {
+  font-family: 'Fraunces', serif !important;
+}
+
+code, pre, .ld-sub, .ld-pct, .nav-pill a, .nav-avail, .btn-nav, .hero-role, .stat-lbl, .term-title, .term-bd, .fc-label, .fc-sub, .tick-item, .sec-eyebrow, .ss-sub, .ss-tag, .tag, .br-lbl, .pg-title, .pg-run, .pg-output, .preset-btn, .exp-badge, .exp-meta span, .imp-lbl, .ptag, .proj-ey, .proj-client, .pm-lbl, .testi-role, .edu-row, .cert-issuer, .cta-tag, .cta-contact, .soc-btn, .footer-links a, .footer-copy {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ═══════════ SCROLLBAR ═══════════ */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg0); }
+::-webkit-scrollbar-thumb { background: var(--g); border-radius: 3px; }
+
+/* ═══════════ SCROLL PROGRESS ═══════════ */
+#scroll-progress {
+  position: fixed; top:0; left:0; height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--g), var(--g2));
+  z-index: 10001; width: 0%; transition: width 0.1s linear;
+  box-shadow: 0 0 14px rgba(150,191,72,0.5);
+}
+
+/* ═══════════ LOADER ═══════════ */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--bg0);
+  z-index: 10000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+}
+#loader.gone { opacity:0; visibility:hidden; pointer-events:none; }
+.ld-logo {
+  font-size: 56px; font-weight: 900;
+  color: transparent;
+  background: linear-gradient(135deg, var(--teal), var(--g), var(--g2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -3px;
+}
+.ld-sub { font-size: 10px; color: var(--t3); letter-spacing: 4px; text-transform: uppercase; }
+.ld-bar { width: 160px; height: 1px; background: var(--bg3); border-radius:1px; overflow:hidden; margin-top:4px; position:relative; }
+.ld-fill { position:absolute; left:0; top:0; height:100%; width:0%; background: linear-gradient(90deg, var(--teal), var(--g)); transition: width 0.1s linear; }
+.ld-pct { font-size:11px; color:var(--g); letter-spacing:2px; font-weight:500; }
+
+/* ═══════════ CANVAS ═══════════ */
+#bgCanvas { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.7; }
+
+/* ═══════════ GRAIN ═══════════ */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9001;
+  transition: opacity 0.35s;
+}
+[data-theme="light"] body::after { opacity: 0.3; }
+
+/* ═══════════ NAV ═══════════ */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:900;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 1px solid var(--b0);
+  transition: all 0.3s;
+}
+.nav.scrolled { border-bottom-color: rgba(150,191,72,0.25); }
+
+.nav-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.nav-logo-wrap {
+  width:32px; height:32px;
+  background: linear-gradient(135deg, var(--teal), var(--g));
+  border-radius: 9px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:800; color:#000;
+  flex-shrink: 0;
+}
+.nav-name { font-size:17px; font-weight:700; color:var(--t0); letter-spacing:-0.5px; }
+.nav-name em { color:var(--g); font-style:normal; }
+
+.nav-pill { display:flex; list-style:none; gap:2px; background: rgba(128,128,128,0.06); border:1px solid var(--b0); border-radius:100px; padding:4px; }
+.nav-pill a {
+  font-size: 10px; color: var(--t3); text-decoration:none;
+  padding: 6px 14px; border-radius:100px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-pill a:hover, .nav-pill a.active { background: rgba(150,191,72,0.12); color: var(--g); }
+
+.nav-r { display:flex; align-items:center; gap:8px; }
+
+.nav-avail {
+  display:flex; align-items:center; gap:7px;
+  font-size:10px; color:var(--g);
+  background: rgba(150,191,72,0.07);
+  border:1px solid rgba(150,191,72,0.2);
+  padding:5px 12px; border-radius:100px; letter-spacing:1px;
+}
+.pulse { width:6px; height:6px; border-radius:50%; background:var(--g); animation:pulse 2s infinite; flex-shrink:0; }
+@keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(150,191,72,0.5)} 50%{opacity:0.7;box-shadow:0 0 0 7px rgba(150,191,72,0)} }
+
+/* Theme toggle */
+.theme-toggle {
+  width:36px; height:36px; border-radius:50%;
+  border:1px solid var(--b0);
+  background: var(--bg3); color: var(--t2);
+  cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+  transition: all 0.25s;
+  flex-shrink:0;
+}
+.theme-toggle:hover { border-color: rgba(150,191,72,0.4); color:var(--g); transform:rotate(20deg); }
+
+.btn-nav {
+  display:flex; align-items:center; gap:7px;
+  font-size:10px; font-weight:600;
+  color:#000;
+  background: linear-gradient(135deg, var(--teal), var(--g));
+  border:none; padding:8px 16px; border-radius:100px;
+  cursor:pointer; text-decoration:none; letter-spacing:0.5px; text-transform:uppercase;
+  transition:all 0.25s; position:relative; overflow:hidden; white-space:nowrap;
+}
+.btn-nav::before { content:''; position:absolute; inset:0; background:rgba(255,255,255,0.15); opacity:0; transition:opacity 0.2s; }
+.btn-nav:hover::before { opacity:1; }
+.btn-nav:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(150,191,72,0.35); }
+
+/* Hamburger */
+.ham { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; border-radius:8px; transition:background 0.2s; }
+.ham:hover { background: rgba(128,128,128,0.1); }
+.ham span { display:block; width:20px; height:1.5px; background:var(--t1); border-radius:2px; transition:all 0.3s; }
+.ham.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+.ham.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.ham.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile Nav */
+.mob-nav {
+  display:none; position:fixed;
+  top:60px; left:0; right:0;
+  background: var(--nav-bg);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px);
+  border-bottom:1px solid var(--b0);
+  z-index:899; padding:12px 16px 20px;
+  flex-direction:column; gap:2px;
+  transform:translateY(-100%); opacity:0;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+}
+.mob-nav.open { display:flex; transform:translateY(0); opacity:1; }
+.mob-nav a {
+  font-size:12px;
+  color:var(--t2); text-decoration:none; padding:13px 16px;
+  border-radius:10px; letter-spacing:0.5px;
+  transition:all 0.2s;
+}
+.mob-nav a:hover { background:rgba(150,191,72,0.08); color:var(--g); }
+
+/* ═══════════ HERO ═══════════ */
+#hero {
+  position:relative; z-index:1;
+  min-height: 100svh; min-height:100vh;
+  display:flex; align-items:center;
+  padding: 80px 60px 60px;
+  overflow:hidden;
+}
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(150,191,72,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,191,72,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 10%, transparent 100%);
+  transition: opacity 0.35s;
+}
+[data-theme="light"] .hero-grid { opacity:0.5; }
+
+.orb { position:absolute; border-radius:50%; filter:blur(100px); pointer-events:none; }
+.orb1 { width:600px; height:600px; background:radial-gradient(circle,rgba(0,128,96,0.12),transparent 70%); top:-100px; right:-150px; animation:od 14s ease-in-out infinite; }
+.orb2 { width:450px; height:450px; background:radial-gradient(circle,rgba(150,191,72,0.07),transparent 70%); bottom:-80px; left:-80px; animation:od 11s ease-in-out infinite reverse; }
+[data-theme="light"] .orb1 { background:radial-gradient(circle,rgba(0,128,96,0.07),transparent 70%); }
+[data-theme="light"] .orb2 { background:radial-gradient(circle,rgba(150,191,72,0.05),transparent 70%); }
+@keyframes od { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(35px,-35px) scale(1.08)} 66%{transform:translate(-25px,25px) scale(0.94)} }
+
+.hero-content { position:relative; z-index:3; max-width:700px; width:100%; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:10px;
+  color:var(--g); background:rgba(150,191,72,0.07);
+  border:1px solid rgba(150,191,72,0.22);
+  padding:7px 15px; border-radius:100px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  margin-bottom:28px;
+  animation: fu 0.9s ease both;
+}
+
+.hero-h1 {
+  font-size: clamp(58px, 9vw, 110px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -4px;
+  margin-bottom: 8px;
+  overflow:hidden;
+}
+.hero-h1 .ln { display:block; animation:slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
+.hero-h1 .ln:nth-child(2) { animation-delay:0.08s; }
+.ln1 { color:var(--t0); }
+.ln2 {
+  color:transparent;
+  background: linear-gradient(90deg, var(--teal) 0%, var(--g) 55%, var(--g2) 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+@keyframes slideUp { from{transform:translateY(110%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+.hero-role {
+  font-size:11px;
+  color:var(--orange); letter-spacing:3px; text-transform:uppercase;
+  margin-bottom:24px; animation:fu 0.9s ease 0.2s both;
+}
+
+.hero-p {
+  font-size:16px; font-weight:400; color:var(--t2);
+  line-height:1.85; margin-bottom:40px;
+  animation:fu 0.9s ease 0.3s both;
+  max-width:560px;
+}
+.hero-p strong { color:var(--t1); font-weight:600; }
+
+.hero-btns {
+  display:flex; gap:12px; flex-wrap:wrap;
+  margin-bottom:56px;
+  animation:fu 0.9s ease 0.4s both;
+}
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:600; color:#000;
+  background: linear-gradient(135deg, var(--teal), var(--g));
+  border:none; padding:14px 28px; border-radius:14px;
+  cursor:pointer; text-decoration:none; transition:all 0.3s;
+  position:relative; overflow:hidden;
+}
+.btn-primary::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent); opacity:0; transition:opacity 0.2s; }
+.btn-primary:hover::after { opacity:1; }
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 16px 40px rgba(150,191,72,0.4); }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:500; color:var(--g);
+  background:rgba(150,191,72,0.06);
+  border:1px solid rgba(150,191,72,0.3);
+  padding:14px 28px; border-radius:14px;
+  cursor:pointer; text-decoration:none; transition:all 0.3s;
+}
+.btn-outline:hover { background:rgba(150,191,72,0.12); transform:translateY(-3px); box-shadow:0 10px 28px rgba(150,191,72,0.18); }
+.btn-ghost2 {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:14px; font-weight:500; color:var(--t2);
+  background:transparent; border:1px solid var(--b0);
+  padding:14px 28px; border-radius:14px;
+  cursor:pointer; text-decoration:none; transition:all 0.3s;
+}
+.btn-ghost2:hover { border-color:var(--t2); color:var(--t0); transform:translateY(-3px); }
+
+/* Hero stats */
+.hero-stats {
+  display:flex; gap:0;
+  padding-top:36px; border-top:1px solid var(--b0);
+  animation:fu 0.9s ease 0.5s both;
+}
+.stat { flex:1; padding-right:28px; margin-right:28px; border-right:1px solid var(--b0); }
+.stat:last-child { border-right:none; padding-right:0; margin-right:0; }
+.stat-num {
+  font-size:42px; font-weight:800; letter-spacing:-2px; line-height:1;
+  background: linear-gradient(135deg, var(--teal), var(--g), var(--g2));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.stat-lbl { font-size:9px; color:var(--t3); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+
+/* Hero right — terminal */
+.hero-right {
+  position:absolute; right:60px; top:50%; transform:translateY(-50%);
+  z-index:3; width:400px;
+}
+.term {
+  background:var(--bg2); border:1px solid var(--b0); border-radius:16px;
+  overflow:hidden; box-shadow:var(--card-shadow), var(--glow);
+  animation: floatY 6s ease-in-out infinite;
+  transition: background 0.35s, border-color 0.35s;
+}
+@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+.term-hd {
+  display:flex; align-items:center; gap:8px;
+  padding:12px 16px; background:var(--bg3); border-bottom:1px solid var(--b0);
+  transition:background 0.35s;
+}
+.td { width:10px; height:10px; border-radius:50%; }
+.td1{background:#ff5f56} .td2{background:#febc2e} .td3{background:#28c840}
+.term-title { font-size:10px; color:var(--t3); letter-spacing:0.5px; margin-left:8px; }
+.term-bd { padding:18px; font-size:11.5px; line-height:2.1; min-height:240px; }
+.term-line { display:flex; gap:6px; }
+.tp{color:var(--g)} .tk{color:var(--blue)} .tv{color:var(--g2)} .ts{color:var(--orange)} .tc{color:var(--t3)} .tout{color:var(--t2);padding-left:14px;}
+.tcursor { display:inline-block; width:7px; height:13px; background:var(--g); animation:blink 1.1s infinite; vertical-align:middle; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.float-card {
+  position:absolute; background:var(--bg3);
+  border:1px solid var(--b0); border-radius:12px;
+  padding:12px 16px; backdrop-filter:blur(10px);
+  box-shadow:var(--card-shadow);
+  transition:background 0.35s;
+}
+.fc1 { top:-18px; right:-24px; animation:fc1anim 5s ease-in-out infinite; }
+.fc2 { bottom:-10px; left:-35px; animation:fc2anim 7s ease-in-out infinite; }
+@keyframes fc1anim { 0%,100%{transform:translate(0,0) rotate(2deg)} 50%{transform:translate(-6px,7px) rotate(-1deg)} }
+@keyframes fc2anim { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(6px,-5px) rotate(1deg)} }
+.fc-label { font-size:9px; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.fc-val { font-size:22px; font-weight:800; color:var(--g); letter-spacing:-1px; line-height:1; }
+.fc-sub { font-size:9px; color:var(--t3); }
+.fc-spark { display:flex; gap:3px; align-items:flex-end; margin-top:8px; }
+.spark-bar { width:6px; border-radius:2px; background:var(--g); opacity:0.4; }
+.spark-bar.hi { opacity:1; }
+
+@keyframes fu { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+/* ═══════════ TICKER ═══════════ */
+.ticker {
+  position:relative; z-index:1;
+  background:var(--bg1); border-top:1px solid var(--b0); border-bottom:1px solid var(--b0);
+  overflow:hidden; padding:12px 0;
+  transition:background 0.35s;
+}
+.ticker-inner { display:flex; animation:tick 30s linear infinite; width:max-content; }
+.tick-item {
+  display:flex; align-items:center; gap:10px;
+  padding:0 28px; white-space:nowrap;
+  font-size:11px;
+  color:var(--t3); letter-spacing:1px; text-transform:uppercase;
+}
+.tick-dot { width:4px; height:4px; border-radius:50%; background:var(--g); flex-shrink:0; }
+.tick-item span { color:var(--g); font-weight:600; }
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ═══════════ SECTION BASE ═══════════ */
+section { position:relative; z-index:1; overflow:hidden; transition:background 0.35s; }
+.sec { max-width:1200px; margin:0 auto; padding:70px 60px; }
+.sec-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:9px;
+  color:var(--g); letter-spacing:4px; text-transform:uppercase; margin-bottom:12px;
+}
+.sec-eyebrow::before { content:'//'; color:var(--t3); }
+.sec-h2 {
+  font-size:clamp(34px,5vw,62px); font-weight:800;
+  letter-spacing:-2.5px; color:var(--t0);
+  margin-bottom:64px; line-height:0.95;
+  transition:color 0.35s;
+}
+.sec-h2 em {
+  font-style:normal; color:transparent;
+  background:linear-gradient(90deg,var(--teal),var(--g));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ═══════════ SKILLS ═══════════ */
+#skills { background:var(--bg1); }
+.shopify-strip {
+  display:flex; align-items:center; gap:20px;
+  background:linear-gradient(135deg,rgba(0,64,51,0.35),rgba(0,128,96,0.15));
+  border:1px solid rgba(150,191,72,0.2); border-radius:16px;
+  padding:22px 28px; margin-bottom:20px;
+  flex-wrap:wrap;
+}
+[data-theme="light"] .shopify-strip { background:linear-gradient(135deg,rgba(0,128,96,0.06),rgba(150,191,72,0.04)); }
+.ss-icon { font-size:32px; }
+.ss-main { flex:1; min-width:200px; }
+.ss-title { font-size:18px; font-weight:700; color:var(--t0); margin-bottom:4px; letter-spacing:-0.3px; }
+.ss-sub { font-size:9px; color:var(--g); letter-spacing:1.5px; }
+.ss-tags { display:flex; gap:8px; flex-wrap:wrap; }
+.ss-tag { font-size:9px; padding:4px 11px; border-radius:7px; border:1px solid rgba(150,191,72,0.25); color:var(--g); background:rgba(150,191,72,0.06); letter-spacing:0.3px; }
+
+.skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.sk-card {
+  background:var(--bg2); border:1px solid var(--b0);
+  border-radius:16px; padding:24px;
+  position:relative; overflow:hidden;
+  transition:all 0.3s; cursor:default;
+}
+.sk-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(150,191,72,0.06),transparent 55%);
+  opacity:0; transition:opacity 0.3s; pointer-events:none;
+}
+.sk-card:hover { border-color:rgba(150,191,72,0.35); transform:translateY(-5px); box-shadow:var(--card-shadow); }
+.sk-card:hover::before { opacity:1; }
+
+.sk-ico { width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:19px; margin-bottom:15px; }
+.sk-ico-g{background:rgba(150,191,72,0.08);border:1px solid rgba(150,191,72,0.2);}
+.sk-ico-o{background:rgba(255,166,87,0.08);border:1px solid rgba(255,166,87,0.2);}
+.sk-ico-b{background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);}
+.sk-ico-p{background:rgba(188,140,255,0.08);border:1px solid rgba(188,140,255,0.2);}
+.sk-title { font-size:15px; font-weight:700; color:var(--t0); margin-bottom:14px; letter-spacing:-0.2px; }
+
+.tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:9px; padding:4px 10px; border-radius:6px; border:1px solid var(--b0); color:var(--t3); letter-spacing:0.3px; transition:all 0.2s; }
+.tag:hover,.tag.g{border-color:rgba(150,191,72,0.35);color:var(--g);background:rgba(150,191,72,0.06);}
+.tag.o{border-color:rgba(255,166,87,0.3);color:var(--orange);background:rgba(255,166,87,0.06);}
+.tag.b{border-color:rgba(88,166,255,0.3);color:var(--blue);background:rgba(88,166,255,0.06);}
+.tag.p{border-color:rgba(188,140,255,0.3);color:var(--purple);background:rgba(188,140,255,0.06);}
+
+/* Skill bars */
+.bars { display:flex; flex-direction:column; gap:13px; }
+.br-lbl { display:flex; justify-content:space-between; font-size:9px; color:var(--t2); letter-spacing:0.5px; margin-bottom:5px; }
+.br-track { height:3px; background:var(--bg3); border-radius:3px; overflow:hidden; }
+.br-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--teal),var(--g)); transform:scaleX(0); transform-origin:left; transition:transform 1.3s cubic-bezier(0.22,1,0.36,1); }
+.br-fill.on { transform:scaleX(1); }
+
+/* ═══════════ PLAYGROUND ═══════════ */
+#playground { background:var(--bg0); border-top:1px solid var(--b0); }
+.pg-wrap {
+  display:grid; grid-template-columns:1fr 1fr;
+  background:var(--bg2); border:1px solid var(--b0);
+  border-radius:16px; overflow:hidden; box-shadow:var(--card-shadow);
+}
+.pg-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 18px; background:var(--bg3); border-bottom:1px solid var(--b0);
+}
+.pg-dots { display:flex; gap:7px; }
+.pgd { width:10px; height:10px; border-radius:50%; }
+.pgd1{background:#ff5f56} .pgd2{background:#febc2e} .pgd3{background:#28c840}
+.pg-title { font-size:10px; color:var(--t3); letter-spacing:0.5px; }
+.pg-run { font-size:9px; color:#000; background:linear-gradient(135deg,var(--teal),var(--g)); border:none; padding:5px 14px; border-radius:100px; cursor:pointer; letter-spacing:0.5px; transition:all 0.2s; }
+.pg-run:hover { transform:scale(1.05); }
+.pg-editor { background:var(--bg2); }
+.pg-output-wrap { background:var(--bg1); border-left:1px solid var(--b0); }
+textarea#pg-code { width:100%; height:300px; background:transparent; border:none; outline:none; resize:none; color:var(--t1); font-family:'JetBrains Mono', monospace; font-size:12px; line-height:1.9; padding:18px; tab-size:2; }
+.pg-output { padding:18px; font-size:12px; line-height:1.9; color:var(--t2); min-height:300px; white-space:pre-wrap; }
+.pg-output .out-key{color:var(--blue)} .pg-output .out-val{color:var(--g2)} .pg-output .out-tag{color:var(--g)} .pg-output .out-str{color:var(--orange)} .pg-output .out-num{color:var(--purple)}
+.pg-presets { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; align-items:center; }
+.preset-btn { font-size:9px; padding:5px 12px; border-radius:7px; border:1px solid var(--b0); color:var(--t3); background:transparent; cursor:pointer; letter-spacing:0.3px; transition:all 0.2s; }
+.preset-btn:hover,.preset-btn.active { border-color:rgba(150,191,72,0.35); color:var(--g); background:rgba(150,191,72,0.06); }
+
+/* ═══════════ EXPERIENCE ═══════════ */
+#experience { background:var(--bg0); }
+.exp-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.exp-card {
+  background:var(--bg2); border:1px solid var(--b0);
+  border-radius:16px; padding:32px; position:relative; overflow:hidden; transition:all 0.3s;
+}
+.exp-card::before { content:''; position:absolute; top:0; left:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--teal),var(--g)); transform:scaleY(0); transform-origin:top; transition:transform 0.4s; }
+.exp-card:hover::before { transform:scaleY(1); }
+.exp-card:hover { border-color:rgba(150,191,72,0.22); transform:translateY(-4px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
+.exp-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+.exp-emo { width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:24px; background:linear-gradient(135deg,rgba(0,64,51,0.5),rgba(0,128,96,0.3)); border:1px solid rgba(150,191,72,0.18); flex-shrink:0; }
+.exp-badge { font-size:9px; padding:5px 12px; border-radius:100px; letter-spacing:0.5px; }
+.badge-now { background:rgba(150,191,72,0.08); border:1px solid rgba(150,191,72,0.22); color:var(--g); }
+.badge-past { background:rgba(128,128,128,0.06); border:1px solid var(--b0); color:var(--t3); }
+.exp-co { font-size:22px; font-weight:800; color:var(--t0); letter-spacing:-0.5px; margin-bottom:4px; }
+.exp-role { font-size:13px; color:var(--g); font-weight:500; margin-bottom:12px; }
+.exp-meta { display:flex; gap:14px; margin-bottom:18px; flex-wrap:wrap; }
+.exp-meta span { font-size:10px; color:var(--t3); letter-spacing:0.5px; }
+.exp-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.exp-list li { font-size:13px; font-weight:400; color:var(--t2); line-height:1.7; padding-left:16px; position:relative; }
+.exp-list li::before { content:''; position:absolute; left:0; top:10px; width:6px; height:1px; background:var(--g); }
+.exp-impact { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px; padding-top:18px; border-top:1px solid var(--b0); }
+.imp-item { text-align:center; padding:11px; background:rgba(150,191,72,0.04); border:1px solid rgba(150,191,72,0.1); border-radius:10px; }
+.imp-val { font-size:17px; font-weight:800; color:var(--g); letter-spacing:-0.5px; }
+.imp-lbl { font-size:8px; color:var(--t3); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+/* ═══════════ PROJECTS ═══════════ */
+#projects { background:var(--bg1); }
+.proj-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.proj-card { background:var(--bg2); border:1px solid var(--b0); border-radius:16px; overflow:hidden; transition:all 0.4s; cursor:default; position:relative; }
+.proj-card:hover { border-color:rgba(150,191,72,0.3); transform:translateY(-8px); box-shadow:0 36px 80px rgba(0,0,0,0.55), var(--glow); }
+.proj-banner { height:190px; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.pb1{background:linear-gradient(135deg,#020d06,#051a0a,#0a2e14);}
+.pb2{background:linear-gradient(135deg,#0d0800,#1a1000,#2d1e00);}
+[data-theme="light"] .pb1 { background:linear-gradient(135deg,#d6f5e3,#c2edcc,#a8e4b8); }
+[data-theme="light"] .pb2 { background:linear-gradient(135deg,#fff3d6,#ffe8a8,#ffd980); }
+.pbg { position:absolute; inset:0; background-image:linear-gradient(rgba(150,191,72,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(150,191,72,0.07) 1px,transparent 1px); background-size:24px 24px; }
+.pb-glow2 { position:absolute; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(150,191,72,0.14),transparent 70%); animation:pp 3s ease-in-out infinite; }
+.pb2 .pb-glow2 { background:radial-gradient(circle,rgba(255,166,87,0.14),transparent 70%); }
+@keyframes pp { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.18);opacity:1} }
+.pb-num { position:absolute; right:14px; bottom:-8px; font-size:90px; font-weight:900; color:rgba(150,191,72,0.05); line-height:1; letter-spacing:-4px; }
+.pb-emo { font-size:48px; z-index:1; filter:drop-shadow(0 0 20px rgba(150,191,72,0.3)); }
+.proj-tech-row { position:absolute; bottom:10px; left:10px; right:10px; display:flex; gap:5px; flex-wrap:wrap; z-index:2; }
+.ptag { font-size:8px; padding:3px 8px; border-radius:5px; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); border:1px solid rgba(150,191,72,0.22); color:var(--g); letter-spacing:0.3px; }
+.proj-body { padding:24px; }
+.proj-ey { font-size:9px; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; color:var(--g); }
+.proj-title { font-size:22px; font-weight:800; color:var(--t0); letter-spacing:-0.5px; margin-bottom:4px; }
+.proj-client { font-size:9px; color:var(--t3); letter-spacing:0.5px; margin-bottom:12px; }
+.proj-desc { font-size:13px; font-weight:400; color:var(--t2); line-height:1.8; margin-bottom:16px; }
+.proj-metrics { display:flex; gap:0; margin-top:14px; padding-top:14px; border-top:1px solid var(--b0); }
+.pm { flex:1; text-align:center; padding:0 10px; border-right:1px solid var(--b0); }
+.pm:last-child { border-right:none; }
+.pm-val { font-size:16px; font-weight:800; color:var(--g); letter-spacing:-0.5px; }
+.pm-lbl { font-size:8px; color:var(--t3); letter-spacing:0.8px; text-transform:uppercase; margin-top:2px; }
+
+/* ═══════════ TESTIMONIALS ═══════════ */
+#testimonials { background:var(--bg0); border-top:1px solid var(--b0); }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.testi-card { background:var(--bg2); border:1px solid var(--b0); border-radius:16px; padding:26px; transition:all 0.3s; }
+.testi-card:hover { border-color:rgba(150,191,72,0.25); transform:translateY(-4px); box-shadow:var(--card-shadow); }
+.testi-stars { display:flex; gap:3px; margin-bottom:14px; }
+.star { color:var(--g); font-size:12px; }
+.testi-q { font-size:13px; font-weight:400; color:var(--t2); line-height:1.85; margin-bottom:18px; font-style:italic; }
+.testi-q::before { content:'"'; font-family:'Fraunces', serif; font-size:34px; color:rgba(150,191,72,0.2); line-height:0; vertical-align:-12px; margin-right:4px; }
+.testi-author { display:flex; align-items:center; gap:12px; }
+.testi-av { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; background:linear-gradient(135deg,var(--teal),var(--g)); flex-shrink:0; }
+.testi-name { font-size:13px; font-weight:600; color:var(--t1); }
+.testi-role { font-size:9px; color:var(--t3); letter-spacing:0.5px; }
+
+/* ═══════════ EDUCATION ═══════════ */
+#education { background:var(--bg1); }
+.edu-layout { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.edu-card { background:var(--bg2); border:1px solid var(--b0); border-radius:16px; padding:32px; overflow:hidden; position:relative; transition:all 0.3s; }
+.edu-card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,var(--teal),var(--g),transparent); }
+.edu-card:hover { border-color:rgba(150,191,72,0.25); transform:translateY(-4px); }
+.edu-ico { font-size:38px; margin-bottom:18px; }
+.edu-deg { font-size:19px; font-weight:700; color:var(--t0); letter-spacing:-0.3px; margin-bottom:6px; line-height:1.25; }
+.edu-school { font-size:14px; color:var(--g); font-weight:500; margin-bottom:14px; }
+.edu-meta { display:flex; flex-direction:column; gap:6px; }
+.edu-row { font-size:11px; color:var(--t3); display:flex; align-items:center; gap:8px; letter-spacing:0.5px; }
+.cert-stack { display:flex; flex-direction:column; gap:10px; }
+.cert-card { background:var(--bg2); border:1px solid var(--b0); border-radius:12px; padding:18px; display:flex; align-items:center; gap:14px; transition:all 0.25s; }
+.cert-card:hover { border-color:rgba(150,191,72,0.22); transform:translateX(5px); }
+.cert-ico { width:42px; height:42px; border-radius:11px; background:rgba(150,191,72,0.07); border:1px solid rgba(150,191,72,0.18); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.cert-name { font-size:13px; font-weight:600; color:var(--t1); margin-bottom:4px; line-height:1.3; }
+.cert-issuer { font-size:9px; color:var(--g); letter-spacing:1px; text-transform:uppercase; }
+
+/* ═══════════ CTA ═══════════ */
+.cta-sec { position:relative; z-index:1; background:var(--bg0); border-top:1px solid var(--b0); padding:110px 60px; text-align:center; overflow:hidden; }
+.cta-bg { position:absolute; width:700px; height:350px; border-radius:50%; background:radial-gradient(circle,rgba(0,128,96,0.07),transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); filter:blur(60px); pointer-events:none; }
+.cta-inner { position:relative; z-index:2; max-width:600px; margin:0 auto; }
+.cta-tag { display:inline-flex; align-items:center; gap:8px; font-size:9px; color:var(--g); letter-spacing:2px; text-transform:uppercase; background:rgba(150,191,72,0.06); border:1px solid rgba(150,191,72,0.18); padding:6px 14px; border-radius:100px; margin-bottom:24px; }
+.cta-h { font-size:clamp(38px,6vw,68px); font-weight:900; letter-spacing:-3px; color:var(--t0); margin-bottom:16px; line-height:0.95; }
+.cta-h em { font-style:normal; color:transparent; background:linear-gradient(90deg,var(--teal),var(--g)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.cta-p { font-size:15px; color:var(--t2); font-weight:400; line-height:1.8; margin-bottom:36px; }
+.cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:24px; }
+.cta-contact { font-size:11px; color:var(--t3); letter-spacing:0.5px; }
+.cta-contact a { color:var(--g); text-decoration:none; }
+.cta-contact a:hover { text-decoration:underline; }
+.social-row { display:flex; gap:10px; justify-content:center; margin-top:28px; flex-wrap:wrap; }
+.soc-btn { display:flex; align-items:center; gap:8px; font-size:10px; color:var(--t3); background:var(--bg2); border:1px solid var(--b0); padding:10px 16px; border-radius:12px; text-decoration:none; transition:all 0.25s; letter-spacing:0.5px; }
+.soc-btn:hover { border-color:rgba(150,191,72,0.3); color:var(--g); transform:translateY(-2px); }
+
+/* ═══════════ FOOTER ═══════════ */
+footer { position:relative; z-index:1; background:var(--bg0); border-top:1px solid var(--b0); padding:24px 60px; }
+.footer-in { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+.footer-brand { font-size:16px; font-weight:700; color:var(--t1); }
+.footer-brand em { color:var(--g); font-style:normal; }
+.footer-links { display:flex; gap:22px; list-style:none; }
+.footer-links a { font-size:9px; color:var(--t3); text-decoration:none; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s; }
+.footer-links a:hover { color:var(--g); }
+.footer-copy { font-size:9px; color:var(--t3); letter-spacing:0.5px; }
+
+/* ═══════════ REVEAL ANIMATIONS ═══════════ */
+.rev { opacity:0; transform:translateY(24px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.rev.on { opacity:1; transform:none; }
+.d1{transition-delay:0.07s} .d2{transition-delay:0.14s} .d3{transition-delay:0.21s} .d4{transition-delay:0.28s}
+.revL { opacity:0; transform:translateX(-24px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.revL.on { opacity:1; transform:none; }
+.revR { opacity:0; transform:translateX(24px); transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.revR.on { opacity:1; transform:none; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — MOBILE FIRST APP FEEL
+   ═══════════════════════════════════════ */
+
+/* ── Tablet 1024px ── */
+@media(max-width:1100px) {
+  .hero-right { display:none; }
+  #hero { padding:80px 40px 60px; }
+  .skills-grid { grid-template-columns:repeat(2,1fr); }
+  .sec { padding:50px 40px; }
+}
+
+/* ── Small Tablet 768px ── */
+@media(max-width:900px) {
+  .testi-grid { grid-template-columns:repeat(2,1fr); }
+  .exp-grid { grid-template-columns:1fr; }
+  .edu-layout { grid-template-columns:1fr; }
+}
+
+/* ── Mobile 768px ── */
+@media(max-width:768px) {
+  /* NAV */
+  .nav { padding:0 16px; height:56px; }
+  .nav-pill { display:none; }
+  .nav-avail { display:none; }
+  .ham { display:flex; }
+  .mob-nav { top:56px; }
+
+  /* HERO */
+  #hero {
+    padding: 72px 20px 48px;
+    min-height: 100svh;
+    align-items:flex-start;
+    padding-top: 88px;
+  }
+  .hero-badge { font-size:9px; padding:6px 12px; margin-bottom:20px; }
+  .hero-h1 { font-size:clamp(52px, 14vw, 72px); letter-spacing:-2.5px; margin-bottom:6px; }
+  .hero-role { font-size:9px; letter-spacing:2px; margin-bottom:18px; }
+  .hero-p { font-size:14px; line-height:1.8; margin-bottom:28px; }
+  .hero-btns {
+    flex-direction:column; gap:10px; margin-bottom:36px;
+  }
+  .btn-primary, .btn-outline, .btn-ghost2 {
+    width:100%; justify-content:center; padding:14px 20px;
+    border-radius:12px; font-size:14px;
+  }
+  .hero-stats {
+    flex-wrap:wrap; gap:0;
+    padding-top:24px;
+  }
+  .stat {
+    min-width:calc(50% - 14px);
+    flex:none;
+    border-right:none;
+    border-bottom:1px solid var(--b0);
+    padding:0 0 16px;
+    margin:0 0 16px;
+  }
+  .stat:nth-child(1), .stat:nth-child(2) { border-right:1px solid var(--b0); }
+  .stat:nth-child(odd) { padding-right:14px; }
+  .stat:nth-child(even) { padding-left:14px; border-right:none; }
+  .stat:last-child { border-bottom:none; }
+  .stat-num { font-size:36px; letter-spacing:-1.5px; }
+
+  /* TICKER */
+  .ticker { padding:10px 0; }
+  .tick-item { font-size:10px; padding:0 20px; }
+
+  /* SECTIONS */
+  .sec { padding:40px 20px; }
+  .sec-h2 { font-size:clamp(30px,8vw,44px); letter-spacing:-1.5px; margin-bottom:36px; }
+
+  /* SKILLS */
+  .shopify-strip { flex-direction:column; align-items:flex-start; gap:14px; padding:18px; }
+  .skills-grid { grid-template-columns:1fr; gap:12px; }
+  .sk-card { padding:20px; }
+
+  /* PLAYGROUND */
+  .pg-wrap { grid-template-columns:1fr; }
+  .pg-output-wrap { border-left:none; border-top:1px solid var(--b0); }
+  textarea#pg-code { height:220px; font-size:11px; }
+  .pg-output { min-height:200px; font-size:11px; }
+  .pg-presets { gap:6px; }
+
+  /* EXPERIENCE */
+  .exp-grid { grid-template-columns:1fr; gap:14px; }
+  .exp-card { padding:24px; }
+  .exp-co { font-size:19px; }
+  .exp-impact { gap:8px; }
+  .imp-val { font-size:15px; }
+
+  /* PROJECTS */
+  .proj-grid { grid-template-columns:1fr; gap:14px; }
+  .proj-banner { height:160px; }
+  .proj-body { padding:20px; }
+  .proj-title { font-size:19px; }
+
+  /* TESTIMONIALS */
+  .testi-grid { grid-template-columns:1fr; gap:12px; }
+
+  /* EDUCATION */
+  .edu-layout { grid-template-columns:1fr; gap:14px; }
+  .edu-card { padding:24px; }
+  .cert-card { padding:16px; }
+
+  /* CTA */
+  .cta-sec { padding:70px 20px; }
+  .cta-h { font-size:clamp(34px,9vw,52px); }
+  .cta-btns { flex-direction:column; align-items:center; gap:10px; }
+  .cta-btns .btn-primary, .cta-btns .btn-outline { width:100%; max-width:300px; justify-content:center; }
+  .social-row { gap:8px; }
+  .soc-btn { padding:9px 14px; font-size:9px; }
+
+  /* FOOTER */
+  footer { padding:20px; }
+  .footer-links { display:none; }
+  .footer-copy { font-size:8px; }
+}
+
+/* ── Very Small Mobile 480px ── */
+@media(max-width:480px) {
+  .hero-h1 { font-size:clamp(46px,13vw,58px); }
+  .hero-badge { display:none; }
+  .nav-name { font-size:15px; }
+  .stat-num { font-size:32px; }
+
+  .exp-impact { grid-template-columns:repeat(3,1fr); }
+  .proj-metrics { gap:0; }
+
+  /* Stack stats cleanly */
+  .hero-stats { flex-direction:row; flex-wrap:wrap; }
+  .stat {
+    flex:1; min-width:80px;
+    border-right:1px solid var(--b0) !important;
+    border-bottom:none !important;
+    padding:0 !important;
+    margin:0 !important;
+    text-align:center;
+  }
+  .stat:last-child { border-right:none !important; }
+  .stat-num { font-size:28px; letter-spacing:-1px; }
+  .stat-lbl { font-size:7px; }
+}
+
+/* ── Safe area for notch phones ── */
+@supports(padding-top:env(safe-area-inset-top)) {
+  .nav {
+    padding-top: env(safe-area-inset-top);
+    height: calc(60px + env(safe-area-inset-top));
+  }
+  .mob-nav { top: calc(60px + env(safe-area-inset-top)); }
+  footer { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+}
+
+/* Smooth tap highlights for mobile */
+@media (hover:none) {
+  .btn-primary:active { transform:scale(0.97); opacity:0.9; }
+  .btn-outline:active, .btn-ghost2:active { transform:scale(0.97); }
+  .sk-card:active, .proj-card:active, .exp-card:active { transform:scale(0.99); }
+  * { -webkit-tap-highlight-color: transparent; }
+}
+</style>
 </head>
 <body>
-  <main>
-        <!-- Sidebar -->
-        <aside class="sidebar" data-sidebar="">
-            <div class="sidebar-info">
-                <a href="/images/profile_image-removebg-preview.png" target="_blank" rel="noopener noreferrer" title="Click me!">
-                <figure class="avatar-box">
-                    <img src="/images/profile_image-removebg-preview.png" alt="Vivek" width="80" />
-                    <span class="active-status" title="Available for work!"></span>
-                </figure>
-                </a>
 
-                <div class="info-content">
-                    <h1 class="name" title="Vivek Patel">Vivek Patel</h1>
-                    <p class="title">Shopify Developer</p>
-                </div>
+<div id="scroll-progress"></div>
 
-                <button class="info_more-btn" data-sidebar-btn="">
-                    <span>Show Contacts</span>  
-                    <ion-icon
-                        name="chevron-down"
-                        role="img"
-                        class="md hydrated"
-                        aria-label="chevron down"
-                    ></ion-icon>
-                </button>
+<div id="loader">
+  <div class="ld-logo">VP</div>
+  <div class="ld-sub">Loading Portfolio</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <div class="ld-pct" id="ldPct">0%</div>
+</div>
+
+<canvas id="bgCanvas"></canvas>
+
+<nav class="nav" id="mainNav">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-logo-wrap">VP</div>
+    <div class="nav-name">Vivek<em>.</em></div>
+  </a>
+  <ul class="nav-pill" id="navPill">
+    <li><a href="#hero" class="active">Home</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#playground">Liquid</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="nav-avail"><div class="pulse"></div>Available</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀</button>
+    <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" class="btn-nav">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Resume
+    </a>
+    <div class="ham" id="ham" onclick="toggleMob(this)">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mob-nav" id="mobNav">
+  <a href="#hero"        onclick="closeMob()">🏠 Home</a>
+  <a href="#skills"      onclick="closeMob()">⚡ Skills</a>
+  <a href="#playground" onclick="closeMob()">🧪 Liquid Playground</a>
+  <a href="#experience" onclick="closeMob()">💼 Experience</a>
+  <a href="#projects"   onclick="closeMob()">🛍 Projects</a>
+  <a href="#education"  onclick="closeMob()">🎓 Education</a>
+  <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" onclick="closeMob()">⬇ Download Resume</a>
+</div>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge"><div class="pulse"></div>Shopify Frontend Developer · Open to Work</div>
+    <h1 class="hero-h1">
+      <span class="ln ln1">VIVEK</span>
+      <span class="ln ln2">PATEL</span>
+    </h1>
+    <p class="hero-role">// Liquid · JSON · OS 2.0 · DTC eCommerce</p>
+    <p class="hero-p">
+      I craft high-performance <strong>Shopify storefronts</strong> for DTC brands — from pixel-perfect <strong>Liquid templating</strong> and OS 2.0 theme architecture to conversion-optimized UX that turns browsers into buyers.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Work &nbsp;→</a>
+      <a href="#playground" class="btn-outline">🧪 Liquid Playground</a>
+      <a href="mailto:vikupatel2001@gmail.com" class="btn-ghost2">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-lbl">Years Exp+</div></div>
+      <div class="stat"><div class="stat-num" data-count="10">0</div><div class="stat-lbl">Stores Built+</div></div>
+      <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-lbl">Companies</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="float-card fc1">
+      <div class="fc-label">Page Speed</div>
+      <div class="fc-val">97<span style="font-size:13px;color:var(--t3)">/100</span></div>
+      <div class="fc-sub">Core Web Vitals ✓</div>
+      <div class="fc-spark">
+        <div class="spark-bar" style="height:10px"></div>
+        <div class="spark-bar" style="height:16px"></div>
+        <div class="spark-bar hi" style="height:22px"></div>
+        <div class="spark-bar hi" style="height:28px"></div>
+        <div class="spark-bar hi" style="height:34px"></div>
+      </div>
+    </div>
+    <div class="float-card fc2">
+      <div class="fc-label">Stores Delivered</div>
+      <div class="fc-val">10+</div>
+      <div class="fc-sub">DTC & OS 2.0</div>
+    </div>
+    <div class="term">
+      <div class="term-hd">
+        <div class="td td1"></div><div class="td td2"></div><div class="td td3"></div>
+        <span class="term-title">vivek.liquid — shopify dev</span>
+      </div>
+      <div class="term-bd" id="termBody"></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner" id="tickerInner"></div>
+</div>
+
+<section id="skills">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Toolkit</div>
+    <h2 class="sec-h2 rev d1">Skills &amp; <em>Technologies</em></h2>
+
+    <div class="shopify-strip rev d2">
+      <span class="ss-icon">🛍️</span>
+      <div class="ss-main">
+        <div class="ss-title">Shopify OS 2.0 — Core Expertise</div>
+        <div class="ss-sub">Liquid · JSON Templates · Metafields · Metaobjects · Schema Settings</div>
+      </div>
+      <div class="ss-tags">
+        <span class="ss-tag">OS 2.0</span>
+        <span class="ss-tag">Liquid</span>
+        <span class="ss-tag">Dawn Theme</span>
+        <span class="ss-tag">Sections Everywhere</span>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="sk-card rev d1">
+        <div class="sk-ico sk-ico-g">📊</div>
+        <div class="sk-title">Proficiency</div>
+        <div class="bars">
+          <div class="br-row"><div class="br-lbl"><span>Liquid / Shopify</span><span>95%</span></div><div class="br-track"><div class="br-fill" data-w="0.95"></div></div></div>
+          <div class="br-row"><div class="br-lbl"><span>HTML / CSS</span><span>92%</span></div><div class="br-track"><div class="br-fill" data-w="0.92"></div></div></div>
+          <div class="br-row"><div class="br-lbl"><span>JavaScript / jQuery</span><span>78%</span></div><div class="br-track"><div class="br-fill" data-w="0.78"></div></div></div>
+          <div class="br-row"><div class="br-lbl"><span>Tailwind CSS</span><span>85%</span></div><div class="br-track"><div class="br-fill" data-w="0.85"></div></div></div>
+          <div class="br-row"><div class="br-lbl"><span>Performance / CRO</span><span>88%</span></div><div class="br-track"><div class="br-fill" data-w="0.88"></div></div></div>
         </div>
-
-        <div class="sidebar-info_more">
-            <div class="separator"></div>
-
-            <ul class="contacts-list">
-            <li class="contact-item">
-                <div class="icon-box">
-                <ion-icon
-                    name="mail-outline"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="mail outline"
-                ></ion-icon>
-                </div>
-                <div class="contact-info">
-                <p class="contact-title">Email</p>
-                <a href="mailto:vikupatel2001@gmail.com" class="contact-link"
-                    >vikupatel2001@gmail.com</a
-                >
-                </div>
-            </li>
-
-            <li class="contact-item">
-                <div class="icon-box">
-                <ion-icon
-                    name="phone-portrait-outline"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="phone portrait outline"
-                ></ion-icon>
-                </div>
-                <div class="contact-info">
-                <p class="contact-title">Phone</p>
-                <a href="https://wa.me/918658458987?text=Hello%20👋%2C%20I%20just%20visited%20your%20portfolio%20and%20wanted%20to%20connect%21" target="_blank" class="contact-link">
-                    +91 86584 58987
-                </a>                  
-                </div>
-            </li>
-
-            <li class="contact-item">
-                <div class="icon-box">
-                <ion-icon
-                    name="location-outline"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="location outline"
-                ></ion-icon>
-                </div>
-                <div class="contact-info">
-                <p class="contact-title">Location</p>
-                <a href="" target="_blank" class="contact-link"
-                    >Ahmedabad, Gujarat, India</a
-                >
-                </div>
-            </li>
-            </ul>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-            <li class="social-item">
-                <a
-                href="https://www.linkedin.com/in/vivek-patel-shopify/"
-                target="_blank"
-                class="social-link"
-                >
-                <ion-icon
-                    name="logo-linkedin"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="logo linkedin"
-                ></ion-icon>
-                </a>
-            </li>
-
-            <li class="social-item">
-                <a href="https://github.com/vvk14" target="_blank" class="social-link">
-                <ion-icon
-                    name="logo-github"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="logo github"
-                ></ion-icon>
-                </a>
-            </li>
-
-            <li class="social-item">
-                <a href="https://profile-viveks-projects-8d9a7f8a.vercel.app/" target="_blank" class="social-link">
-                <ion-icon
-                    name="logo-google"
-                    role="img"
-                    class="md hydrated"
-                    aria-label="logo google"
-                ></ion-icon>
-                </a>
-            </li>
-            </ul>
+      </div>
+      <div class="sk-card rev d2">
+        <div class="sk-ico sk-ico-b">💻</div>
+        <div class="sk-title">Frontend Stack</div>
+        <div class="tags">
+          <span class="tag b">HTML5</span><span class="tag b">CSS3</span>
+          <span class="tag b">JavaScript</span><span class="tag">jQuery</span>
+          <span class="tag b">Tailwind</span><span class="tag">Responsive</span>
+          <span class="tag">AJAX</span><span class="tag b">Fetch API</span>
         </div>
-        </aside>  
-        <div class="main-content">
-            <!--- #NAVBAR-->
-            <nav class="navbar">
-                <ul class="navbar-list">
-                <li class="navbar-item">
-                    <button class="navbar-link active" data-nav-link="">About</button>
-                </li>
-                <li class="navbar-item">
-                    <button class="navbar-link" data-nav-link="">Resume</button>
-                </li>
-                <li class="navbar-item">
-                    <button class="navbar-link" data-nav-link="">Contact</button>
-                </li>
-                </ul>
-            </nav>
-            <!-- About -->
-            <article class="about active" data-page="about">
-
-            <header>
-                <h2 class="h2 article-title">About me</h2>
-            </header>
-
-            <section class="about-text">
-                <p>
-                I'm a passionate Shopify Frontend Developer focused on building engaging, high-performance eCommerce experiences. 
-                I specialize in custom Shopify sections, site speed optimization, and crafting responsive, modern user interfaces that drive results.
-                </p>
-                <p>
-                With a strong foundation in HTML, CSS, JavaScript, jQuery, and Liquid, I've worked on a variety of Shopify projects — turning ideas into polished, user-friendly online stores.
-                I'm committed to clean code, smooth functionality, and keeping up with the latest web trends.
-                </p>
-                <p>
-                If you're looking for a dedicated developer to elevate your Shopify store and bring your vision to life, let's connect and build something exceptional together!
-                </p>
-            </section>     
-
-            <!--- service-->
-            <section class="service">
-
-            <h3 class="h3 service-title">What I'm doing</h3>
-
-            <ul class="service-list">
-
-                <li class="service-item">
-                <div class="service-icon-box">
-                    <img src="/images/shopify-svgrepo-com.svg" alt="Shopify development icon" width="40">
-                </div>
-                <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Shopify Development</h4>
-                    <p class="service-item-text">
-                    Building custom Shopify themes and sections with Liquid, optimizing store speed, and ensuring seamless UX.
-                    </p>
-                </div>
-                </li>
-                
-                <li class="service-item">
-                <div class="service-icon-box">
-                    <img src="/images/mobile-svgrepo-com.svg" alt="Responsive web design icon" width="40">
-                </div>
-                <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Responsive Web Design</h4>
-                    <p class="service-item-text">
-                    Crafting mobile-first, accessible, and modern user interfaces using HTML, CSS, JavaScript, and jQuery.
-                    </p>
-                </div>
-                </li>
-
-                <li class="service-item">
-                <div class="service-icon-box">
-                    <img src="/images/website-optimization-svgrepo-com.svg" alt="Performance optimization icon" width="40">
-                </div>
-                <div class="service-content-box">
-                    <h4 class="h4 service-item-title">Site Speed Optimization</h4>
-                    <p class="service-item-text">
-                    Improving Shopify store loading times and performance for better user experience and SEO.
-                    </p>
-                </div>
-                </li>
-
-                <li class="service-item">
-                <div class="service-icon-box">
-                    <img src="/images/website-dashboard-svgrepo-com.svg" alt="UI/UX Design icon" width="40">
-                </div>
-                <div class="service-content-box">
-                    <h4 class="h4 service-item-title">UI/UX Design</h4>
-                    <p class="service-item-text">
-                    Designing clean, intuitive, and user-friendly interfaces focused on ecommerce conversion.
-                    </p>
-                </div>
-                </li>
-
-            </ul>
-            </section>  
-
-            <!-- Clients / Skills -->
-            <section class="clients">
-                <h3 class="h3 clients-title">Skills</h3>
-                <ul class="clients-list has-scrollbar">
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/HTML5_Badge.svg" alt="HTML" style="filter: none;">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/CSS3_logo.svg.png" alt="CSS logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/skills-logo/javascript-logo-svgrepo-com.svg" alt="JavaScript logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="./images/skills-logo/jquery logo.svg" alt="jQuery logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="./images/skills-logo/shopify logo.svg" alt="Shopify logo">
-                    </a>
-                </li>
-
-                <li class="clients-item">
-                    <a href="" target="_blank" rel="noopener noreferrer">
-                    <img src="/images/skills-logo/liquid logo 1.svg" alt="Liquid logo">
-                    </a>
-                </li>
-
-                </ul>
-            </section>
-
-            </article>
-
-            <!--- #RESUME -->
-            <article class="resume" data-page="resume">
-
-                <header>
-                <h2 class="h2 article-title">Resume</h2>
-                </header>
-            
-                <section class="timeline">
-                <div class="title-wrapper">
-                    <div class="icon-box">
-                    <ion-icon name="book-outline" role="img" class="md hydrated" aria-label="book outline"></ion-icon>
-                    </div>
-                    <h3 class="h3">Education</h3>
-                </div>
-            
-                <ol class="timeline-list">
-                    <li class="timeline-item">
-                    <h4 class="h4 timeline-item-title">Sambalpur University</h4>
-                    <p class="timeline-text">Bachelor of Science in Computer Science</p>
-                    <span>2019 — 2022</span>
-                    </li>
-                    <li class="timeline-item">
-                        <h4 class="h4 timeline-item-title">Panchayat College, Bargarh, Odisha</h4>
-                        <p class="timeline-text">12th Science</p>
-                        <span>2017 — 2019</span>
-                    </li>
-                </ol>
-                </section>
-            
-                <section class="timeline">
-                <div class="title-wrapper">
-                    <div class="icon-box">
-                    <ion-icon name="briefcase-outline" role="img" class="md hydrated" aria-label="briefcase outline"></ion-icon>
-                    </div>
-                    <h3 class="h3">Experience</h3>
-                </div>
-            
-                <ol class="timeline-list">
-                    <li class="timeline-item">
-                    <h4 class="h4 timeline-item-title">Shopify Developer</h4>
-                    <p class="timeline-text">BabyOrgano</p>
-                    <span>October, 2024 — Present</span>
-                    <p class="timeline-text"><i>Ahmedabad, India</i></p>
-                    <ul class="timeline-text">
-                        <li>Maintaining and optimizing the Shopify website for a leading Ayurvedic brand.</li>
-                        <li>Implemented custom sections and ensured seamless UX across all devices.</li>
-                        <li>Collaborated with the team to improve performance and feature rollouts.</li>
-                    </ul>
-                    </li>
-            
-                    <li class="timeline-item">
-                    <h4 class="h4 timeline-item-title">Shopify Developer</h4>
-                    <p class="timeline-text">Alian Software</p>
-                    <span>October, 2022 — August, 2024</span>
-                    <p class="timeline-text"><i>Anand, India</i></p>
-                    <ul class="timeline-text">
-                        <li>Worked on multiple Shopify projects with customized theme development.</li>
-                        <li>Created responsive sections using Liquid, HTML, CSS, and JS/jQuery.</li>
-                        <li>Handled entire store setups, integrations, and dynamic metafields.</li>
-                        <li>Notable projects: Missionary to Madame, Coined By, DTC Garage - Habibi NY.</li>
-                    </ul>
-                    </li>
-                </ol>
-                </section>
-            
-                <a class="form-btn" href="/CV/Vivek CV.pdf" download>
-                    <ion-icon name="document-text-outline" role="img" class="md hydrated" aria-label="document text outline"></ion-icon>
-                    <span>Download CV</span>
-                  </a>
-                  
-            
-            </article>
-
-            <!--- #CONTACT-->
-            <article class="contact" data-page="contact">
-
-            <header>
-            <h2 class="h2 article-title">Contact</h2>
-            </header>
-
-            <section class="mapbox" data-mapbox="">
-            <figure>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235014.29918790405!2d72.41493012913726!3d23.020158084541748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1748761413198!5m2!1sen!2sin"  width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </figure>
-            </section>      
-
-            <!-- contact form -->
-
-            <section class="contact-form">
-            <h3 class="h3 form-title">Contact Form</h3>
-            <form class="form" data-form="">
-            <input type="hidden" name="access_key" value="3bfdc8c6-a387-429f-a1a4-3c397d132d11">
-            <input type="hidden" name="from_name" value="Portfolio">
-
-            <div class="input-wrapper">
-            <input type="text" name="fullname" class="form-input" placeholder="Full name" required="" data-form-input="">
-            <input type="email" name="email" class="form-input" placeholder="Email address" required="" data-form-input="">
-            </div>
-
-            <input type="text" name="subject" class="form-input" placeholder="Subject" required="" data-form-input="">
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required="" data-form-input=""></textarea>
-
-            <button class="form-btn" type="submit" disabled="" data-form-btn="">
-            <ion-icon name="paper-plane" role="img" class="md hydrated" aria-label="paper plane"></ion-icon>
-            <span>Send Message</span>
-            </button>
-            </form>
-            <div id="thankyou-popup" class="popup hidden">
-                <div class="popup-content">
-                  <span class="close-popup">&times;</span>
-                  <h3>Thank You!</h3>
-                  <p>Your message has been successfully sent. We’ll get back to you soon.</p>
-                </div>
-              </div>
-            </section>
-
-
-
-            <!-- <div id="toast" class="toast"></div> -->
-
-            <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-            </article>
-
+      </div>
+      <div class="sk-card rev d3">
+        <div class="sk-ico sk-ico-o">⚙️</div>
+        <div class="sk-title">Tools & Workflow</div>
+        <div class="tags">
+          <span class="tag o">Shopify CLI</span><span class="tag o">GitHub</span>
+          <span class="tag">Figma</span><span class="tag">ClickUp</span>
+          <span class="tag">Asana</span><span class="tag">Slack</span>
+          <span class="tag o">VS Code</span><span class="tag">Trello</span>
         </div>
-  </main>
-<!-- Load Supabase Library FIRST -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="script.js"></script>
-<!-- THEN use it like this -->
+      </div>
+      <div class="sk-card rev">
+        <div class="sk-ico sk-ico-p">🚀</div>
+        <div class="sk-title">Performance & CRO</div>
+        <div class="tags">
+          <span class="tag p">Core Web Vitals</span><span class="tag p">LCP</span>
+          <span class="tag p">CLS</span><span class="tag">Lazy Loading</span>
+          <span class="tag">Image Optimization</span><span class="tag p">SEO</span>
+          <span class="tag">A/B Testing</span><span class="tag p">UX/UI</span>
+        </div>
+      </div>
+      <div class="sk-card rev d1">
+        <div class="sk-ico sk-ico-g">🛒</div>
+        <div class="sk-title">Shopify Ecosystem</div>
+        <div class="tags">
+          <span class="tag g">Metafields</span><span class="tag g">Metaobjects</span>
+          <span class="tag g">Shopify Flow</span><span class="tag">App Integrations</span>
+          <span class="tag g">Theme Editor</span><span class="tag">Klaviyo</span>
+          <span class="tag">ReCharge</span><span class="tag">Yotpo</span>
+        </div>
+      </div>
+      <div class="sk-card rev d2">
+        <div class="sk-ico sk-ico-o">🎨</div>
+        <div class="sk-title">Design & UX</div>
+        <div class="tags">
+          <span class="tag o">Figma</span><span class="tag">Brand Identity</span>
+          <span class="tag o">Prototyping</span><span class="tag">Mobile-First</span>
+          <span class="tag">Accessibility</span><span class="tag o">Color Theory</span>
+          <span class="tag">Typography</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="playground">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Interactive</div>
+    <h2 class="sec-h2 rev d1"><em>Liquid</em> Playground</h2>
+    <p class="rev d2" style="font-size:14px;color:var(--t2);font-weight:400;margin-bottom:32px;line-height:1.8;">Try writing Shopify Liquid code and see it simulated in real-time. This is what I work with every day — <strong style="color:var(--t1);">metafields, loops, conditionals, filters.</strong></p>
+
+    <div class="pg-wrap rev d2">
+      <div class="pg-editor">
+        <div class="pg-header">
+          <div class="pg-dots"><div class="pgd pgd1"></div><div class="pgd pgd2"></div><div class="pgd pgd3"></div></div>
+          <span class="pg-title">product.liquid — editor</span>
+          <button class="pg-run" onclick="runLiquid()">▶ Run</button>
+        </div>
+        <textarea id="pg-code" spellcheck="false">{% assign product_title = "Organic Baby Serum" %}
+{% assign price = 24.99 %}
+{% assign vendor = "BabyOrgano" %}
+{% assign in_stock = true %}
+{% assign tags = "organic, baby, serum, natural" %}
+
+{% if in_stock %}
+  {{ product_title }} — Available ✓
+{% else %}
+  {{ product_title }} — Out of Stock
+{% endif %}
+
+{% assign tag_array = tags | split: ", " %}
+{% for tag in tag_array %}
+  #{{ tag }}
+{% endfor %}
+
+Price: ${{ price | times: 1 | round: 2 }}
+Vendor: {{ vendor | upcase }}
+Slug: {{ product_title | handleize }}</textarea>
+      </div>
+      <div class="pg-output-wrap">
+        <div class="pg-header">
+          <div class="pg-dots"><div class="pgd pgd1"></div><div class="pgd pgd2"></div><div class="pgd pgd3"></div></div>
+          <span class="pg-title">output — rendered</span>
+        </div>
+        <div class="pg-output" id="pg-output">Click ▶ Run to execute...</div>
+      </div>
+    </div>
+
+    <div class="pg-presets rev d3">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;">Snippets:</span>
+      <button class="preset-btn" onclick="loadPreset('product',this)">Product Page</button>
+      <button class="preset-btn" onclick="loadPreset('metafield',this)">Metafields</button>
+      <button class="preset-btn" onclick="loadPreset('loop',this)">Collection Loop</button>
+      <button class="preset-btn" onclick="loadPreset('filter',this)">Liquid Filters</button>
+      <button class="preset-btn" onclick="loadPreset('cart',this)">Cart Logic</button>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Career</div>
+    <h2 class="sec-h2 rev d1">Work <em>Experience</em></h2>
+    <div class="exp-grid">
+      <div class="exp-card revL">
+        <div class="exp-top">
+          <div class="exp-emo">🌿</div>
+          <span class="exp-badge badge-now">● Current</span>
+        </div>
+        <div class="exp-co">BabyOrgano</div>
+        <div class="exp-role">Shopify Developer</div>
+        <div class="exp-meta">
+          <span>📅 Oct 2024 – Present</span>
+          <span>📍 Ahmedabad, India</span>
+        </div>
+        <ul class="exp-list">
+          <li>Maintain and optimize Shopify website for fast load times and minimal downtime</li>
+          <li>Implement responsive, user-centric designs to enhance engagement and conversions</li>
+          <li>Develop and customize Shopify themes aligned with brand identity</li>
+          <li>Performance checks — speed optimization & SEO ranking improvements</li>
+          <li>Bug fixing and rigorous QA testing across all devices before deployment</li>
+          <li>Collaborate with product, marketing and design teams on campaigns</li>
+        </ul>
+        <div class="exp-impact">
+          <div class="imp-item"><div class="imp-val">97+</div><div class="imp-lbl">Page Speed</div></div>
+          <div class="imp-item"><div class="imp-val">0</div><div class="imp-lbl">Downtime</div></div>
+          <div class="imp-item"><div class="imp-val">↑CRO</div><div class="imp-lbl">Conversion</div></div>
+        </div>
+      </div>
+      <div class="exp-card revR">
+        <div class="exp-top">
+          <div class="exp-emo" style="background:linear-gradient(135deg,rgba(0,30,70,0.5),rgba(0,60,120,0.3));border-color:rgba(88,166,255,0.2);">💼</div>
+          <span class="exp-badge badge-past">Past</span>
+        </div>
+        <div class="exp-co">Alian Software</div>
+        <div class="exp-role">Shopify Frontend Developer</div>
+        <div class="exp-meta">
+          <span>📅 Oct 2022 – Aug 2024</span>
+          <span>📍 Anand, India</span>
+        </div>
+        <ul class="exp-list">
+          <li>Trained in HTML5, CSS3, jQuery, JavaScript + Shopify (Jan 2023)</li>
+          <li>Customized Dawn theme extensively per individual client requirements</li>
+          <li>Built custom sections with schema settings for backend customizability</li>
+          <li>Created and managed metafields for product pages with custom data</li>
+          <li>Integrated third-party apps and improved store functionality</li>
+          <li>Implemented jQuery interactive features and page speed optimization</li>
+        </ul>
+        <div class="exp-impact">
+          <div class="imp-item"><div class="imp-val">10+</div><div class="imp-lbl">Stores Built</div></div>
+          <div class="imp-item"><div class="imp-val">2yr</div><div class="imp-lbl">Duration</div></div>
+          <div class="imp-item"><div class="imp-val">✓</div><div class="imp-lbl">Multi-client</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Portfolio</div>
+    <h2 class="sec-h2 rev d1">Featured <em>Projects</em></h2>
+    <div class="proj-grid">
+      <div class="proj-card rev">
+        <div class="proj-banner pb1">
+          <div class="pbg"></div>
+          <div class="pb-glow2"></div>
+          <div class="pb-num">01</div>
+          <div class="pb-emo">🏪</div>
+          <div class="proj-tech-row">
+            <span class="ptag">Dawn Theme</span><span class="ptag">Metafields</span><span class="ptag">Data Migration</span><span class="ptag">QA</span>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-ey">Store Redevelopment · Dec 2023</div>
+          <div class="proj-title">M2M Store</div>
+          <div class="proj-client">Client: Missionary to Madame · AU eCommerce</div>
+          <div class="proj-desc">Full store redevelopment — analyzed existing theme, customized Dawn for brand identity, migrated all products, media & metafields. Achieved full cross-browser responsiveness post-launch.</div>
+          <div class="proj-metrics">
+            <div class="pm"><div class="pm-val">100%</div><div class="pm-lbl">Migration</div></div>
+            <div class="pm"><div class="pm-val">All</div><div class="pm-lbl">Devices</div></div>
+            <div class="pm"><div class="pm-val">✓</div><div class="pm-lbl">On Time</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card rev d1">
+        <div class="proj-banner pb2">
+          <div class="pbg"></div>
+          <div class="pb-glow2"></div>
+          <div class="pb-num">02</div>
+          <div class="pb-emo">🧡</div>
+          <div class="proj-tech-row">
+            <span class="ptag">Shopify</span><span class="ptag">DTC</span><span class="ptag">Performance</span><span class="ptag">Custom UX</span>
+          </div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-ey">DTC Build · Feb – Apr 2024</div>
+          <div class="proj-title">Habibi NY</div>
+          <div class="proj-client">Client: DTC Garage</div>
+          <div class="proj-desc">Built a DTC store with client-specific features, seamless UX, and full performance optimization. Collaborated with team to meet all design and functional requirements across devices.</div>
+          <div class="proj-metrics">
+            <div class="pm"><div class="pm-val">Fast</div><div class="pm-lbl">Load Time</div></div>
+            <div class="pm"><div class="pm-val">DTC</div><div class="pm-lbl">Focused</div></div>
+            <div class="pm"><div class="pm-val">✓</div><div class="pm-lbl">Responsive</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Social Proof</div>
+    <h2 class="sec-h2 rev d1">What People <em>Say</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card rev">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-q">Vivek transformed our store completely. The speed improvements and clean code made a huge difference to our conversions. Very professional throughout.</div>
+        <div class="testi-author">
+          <div class="testi-av">👩</div>
+          <div><div class="testi-name">Sarah M.</div><div class="testi-role">Founder · M2M Store · AU</div></div>
+        </div>
+      </div>
+      <div class="testi-card rev d1">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-q">Excellent Shopify knowledge — especially with metafields and Liquid. Delivered exactly what we needed and was easy to communicate with. Would hire again.</div>
+        <div class="testi-author">
+          <div class="testi-av">👨</div>
+          <div><div class="testi-name">Raj K.</div><div class="testi-role">Project Lead · Alian Software</div></div>
+        </div>
+      </div>
+      <div class="testi-card rev d2">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <div class="testi-q">Our BabyOrgano store went from sluggish to lightning fast after Vivek took over. He understands both the technical and business side of eCommerce very well.</div>
+        <div class="testi-author">
+          <div class="testi-av">🌿</div>
+          <div><div class="testi-name">Team</div><div class="testi-role">BabyOrgano · Ahmedabad</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="sec">
+    <div class="sec-eyebrow rev">Background</div>
+    <h2 class="sec-h2 rev d1">Education &amp; <em>Certificates</em></h2>
+    <div class="edu-layout">
+      <div class="edu-card rev">
+        <div class="edu-ico">🎓</div>
+        <div class="edu-deg">Bachelor of Science in Computer Science</div>
+        <div class="edu-school">Sambalpur University</div>
+        <div class="edu-meta">
+          <div class="edu-row">📅 2019 – 2022</div>
+          <div class="edu-row">📍 Sambalpur, India</div>
+        </div>
+      </div>
+      <div class="cert-stack">
+        <div class="cert-card rev d1">
+          <div class="cert-ico">🛍️</div>
+          <div>
+            <div class="cert-name">Shopify Theme Development: Online Store 3.0 + Tailwind CSS</div>
+            <div class="cert-issuer">Shopify · Certified</div>
+          </div>
+        </div>
+        <div class="cert-card rev d2">
+          <div class="cert-ico">🏅</div>
+          <div>
+            <div class="cert-name">LinkedIn Skill Assessment — HTML &amp; CSS</div>
+            <div class="cert-issuer">LinkedIn · Verified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-sec">
+  <div class="cta-bg"></div>
+  <div class="cta-inner rev">
+    <div class="cta-tag"><div class="pulse"></div>Open to Work · Ahmedabad &amp; Remote</div>
+    <h2 class="cta-h">Let's Build Something <em>Great</em></h2>
+    <p class="cta-p">Looking for a Shopify developer who delivers fast, conversion-focused stores? I bring 3+ years of hands-on OS 2.0 experience, clean Liquid code, and obsessive attention to performance.</p>
+    <div class="cta-btns">
+      <a href="mailto:vikupatel2001@gmail.com" class="btn-primary">Send a Message &nbsp;→</a>
+    <a href="/CV/Vivek CV.pdf" download="Vivek_Patel_Resume.pdf" onclick="closeMob()" class="btn-outline">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+    <div class="cta-contact">or email directly: <a href="mailto:vikupatel2001@gmail.com">vikupatel2001@gmail.com</a></div>
+    <div class="social-row">
+      <a href="#" class="soc-btn">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="#" class="soc-btn">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:vikupatel2001@gmail.com" class="soc-btn">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+      <a href="tel:8658458987" class="soc-btn">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1.13h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.45a16 16 0 006.29 6.29l1.69-1.69a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 86584 58987
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-in">
+    <div class="footer-brand">Vivek Patel<em>.</em></div>
+    <ul class="footer-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#playground">Liquid</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Vivek Patel · Shopify Developer · Ahmedabad</div>
+  </div>
+</footer>
+
 <script>
-</script>  
+/* ── LOADER ── */
+var pct = 0;
+var ldPct = document.getElementById('ldPct');
+var ldFill = document.querySelector('.ld-fill');
+var loaderEl = document.getElementById('loader');
 
+function updateLoader() {
+  // Calculates an increment that slows down as it approaches 100
+  var increment = (100 - pct) * 0.08; 
+  pct += Math.max(increment, 0.1);
+
+  if (pct < 99.9) {
+    ldPct.textContent = Math.floor(pct) + '%';
+    if(ldFill) ldFill.style.width = pct + '%';
+    requestAnimationFrame(updateLoader);
+  }
+}
+
+// Start the animation
+requestAnimationFrame(updateLoader);
+
+// Fire the real load event
+window.addEventListener('load', function() {
+  pct = 100;
+  ldPct.textContent = '100%';
+  if(ldFill) ldFill.style.width = '100%';
+  
+  // Let the bar sit at 100% for a tiny fraction of a second, then fade out
+  setTimeout(function() {
+    loaderEl.classList.add('gone');
+    
+    // Trigger terminal after loader starts fading
+    setTimeout(function() {
+      buildTerminal();
+    }, 400);
+  }, 450);
+});
+
+/* ── THEME TOGGLE ── */
+var html = document.documentElement;
+var btn = document.getElementById('themeToggle');
+var isDark = true;
+function setTheme(dark) {
+  isDark = dark;
+  html.setAttribute('data-theme', dark ? 'dark' : 'light');
+  btn.textContent = dark ? '☀' : '🌙';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+btn.addEventListener('click', function(){ setTheme(!isDark); });
+// Restore saved theme
+var saved = localStorage.getItem('theme');
+if(saved) setTheme(saved === 'dark');
+else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) setTheme(false);
+
+/* ── SCROLL PROGRESS ── */
+window.addEventListener('scroll', function(){
+  var sp = document.getElementById('scroll-progress');
+  var p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  sp.style.width = p + '%';
+}, {passive:true});
+
+/* ── CANVAS PARTICLES ── */
+var cvs = document.getElementById('bgCanvas');
+var ctx2 = cvs.getContext('2d');
+var W, H;
+function resizeCanvas(){ W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas, {passive:true});
+var dots = [];
+for(var di=0; di<70; di++){
+  var colors=['150,191,72','0,128,96','88,166,255'];
+  var ci=Math.random()<0.55?0:Math.random()<0.6?1:2;
+  dots.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.2+0.2,vx:(Math.random()-0.5)*0.35,vy:(Math.random()-0.5)*0.35,a:Math.random()*0.4+0.07,c:colors[ci]});
+}
+(function drawCanvas(){
+  ctx2.clearRect(0,0,W,H);
+  var isLight = !isDark;
+  for(var i=0;i<dots.length;i++){
+    var d=dots[i];
+    ctx2.beginPath(); ctx2.arc(d.x,d.y,d.r,0,Math.PI*2);
+    ctx2.fillStyle='rgba('+d.c+','+(isLight?d.a*0.4:d.a)+')'; ctx2.fill();
+    d.x+=d.vx; d.y+=d.vy;
+    if(d.x<0||d.x>W)d.vx*=-1; if(d.y<0||d.y>H)d.vy*=-1;
+  }
+  for(var i=0;i<dots.length;i++){
+    for(var j=i+1;j<dots.length;j++){
+      var dx=dots[i].x-dots[j].x,dy=dots[i].y-dots[j].y;
+      var dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx2.beginPath();
+        ctx2.strokeStyle='rgba(150,191,72,'+(isLight?0.03:0.06)*(1-dist/120)+')';
+        ctx2.lineWidth=0.5;
+        ctx2.moveTo(dots[i].x,dots[i].y); ctx2.lineTo(dots[j].x,dots[j].y); ctx2.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawCanvas);
+})();
+
+/* ── NAV ── */
+var mainNav = document.getElementById('mainNav');
+var navAs = document.querySelectorAll('.nav-pill a');
+var sections = ['hero','skills','playground','experience','projects','education'];
+window.addEventListener('scroll', function(){
+  if(window.scrollY>40) mainNav.classList.add('scrolled'); else mainNav.classList.remove('scrolled');
+  var cur='hero';
+  for(var i=0;i<sections.length;i++){
+    var s=document.getElementById(sections[i]);
+    if(s&&window.scrollY>=s.offsetTop-150) cur=sections[i];
+  }
+  for(var i=0;i<navAs.length;i++){
+    navAs[i].className=navAs[i].getAttribute('href')==='#'+cur?'active':'';
+  }
+}, {passive:true});
+
+/* ── MOBILE NAV ── */
+var hamOpen = false;
+function toggleMob(hamEl){
+  hamOpen = !hamOpen;
+  if(hamEl) hamEl.classList.toggle('open', hamOpen);
+  var mn = document.getElementById('mobNav');
+  mn.classList.toggle('open', hamOpen);
+}
+function closeMob(){
+  hamOpen=false;
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('mobNav').classList.remove('open');
+}
+
+/* ── SCROLL REVEAL ── */
+var revEls = document.querySelectorAll('.rev,.revL,.revR');
+var revObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('on'); });
+},{threshold:0.07});
+revEls.forEach(function(el){ revObs.observe(el); });
+
+/* ── SKILL BARS ── */
+var barObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.querySelectorAll('.br-fill').forEach(function(f){ f.classList.add('on'); }); });
+},{threshold:0.15});
+document.querySelectorAll('.sk-card').forEach(function(c){ barObs.observe(c); });
+
+/* ── COUNTERS ── */
+function animCount(el, target){
+  var start=null, dur=1500;
+  (function step(ts){ if(!start) start=ts; var p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3); el.textContent=Math.floor(e*target); if(p<1)requestAnimationFrame(step); else el.textContent=target; })(0);
+}
+var cntObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.querySelectorAll('[data-count]').forEach(function(el){ animCount(el,parseInt(el.dataset.count)); }); cntObs.unobserve(e.target); }});
+},{threshold:0.3});
+var heroEl=document.getElementById('hero'); if(heroEl) cntObs.observe(heroEl);
+
+/* ── BENTO GLOW ── */
+document.querySelectorAll('.sk-card').forEach(function(card){
+  card.addEventListener('mousemove', function(e){
+    var r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+  });
+});
+
+/* ── TICKER ── */
+var tickItems=['Shopify OS 2.0','Liquid Templating','Metafields','Metaobjects','Dawn Theme','JSON Templates','DTC eCommerce','Core Web Vitals','Page Speed 97+','Custom Sections','Schema Settings','Shopify Flow','Responsive Design','CRO Optimization','BabyOrgano','Alian Software'];
+var tickerEl=document.getElementById('tickerInner');
+if(tickerEl){
+  var h='';
+  for(var ti=0;ti<2;ti++) for(var tii=0;tii<tickItems.length;tii++){
+    var t=tickItems[tii], hi2=t.indexOf('97')!==-1||t.indexOf('OS')!==-1||t.indexOf('Liquid')!==-1;
+    h+='<div class="tick-item"><div class="tick-dot"></div>'+(hi2?'<span>'+t+'</span>':t)+'</div>';
+  }
+  tickerEl.innerHTML=h;
+}
+
+/* ── TERMINAL ── */
+var termLines=[
+  {type:'prompt',content:'assign dev = vivek_patel'},
+  {type:'out',content:'→ Developer loaded ✓'},
+  {type:'kv',key:'name:',val:'"Vivek Patel"'},
+  {type:'kv',key:'role:',val:'"Shopify Dev"'},
+  {type:'kv',key:'version:',val:'"OS 2.0"'},
+  {type:'kv',key:'liquid:',val:'true'},
+  {type:'kv',key:'metafields:',val:'true'},
+  {type:'kv',key:'years_exp:',val:'3'},
+  {type:'kv',key:'stores:',val:'"10+"'},
+  {type:'kv',key:'status:',val:'"available"'},
+  {type:'cursor'}
+];
+function buildTerminal(){
+  var body=document.getElementById('termBody'); if(!body)return;
+  body.innerHTML=''; var delay=0;
+  for(var i=0;i<termLines.length;i++){
+    (function(line,d){ setTimeout(function(){
+      var h='';
+      if(line.type==='prompt') h='<div class="term-line"><span class="tp">{% </span><span style="color:var(--t1)">'+line.content+'</span><span class="tp"> %}</span></div>';
+      else if(line.type==='out') h='<div class="tout">'+line.content+'</div>';
+      else if(line.type==='kv') h='<div class="term-line"><span class="tk">'+line.key+'</span><span class="tv"> '+line.val+'</span></div>';
+      else if(line.type==='cursor') h='<div class="term-line"><span class="tp">$</span><span class="tcursor" style="margin-left:6px"></span></div>';
+      body.innerHTML+=h;
+    },d); })(termLines[i], delay);
+    delay+=i===0?500:150;
+  }
+}
+
+/* ── LIQUID PLAYGROUND ── */
+var PRESETS={
+  product:'{% assign product_title = "Organic Baby Serum" %}\n{% assign price = 24.99 %}\n{% assign vendor = "BabyOrgano" %}\n{% assign in_stock = true %}\n{% assign tags = "organic, baby, serum, natural" %}\n\n{% if in_stock %}\n  {{ product_title }} — Available\n{% else %}\n  {{ product_title }} — Out of Stock\n{% endif %}\n\n{% assign tag_array = tags | split: ", " %}\n{% for tag in tag_array %}\n  #{{ tag }}\n{% endfor %}\n\nPrice: ${{ price | round: 2 }}\nVendor: {{ vendor | upcase }}\nSlug: {{ product_title | handleize }}',
+  metafield:'{% assign metafield_ingredients = "Aloe Vera, Vitamin C, Jojoba Oil" %}\n{% assign metafield_age_range = "0-12 months" %}\n{% assign metafield_is_organic = true %}\n\n== Product Metafields ==\nIngredients: {{ metafield_ingredients }}\nAge Range:   {{ metafield_age_range }}\n\n{% if metafield_is_organic %}\nCertified Organic: Yes\n{% endif %}\n\n{% assign ingredient_list = metafield_ingredients | split: ", " %}\n{% for ingredient in ingredient_list %}\n  * {{ ingredient }}\n{% endfor %}',
+  loop:'{% assign collection_title = "Baby Skincare" %}\n{% assign products = "Serum,Lotion,Body Wash,Shampoo,Sunscreen" %}\n{% assign product_list = products | split: "," %}\n\n== {{ collection_title }} Collection ==\nTotal Products: {{ product_list | size }}\n\n{% for product in product_list %}\n  {{ forloop_index }}. {{ product | strip | upcase }}\n{% endfor %}',
+  filter:'{% assign title = "baby organic serum v2" %}\n{% assign price = 24.9900 %}\n{% assign description = "  Natural skincare for babies  " %}\n\nCapitalize:  {{ title | capitalize }}\nUpcase:      {{ title | upcase }}\nHandleize:   {{ title | handleize }}\nStrip:       |{{ description | strip }}|\nTruncate 20: {{ title | truncate: 20 }}\nPrice:       ${{ price | round: 2 }}\nPlus 10:     ${{ price | plus: 10 | round: 2 }}\nTimes 3:     ${{ price | times: 3 | round: 2 }}',
+  cart:'{% assign cart_items = "Serum,Lotion,Shampoo" %}\n{% assign item_list = cart_items | split: "," %}\n\n== Shopping Cart ==\n\n{% for item in item_list %}\n  {{ forloop_index }}. {{ item | strip }}\n{% endfor %}\n\nSubtotal: ${{ 24.99 | plus: 14.99 | plus: 9.99 | round: 2 }}\nItems: {{ item_list | size }}\n\n{% if item_list.size >= 3 %}\n  Free shipping unlocked!\n{% endif %}'
+};
+function loadPreset(key,btn2){ var ce=document.getElementById('pg-code'); if(!ce||!PRESETS[key])return; ce.value=PRESETS[key]; document.querySelectorAll('.preset-btn').forEach(function(b){ b.classList.remove('active'); }); if(btn2)btn2.classList.add('active'); runLiquid(); }
+function runLiquid(){ var code=document.getElementById('pg-code').value, out=document.getElementById('pg-output'); try{ out.innerHTML=highlight(simulateLiquid(code)); }catch(e){ out.innerHTML='<span style="color:#ff7b7b">Error: '+e.message+'</span>'; } }
+
+function simulateLiquid(code){
+  var vars={},output='',lines=code.split('\n'),skipUntil=null,forVar='',forItems=[],forBody=[],inFor=false;
+  for(var i=0;i<lines.length;i++){
+    var line=lines[i],trimmed=line.trim();
+    if(trimmed.indexOf('{%')!==-1&&trimmed.indexOf('comment')!==-1)continue;
+    if(trimmed.indexOf('endcomment')!==-1)continue;
+    var aMatch=trimmed.match(/\{%-?\s*assign\s+(\w+)\s*=\s*([\s\S]+?)\s*-?%\}/);
+    if(aMatch){vars[aMatch[1]]=evalFilter(aMatch[2].trim(),vars);continue;}
+    var fMatch=trimmed.match(/\{%-?\s*for\s+(\w+)\s+in\s+(\w+(?:\.\w+)?)\s*-?%\}/);
+    if(fMatch){inFor=true;forVar=fMatch[1];var src=getDeep(vars,fMatch[2]);forItems=Array.isArray(src)?src:String(src||'').split(',');forBody=[];continue;}
+    if(trimmed.match(/\{%-?\s*endfor\s*-?%\}/)){inFor=false;for(var fi=0;fi<forItems.length;fi++){var lv=shallowCopy(vars);lv[forVar]=String(forItems[fi]).trim();lv.forloop_index=fi+1;lv.forloop_index0=fi;lv.forloop_first=fi===0;lv.forloop_last=fi===forItems.length-1;lv.forloop_size=forItems.length;for(var li=0;li<forBody.length;li++)output+=processLine(forBody[li],lv);}continue;}
+    if(inFor){forBody.push(line);continue;}
+    var ifMatch=trimmed.match(/\{%-?\s*if\s+([\s\S]+?)\s*-?%\}/);
+    if(ifMatch){skipUntil=evalCondition(ifMatch[1],vars)?null:'else';continue;}
+    var eiMatch=trimmed.match(/\{%-?\s*elsif\s+([\s\S]+?)\s*-?%\}/);
+    if(eiMatch){if(skipUntil==='else')skipUntil=evalCondition(eiMatch[1],vars)?null:'else';else if(!skipUntil)skipUntil='endif';continue;}
+    if(trimmed.match(/\{%-?\s*else\s*-?%\}/)){skipUntil=(skipUntil==='else')?null:'endif';continue;}
+    if(trimmed.match(/\{%-?\s*endif\s*-?%\}/)){skipUntil=null;continue;}
+    if(skipUntil)continue;
+    output+=processLine(line,vars);
+  }
+  return output.replace(/^\n+|\n+$/,'');
+}
+function shallowCopy(obj){var o={};for(var k in obj)o[k]=obj[k];return o;}
+function getDeep(vars,path){var parts=path.split('.'),v=vars[parts[0]];for(var i=1;i<parts.length;i++)v=v?v[parts[i]]:undefined;return v;}
+function processLine(line,vars){return line.replace(/forloop\.index0/g,'forloop_index0').replace(/forloop\.index/g,'forloop_index').replace(/forloop\.first/g,'forloop_first').replace(/forloop\.last/g,'forloop_last').replace(/forloop\.size/g,'forloop_size').replace(/\{\{([\s\S]+?)\}\}/g,function(m,expr){return evalFilter(expr.trim(),vars);})+'\n';}
+function splitPipes(expr){var parts=[],cur='',inQ=false,qCh='';for(var i=0;i<expr.length;i++){var ch=expr[i];if(!inQ&&(ch==='"'||ch==="'")){inQ=true;qCh=ch;cur+=ch;}else if(inQ&&ch===qCh){inQ=false;qCh='';cur+=ch;}else if(!inQ&&ch==='|'){parts.push(cur.trim());cur='';}else{cur+=ch;}}if(cur.trim())parts.push(cur.trim());return parts;}
+function stripQuotes(s){s=String(s).trim();if((s.charAt(0)==='"'&&s.charAt(s.length-1)==='"')||(s.charAt(0)==="'"&&s.charAt(s.length-1)==="'"))return s.slice(1,-1);return s;}
+function evalFilter(expr,vars){var parts=splitPipes(expr),val=evalVal(parts[0],vars);for(var i=1;i<parts.length;i++){var f=parts[i].trim(),ci=f.indexOf(':'),fName=ci!==-1?f.slice(0,ci).trim():f.trim(),fArg=ci!==-1?stripQuotes(f.slice(ci+1).trim()):'';if(fName==='upcase')val=String(val).toUpperCase();else if(fName==='downcase')val=String(val).toLowerCase();else if(fName==='capitalize')val=String(val).charAt(0).toUpperCase()+String(val).slice(1);else if(fName==='strip')val=String(val).trim();else if(fName==='handleize')val=String(val).toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');else if(fName==='size')val=Array.isArray(val)?val.length:String(val).length;else if(fName==='first')val=Array.isArray(val)?val[0]:String(val).charAt(0);else if(fName==='last')val=Array.isArray(val)?val[val.length-1]:String(val).charAt(String(val).length-1);else if(fName==='join')val=Array.isArray(val)?val.join(fArg||', '):String(val);else if(fName==='split')val=String(val).split(fArg||',');else if(fName==='append')val=String(val)+fArg;else if(fName==='prepend')val=fArg+String(val);else if(fName==='remove')val=String(val).split(fArg).join('');else if(fName==='truncate'){var tl=parseInt(fArg)||50;val=String(val).length>tl?String(val).slice(0,tl)+'...':String(val);}else if(fName==='round'){var rd=parseInt(fArg);rd=isNaN(rd)?0:rd;val=parseFloat(val).toFixed(rd);}else if(fName==='ceil')val=Math.ceil(parseFloat(val));else if(fName==='floor')val=Math.floor(parseFloat(val));else if(fName==='abs')val=Math.abs(parseFloat(val));else if(fName==='plus')val=parseFloat(val)+(parseFloat(fArg)||0);else if(fName==='minus')val=parseFloat(val)-(parseFloat(fArg)||0);else if(fName==='times')val=parseFloat(val)*(parseFloat(fArg)||1);else if(fName==='divided_by')val=parseFloat(val)/(parseFloat(fArg)||1);else if(fName==='modulo')val=parseFloat(val)%(parseFloat(fArg)||1);else if(fName==='default'){if(val===''||val===null||val===undefined||val===false)val=fArg;}else if(fName==='url_encode')val=encodeURIComponent(String(val));else if(fName==='escape')val=String(val).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}return Array.isArray(val)?val.join(', '):String(val);}
+function evalVal(expr,vars){if(!expr)return '';expr=expr.trim();if(expr==='true')return true;if(expr==='false')return false;if(expr==='nil'||expr==='null'||expr==='blank')return '';if((expr.charAt(0)==='"'&&expr.charAt(expr.length-1)==='"')||(expr.charAt(0)==="'"&&expr.charAt(expr.length-1)==="'"))return expr.slice(1,-1);if(expr!==''&&!isNaN(Number(expr)))return Number(expr);var am=expr.match(/^(\w+)\[(\d+)\]$/);if(am){var av=vars[am[1]];return Array.isArray(av)?av[parseInt(am[2])]:'';} var dm=expr.match(/^(\w+)\.size$/);if(dm){var dv=vars[dm[1]];return Array.isArray(dv)?dv.length:String(dv||'').length;}return vars[expr]!==undefined?vars[expr]:expr;}
+function evalCondition(cond,vars){cond=cond.trim();if(cond.indexOf(' contains ')!==-1){var cp=cond.split(' contains ');return String(evalVal(cp[0].trim(),vars)).indexOf(String(evalVal(cp[1].trim(),vars)))!==-1;}if(cond.indexOf('!=')!==-1){var p=cond.split('!=');return String(evalVal(p[0].trim(),vars))!==String(evalVal(p[1].trim(),vars));}if(cond.indexOf('==')!==-1){var p=cond.split('==');return String(evalVal(p[0].trim(),vars))===String(evalVal(p[1].trim(),vars));}if(cond.indexOf('>=')!==-1){var p=cond.split('>=');return +evalVal(p[0].trim(),vars)>=+evalVal(p[1].trim(),vars);}if(cond.indexOf('<=')!==-1){var p=cond.split('<=');return +evalVal(p[0].trim(),vars)<=+evalVal(p[1].trim(),vars);}if(cond.indexOf('>')!==-1){var p=cond.split('>');return +evalVal(p[0].trim(),vars)>+evalVal(p[1].trim(),vars);}if(cond.indexOf('<')!==-1){var p=cond.split('<');return +evalVal(p[0].trim(),vars)<+evalVal(p[1].trim(),vars);}var v=evalVal(cond,vars);return v!==false&&v!==null&&v!==''&&v!==0&&v!=='false';}
+function highlight(text){return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/(#\w+)/g,'<span class="out-val">$1</span>').replace(/(\$[\d.]+)/g,'<span class="out-num">$1</span>').replace(/(== [^\n]+ ==)/g,'<span class="out-key">$1</span>');}
+window.addEventListener('load',function(){ setTimeout(runLiquid,200); });
+
+/* ── RESUME DOWNLOAD ── */
+function dlResume(e){ e.preventDefault(); var lines=['VIVEK PATEL — SHOPIFY DEVELOPER','================================================','Email:    vikupatel2001@gmail.com','Phone:    8658458987','Location: Ahmedabad, Gujarat, India','','SUMMARY','-------','Shopify Frontend Developer with 3+ years experience building, customizing,','and optimizing OS 2.0 themes for DTC eCommerce brands.','','SKILLS','------','Shopify:  Liquid, JSON Templates, Metafields, OS 2.0, Dawn, Shopify CLI','Frontend: HTML5, CSS3, JavaScript, jQuery, Tailwind CSS','Tools:    GitHub, Figma, ClickUp, VS Code','Optimize: Core Web Vitals, SEO, CRO, Performance','','EXPERIENCE','----------','BabyOrgano — Shopify Developer','Oct 2024 – Present | Ahmedabad, India','• Website optimization (97+ PageSpeed scores)','• UX optimization, responsive design, custom theme development','• Speed optimization, SEO improvements, QA testing','','Alian Software — Shopify Frontend Developer','Oct 2022 – Aug 2024 | Anand, India','• Dawn theme customization for multiple clients','• Custom sections, metafields, responsive design','• Third-party app integrations, page speed optimization','','PROJECTS','--------','M2M Store — Dec 2023','Full store redevelopment on Dawn theme, AU eCommerce','','Habibi NY — Feb–Apr 2024','DTC store build with custom UX for DTC Garage','','EDUCATION','----------','BSc Computer Science — Sambalpur University (2019–2022)','','CERTIFICATES','• Shopify Theme Development: OS 2.0 + Tailwind CSS','• LinkedIn HTML & CSS Skill Assessment']; var blob=new Blob([lines.join('\n')],{type:'text/plain'}); var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='Vivek_Patel'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); var btn3=e.currentTarget; if(btn3){var orig=btn3.innerHTML; btn3.innerHTML='✓ Downloaded!'; setTimeout(function(){btn3.innerHTML=orig;},2200);} }
+</script>
 </body>
-</html>  
+</html>
