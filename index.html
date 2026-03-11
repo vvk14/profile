@@ -574,6 +574,7 @@ textarea#pg-code { width:100%; height:300px; background:transparent; border:none
 .exp-card:hover { border-color:rgba(150,191,72,0.22); transform:translateY(-4px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
 .exp-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
 .exp-emo { width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:24px; background:linear-gradient(135deg,rgba(0,64,51,0.5),rgba(0,128,96,0.3)); border:1px solid rgba(150,191,72,0.18); flex-shrink:0; }
+.exp-emo img {width: 100%;max-width: 25px;object-fit: contain;height: auto;}
 .exp-badge { font-size:9px; padding:5px 12px; border-radius:100px; letter-spacing:0.5px; }
 .badge-now { background:rgba(150,191,72,0.08); border:1px solid rgba(150,191,72,0.22); color:var(--g); }
 .badge-past { background:rgba(128,128,128,0.06); border:1px solid var(--b0); color:var(--t3); }
@@ -600,11 +601,9 @@ textarea#pg-code { width:100%; height:300px; background:transparent; border:none
 [data-theme="light"] .pb1 { background:linear-gradient(135deg,#d6f5e3,#c2edcc,#a8e4b8); }
 [data-theme="light"] .pb2 { background:linear-gradient(135deg,#fff3d6,#ffe8a8,#ffd980); }
 .pbg { position:absolute; inset:0; background-image:linear-gradient(rgba(150,191,72,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(150,191,72,0.07) 1px,transparent 1px); background-size:24px 24px; }
-.pb-glow2 { position:absolute; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(150,191,72,0.14),transparent 70%); animation:pp 3s ease-in-out infinite; }
-.pb2 .pb-glow2 { background:radial-gradient(circle,rgba(255,166,87,0.14),transparent 70%); }
-@keyframes pp { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.18);opacity:1} }
-.pb-num { position:absolute; right:14px; bottom:-8px; font-size:90px; font-weight:900; color:rgba(150,191,72,0.05); line-height:1; letter-spacing:-4px; }
+.pb-num { position:absolute; right:14px; bottom:-8px; font-size:90px; font-weight:900; color:rgba(150,191,72,0.4); line-height:1; letter-spacing:-4px; }
 .pb-emo { font-size:48px; z-index:1; filter:drop-shadow(0 0 20px rgba(150,191,72,0.3)); }
+.pb-emo img {width: 100%;object-fit: contain;opacity: 0.4;height: auto;}
 .proj-tech-row { position:absolute; bottom:10px; left:10px; right:10px; display:flex; gap:5px; flex-wrap:wrap; z-index:2; }
 .ptag { font-size:8px; padding:3px 8px; border-radius:5px; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); border:1px solid rgba(150,191,72,0.22); color:var(--g); letter-spacing:0.3px; }
 .proj-body { padding:24px; }
@@ -1143,7 +1142,7 @@ Slug: {{ product_title | handleize }}</textarea>
     <div class="exp-grid">
       <div class="exp-card revL">
         <div class="exp-top">
-          <div class="exp-emo">🌿</div>
+          <div class="exp-emo"><img src="/images/company_logo/babyorgano.png" alt="BabyOrgano"></div>
           <span class="exp-badge badge-now">● Current</span>
         </div>
         <div class="exp-co">BabyOrgano</div>
@@ -1168,7 +1167,7 @@ Slug: {{ product_title | handleize }}</textarea>
       </div>
       <div class="exp-card revR">
         <div class="exp-top">
-          <div class="exp-emo" style="background:linear-gradient(135deg,rgba(0,30,70,0.5),rgba(0,60,120,0.3));border-color:rgba(88,166,255,0.2);">💼</div>
+          <div class="exp-emo" style="background:linear-gradient(135deg,rgba(0,30,70,0.5),rgba(0,60,120,0.3));border-color:rgba(88,166,255,0.2);"><img src="/images/company_logo/alian_software_logo.webp" alt="BabyOrgano"></div>
           <span class="exp-badge badge-past">Past</span>
         </div>
         <div class="exp-co">Alian Software</div>
@@ -1203,9 +1202,8 @@ Slug: {{ product_title | handleize }}</textarea>
       <div class="proj-card rev">
         <div class="proj-banner pb1">
           <div class="pbg"></div>
-          <div class="pb-glow2"></div>
           <div class="pb-num">01</div>
-          <div class="pb-emo">🏪</div>
+          <div class="pb-emo"><img src="/images/banner_images/div.video-feel.png" alt="M2M Store"></div>
           <div class="proj-tech-row">
             <span class="ptag">Dawn Theme</span><span class="ptag">Metafields</span><span class="ptag">Data Migration</span><span class="ptag">QA</span>
           </div>
@@ -1225,9 +1223,8 @@ Slug: {{ product_title | handleize }}</textarea>
       <div class="proj-card rev d1">
         <div class="proj-banner pb2">
           <div class="pbg"></div>
-          <div class="pb-glow2"></div>
           <div class="pb-num">02</div>
-          <div class="pb-emo">🧡</div>
+          <div class="pb-emo"><img src="/images/banner_images/habibi.png" alt="Habibi NY"></div>
           <div class="proj-tech-row">
             <span class="ptag">Shopify</span><span class="ptag">DTC</span><span class="ptag">Performance</span><span class="ptag">Custom UX</span>
           </div>
@@ -1248,7 +1245,7 @@ Slug: {{ product_title | handleize }}</textarea>
   </div>
 </section>
 
-<section id="testimonials">
+<!-- <section id="testimonials">
   <div class="sec">
     <div class="sec-eyebrow rev">Social Proof</div>
     <h2 class="sec-h2 rev d1">What People <em>Say</em></h2>
@@ -1279,7 +1276,7 @@ Slug: {{ product_title | handleize }}</textarea>
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section id="education">
   <div class="sec">
@@ -1360,7 +1357,7 @@ Slug: {{ product_title | handleize }}</textarea>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
     </ul>
-    <div class="footer-copy">© 2025 Vivek Patel · Shopify Developer · Ahmedabad</div>
+    <div class="footer-copy">© 2026 Vivek Patel · Shopify Developer · Ahmedabad</div>
   </div>
 </footer>
 
