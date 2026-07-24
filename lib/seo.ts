@@ -151,3 +151,43 @@ export function projectJsonLd(project: {
     creator: { "@type": "Person", name: siteConfig.fullName },
   };
 }
+
+export function serviceJsonLd(service: { title: string; summary: string; slug: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: service.title,
+    name: service.title,
+    description: service.summary,
+    url: `${siteConfig.url}/services/${service.slug}`,
+    provider: { "@type": "Person", name: siteConfig.fullName, url: siteConfig.url },
+    areaServed: "Worldwide",
+  };
+}
+
+export function reviewsJsonLd(
+  reviews: { name: string; message: string; rating: number }[]
+) {
+  if (reviews.length === 0) return null;
+
+  const average = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.fullName,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: average.toFixed(1),
+      reviewCount: reviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    review: reviews.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.name },
+      reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5 },
+      reviewBody: r.message,
+    })),
+  };
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { buildMetadata, jsonLdScript, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, jsonLdScript, breadcrumbJsonLd, serviceJsonLd } from "@/lib/seo";
 import { services } from "@/content/services";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { LinkButton } from "@/components/ui/button";
@@ -16,15 +16,20 @@ export const metadata: Metadata = buildMetadata({
 
 export default function CustomWebsitesPage() {
   if (!service) notFound();
-  const jsonLd = breadcrumbJsonLd([
-    { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
-    { name: service.title, path: "/services/custom-websites" },
-  ]);
+  const jsonLd = [
+    serviceJsonLd(service),
+    breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: service.title, path: "/services/custom-websites" },
+    ]),
+  ];
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 md:py-16">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      {jsonLd.map((data, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(data) }} />
+      ))}
 
       <Reveal>
         <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">Service</p>

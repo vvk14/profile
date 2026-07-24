@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Star } from "lucide-react";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, jsonLdScript, reviewsJsonLd } from "@/lib/seo";
 import { getApprovedReviews } from "@/lib/reviews";
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { LinkButton } from "@/components/ui/button";
@@ -14,9 +14,14 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function TestimonialsPage() {
   const reviews = await getApprovedReviews();
+  const jsonLd = reviewsJsonLd(reviews);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 md:py-16">
+      {jsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      )}
+
       <Reveal className="text-center">
         <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">Social Proof</p>
         <h1 className="mt-2 font-display text-4xl font-semibold md:text-5xl">Client Testimonials</h1>

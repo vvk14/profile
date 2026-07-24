@@ -5,7 +5,7 @@ export const siteConfig = {
   role: "Shopify Frontend Developer",
   tagline: "I build premium Shopify storefronts that load fast, rank well, and convert.",
   description:
-    "Vivek Patel (VVKDEV) is a Shopify Theme Developer with 3+ years of experience building high-performance, SEO-optimized Shopify Plus storefronts, custom sections, and conversion-focused ecommerce UX for DTC brands.",
+    "Vivek Patel (VVKDEV) — Shopify Theme Developer building fast, SEO-optimized Shopify Plus storefronts that convert for DTC brands.",
   url: "https://vvkdev.in",
   email: "vikupatel2001@gmail.com",
   locale: "en_US",
