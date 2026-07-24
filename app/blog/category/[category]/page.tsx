@@ -16,7 +16,7 @@ export async function generateMetadata({
   const { category } = await params;
   const name = decodeURIComponent(category);
   return buildMetadata({
-    title: `${name} Articles — Blog`,
+    title: `${name} Blog Articles`,
     description: `Articles about ${name} on the VVKDEV blog.`,
     path: `/blog/category/${category}`,
   });

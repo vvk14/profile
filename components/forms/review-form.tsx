@@ -68,7 +68,7 @@ export function ReviewForm() {
       </div>
 
       <label className="block">
-        <span className="text-sm font-medium">Email (optional — for a thank-you reply)</span>
+        <span className="text-sm font-medium">Email (optional, for a thank-you reply)</span>
         <input {...register("email")} type="email" className="input mt-1.5" placeholder="you@company.com" />
         {errors.email && <span className="mt-1 block text-xs text-red-500">{errors.email.message}</span>}
       </label>

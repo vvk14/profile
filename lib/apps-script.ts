@@ -27,7 +27,7 @@ export async function postToAppsScript(action: "contact" | "review" | "comment" 
   if (!res.ok) throw new Error(`Apps Script request failed: ${res.status}`);
 
   // Apps Script's doPost always replies with HTTP 200, even on logical
-  // failures (bad secret, unknown action) — the real result is in the body.
+  // failures (bad secret, unknown action); the real result is in the body.
   const data = await res.json();
   if (data.ok === false) throw new Error(`Apps Script error: ${data.error}`);
   return data;

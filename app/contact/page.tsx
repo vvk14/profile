@@ -7,7 +7,7 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact — Start Your Shopify Project",
+  title: "Contact: Start Your Shopify Project",
   description: "Get in touch to discuss your Shopify development or custom website project. Free 30-minute consultation.",
   path: "/contact",
 });
@@ -19,7 +19,7 @@ export default function ContactPage() {
         <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">Contact</p>
         <h1 className="mt-2 font-display text-4xl font-semibold md:text-5xl">Let's Build Something Great</h1>
         <p className="mx-auto mt-4 max-w-xl text-[var(--fg-muted)]">
-          Tell me about your project — I'll reply within 1-2 business days with next steps.
+          Tell me about your project, and I'll reply within 1-2 business days with next steps.
         </p>
       </Reveal>
 

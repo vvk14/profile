@@ -30,9 +30,9 @@ export function BeforeAfterSlider({
       onMouseMove={(e) => e.buttons === 1 && updateFromClientX(e.clientX)}
       onTouchMove={(e) => updateFromClientX(e.touches[0].clientX)}
     >
-      <Image src={after} alt={`${alt} — after`} fill sizes="100vw" className="object-cover" />
+      <Image src={after} alt={`${alt} (after)`} fill sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${position}%` }}>
-        <Image src={before} alt={`${alt} — before`} fill sizes="100vw" className="object-cover" />
+        <Image src={before} alt={`${alt} (before)`} fill sizes="100vw" className="object-cover" />
       </div>
       <div
         className="absolute inset-y-0 flex w-1 -translate-x-1/2 cursor-ew-resize items-center justify-center bg-[var(--gold)]"

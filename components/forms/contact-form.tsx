@@ -47,7 +47,7 @@ export function ContactForm() {
         <CheckCircle2 className="text-[var(--gold)]" size={40} />
         <h3 className="mt-4 font-display text-xl font-semibold">Message sent!</h3>
         <p className="mt-2 text-[var(--fg-muted)]">
-          Thanks for reaching out — I'll get back to you within 1-2 business days.
+          Thanks for reaching out. I'll get back to you within 1-2 business days.
         </p>
         <Button className="mt-6" onClick={() => setStatus("idle")}>
           Send Another Message
@@ -58,7 +58,7 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-      {/* Honeypot — hidden from real users, bots tend to fill every field */}
+      {/* Honeypot: hidden from real users, bots tend to fill every field */}
       <input type="text" tabIndex={-1} autoComplete="off" className="hidden" {...register("company_website")} />
 
       <div className="grid gap-5 sm:grid-cols-2">

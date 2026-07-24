@@ -7,8 +7,8 @@ import { LinkButton } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Services — Shopify Development & Custom Websites",
-  description: "Shopify theme development, custom website builds, performance optimization, and SEO — see how I can help your store.",
+  title: "Services: Shopify Development & Custom Websites",
+  description: "Shopify theme development, custom website builds, performance optimization, and SEO. See how I can help your store.",
   path: "/services",
 });
 
@@ -28,7 +28,7 @@ export default function ServicesPage() {
         <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">Services</p>
         <h1 className="mt-2 font-display text-4xl font-semibold md:text-5xl">How I Can Help</h1>
         <p className="mx-auto mt-4 max-w-xl text-[var(--fg-muted)]">
-          From full Shopify rebuilds to focused performance fixes — here's what I offer.
+          From full Shopify rebuilds to focused performance fixes, here's what I offer.
         </p>
       </Reveal>
 

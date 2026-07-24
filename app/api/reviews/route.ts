@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Apps Script always writes Status=Pending — only rows manually flipped to
+    // Apps Script always writes Status=Pending; only rows manually flipped to
     // "Approved" in the sheet are ever surfaced by the approvedReviews endpoint.
     await postToAppsScript("review", data);
   } catch (err) {

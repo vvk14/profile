@@ -7,7 +7,7 @@ import { LinkButton } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Testimonials — What Clients Say",
+  title: "Testimonials: What Clients Say",
   description: "Reviews and testimonials from clients who've worked with VVKDEV on Shopify and custom website projects.",
   path: "/testimonials",
 });

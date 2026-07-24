@@ -13,7 +13,7 @@ export interface PostFaq {
 export interface PostMeta {
   slug: string;
   title: string;
-  /** Overrides the templated `%s — VVKDEV` title tag when the post title is already fully SEO-crafted. */
+  /** Overrides the templated site title tag when the post title is already fully SEO-crafted. */
   seoTitle?: string;
   description: string;
   date: string;

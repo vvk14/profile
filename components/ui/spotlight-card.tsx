@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 /**
  * Glass card with a mouse-follow gold glow on the border, the "magic card"
  * hover pattern popularized by 21st.dev / Magic UI component galleries.
- * Pure CSS custom properties — no extra animation library needed.
+ * Pure CSS custom properties; no extra animation library needed.
  */
 export function SpotlightCard({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);

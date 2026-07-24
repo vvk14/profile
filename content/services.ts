@@ -14,7 +14,7 @@ export const services: Service[] = [
     title: "Shopify Theme Development",
     shortTitle: "Shopify Development",
     summary:
-      "Custom Shopify OS 2.0 themes and sections built for Shopify Plus and standard stores — fast, flexible, and merchant-friendly.",
+      "Custom Shopify OS 2.0 themes and sections built for Shopify Plus and standard stores. Fast, flexible, and merchant-friendly.",
     icon: "shopping-bag",
     features: [
       "Custom Liquid theme development from scratch",
@@ -25,11 +25,11 @@ export const services: Service[] = [
       "Shopify Plus checkout customization",
     ],
     process: [
-      "Discovery — understand brand, catalog, and conversion goals",
-      "Design handoff — Figma to pixel-accurate Liquid",
-      "Build — modular, reusable sections and blocks",
-      "QA — cross-device, cross-browser testing",
-      "Launch — performance and SEO validation before go-live",
+      "Discovery: understand brand, catalog, and conversion goals",
+      "Design handoff: Figma to pixel-accurate Liquid",
+      "Build: modular, reusable sections and blocks",
+      "QA: cross-device, cross-browser testing",
+      "Launch: performance and SEO validation before go-live",
     ],
   },
   {
@@ -48,11 +48,11 @@ export const services: Service[] = [
       "Ongoing performance monitoring",
     ],
     process: [
-      "Scope — define pages, content model, and integrations",
-      "Architecture — choose the right stack for the goal",
-      "Build — component-driven, production-quality code",
-      "Optimize — Core Web Vitals and accessibility pass",
-      "Ship — deploy, monitor, iterate",
+      "Scope: define pages, content model, and integrations",
+      "Architecture: choose the right stack for the goal",
+      "Build: component-driven, production-quality code",
+      "Optimize: Core Web Vitals and accessibility pass",
+      "Ship: deploy, monitor, iterate",
     ],
   },
 ];
@@ -68,7 +68,7 @@ export const otherServices = [
   },
   {
     title: "Figma to Shopify",
-    summary: "Turn static design files into a fully functional, editable Shopify theme — no fidelity lost.",
+    summary: "Turn static design files into a fully functional, editable Shopify theme, with no fidelity lost.",
   },
   {
     title: "Ecommerce UX",

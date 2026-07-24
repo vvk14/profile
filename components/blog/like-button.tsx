@@ -29,7 +29,7 @@ export function LikeButton({ slug }: { slug: string }) {
       setLiked(true);
       localStorage.setItem(`liked:${slug}`, "1");
     } catch {
-      // silently ignore — liking is a nice-to-have, not critical
+      // silently ignore: liking is a nice-to-have, not critical
     } finally {
       setPending(false);
     }

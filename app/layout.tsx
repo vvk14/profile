@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     path: "/",
   }),
   metadataBase: new URL(siteConfig.url),
-  title: { default: siteConfig.title, template: `%s — ${siteConfig.name}` },
+  title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
   icons: {
     icon: "/images/favicon_io/favicon-32x32.png",
     apple: "/images/favicon_io/apple-touch-icon.png",

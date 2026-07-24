@@ -4,7 +4,7 @@ import { getAllPosts, getCategories } from "@/lib/blog";
 import { BlogListing } from "@/components/blog/blog-listing";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Blog — Shopify Development, Performance & SEO",
+  title: "Blog: Shopify Development, Performance & SEO",
   description: "Practical, field-tested articles on Shopify theme development, Core Web Vitals, and ecommerce SEO.",
   path: "/blog",
 });
@@ -21,7 +21,7 @@ export default function BlogPage() {
           Notes on Shopify, performance & SEO
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-[var(--fg-muted)]">
-          Practical write-ups from real client work — not theory.
+          Practical write-ups from real client work, not theory.
         </p>
       </div>
       <BlogListing posts={posts} categories={categories} />

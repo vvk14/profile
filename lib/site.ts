@@ -1,11 +1,11 @@
 export const siteConfig = {
   name: "VVKDEV",
   fullName: "Vivek Patel",
-  title: "VVKDEV — Shopify Developer & Ecommerce Frontend Engineer",
+  title: "VVKDEV: Shopify Developer & Ecommerce Frontend Engineer",
   role: "Shopify Frontend Developer",
   tagline: "I build premium Shopify storefronts that load fast, rank well, and convert.",
   description:
-    "Vivek Patel (VVKDEV) — Shopify Theme Developer building fast, SEO-optimized Shopify Plus storefronts that convert for DTC brands.",
+    "Vivek Patel (VVKDEV) is a Shopify Theme Developer building fast, SEO-optimized Shopify Plus storefronts that convert for DTC brands.",
   url: "https://vvkdev.in",
   email: "vikupatel2001@gmail.com",
   locale: "en_US",
@@ -22,8 +22,7 @@ export const siteConfig = {
   ],
   social: {
     github: "https://github.com/vvk14",
-    linkedin: "https://www.linkedin.com/",
-    twitter: "https://twitter.com/",
+    linkedin: "https://www.linkedin.com/in/vivek-patel-shopify/",
   },
   stats: [
     { label: "Years Experience", value: 3, suffix: "+" },

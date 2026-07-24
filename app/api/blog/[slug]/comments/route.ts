@@ -24,7 +24,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
   }
 
   try {
-    // Apps Script always writes Status=Pending — only rows manually flipped
+    // Apps Script always writes Status=Pending; only rows manually flipped
     // to "Approved" in the sheet are ever surfaced by the GET above.
     await postToAppsScript("comment", data);
   } catch (err) {

@@ -1,7 +1,7 @@
-# Setup — Google Sheets + Auto-Email (Google Apps Script)
+# Setup, Google Sheets + Auto-Email (Google Apps Script)
 
-The contact form and review system are fully built and working right now —
-without any setup, submissions are validated, honeypot-checked, and logged to
+The contact form and review system are fully built and working right now.
+Without any setup, submissions are validated, honeypot-checked, and logged to
 the server console instead of being saved/emailed. Follow the steps below to
 connect them to a real Google Sheet with automatic emails, using **Google
 Apps Script** (no GCP console, no service account, no paid API needed).
@@ -20,14 +20,14 @@ Your website  →  POST /api/contact or /api/reviews
    your Google Sheet        Gmail (MailApp)
 ```
 
-The site never talks to Google's APIs directly — it just POSTs JSON to one
+The site never talks to Google's APIs directly, it just POSTs JSON to one
 URL that you control. All the Sheets/Gmail logic lives in
 `apps-script/Code.gs`, which you paste into a script attached to your sheet.
 
 ## 1. Create the Google Sheet
 
 1. Create a new, blank Google Sheet (name it anything, e.g. "VVKDEV Leads").
-2. That's it — you don't need to create tabs or headers manually. The script
+2. That's it, you don't need to create tabs or headers manually. The script
    auto-creates a **Contact Submissions** tab and a **Reviews** tab (with
    header rows) the first time each one is used.
 
@@ -45,7 +45,7 @@ URL that you control. All the Sheets/Gmail logic lives in
 2. Scroll to **Script Properties → Add script property**, and add two:
    - `SHARED_SECRET` → any long random string you make up (e.g. `openssl rand -hex 16`,
      or just mash the keyboard). This is the password your website uses to
-     prove it's allowed to write to your sheet — keep it private.
+     prove it's allowed to write to your sheet, keep it private.
    - `NOTIFY_EMAIL` → your email address (`vikupatel2001@gmail.com`), where
      new contact/review notifications get sent.
 
@@ -57,8 +57,8 @@ URL that you control. All the Sheets/Gmail logic lives in
    - **Execute as:** Me (your Google account)
    - **Who has access:** Anyone
 4. Click **Deploy**. The first time, Google will ask you to authorize the
-   script (it needs permission to edit the sheet and send email as you) —
-   click through the "unverified app" warning, it's your own script.
+   script (it needs permission to edit the sheet and send email as you).
+   Click through the "unverified app" warning; it's your own script.
 5. Copy the **Web app URL** it gives you (ends in `/exec`).
 
 ## 5. Set environment variables
@@ -87,32 +87,32 @@ still missing or the dev server needs a restart to pick up `.env.local`.
 ## 7. Approving reviews and comments
 
 Reviews land in the **Reviews** tab, and blog comments land in the **Blog
-Comments** tab — both with `Status = Pending` and never shown on the site in
+Comments** tab, both with `Status = Pending` and never shown on the site in
 that state. To publish one, open the sheet and change that row's `Status`
 cell to exactly `Approved` (case-insensitive). Reviews re-check hourly;
 comments re-check every ~2 minutes.
 
-Blog likes need no approval — every click on a post's like button increments
+Blog likes need no approval, every click on a post's like button increments
 that post's row in the **Blog Likes** tab directly.
 
 ## Redeploying after you edit Code.gs
 
-Apps Script Web Apps are versioned — editing the script does **not**
+Apps Script Web Apps are versioned, editing the script does **not**
 update the live URL automatically. After **any** change to `Code.gs`
 (including pulling in updates from this repo, like the comment/like support):
 **Deploy → Manage deployments → edit (pencil) → New version → Deploy**.
 
 If comments or likes return a "Failed to submit" error on the live site, this
-is almost always why — the deployed script is still an older version that
+is almost always why, the deployed script is still an older version that
 doesn't recognize the `comment`/`like` actions yet.
 
 ## Where things live
 
-- `apps-script/Code.gs` — the whole backend: sheet writes + email sending + templates.
-- `lib/apps-script.ts` — the one file on the Next.js side that calls it.
-- `lib/reviews.ts` — reads approved reviews (falls back to `content/testimonials.ts`
+- `apps-script/Code.gs`: the whole backend: sheet writes + email sending + templates.
+- `lib/apps-script.ts`: the one file on the Next.js side that calls it.
+- `lib/reviews.ts`: reads approved reviews (falls back to `content/testimonials.ts`
   if the script isn't configured yet, or returns nothing).
-- `app/api/contact/route.ts`, `app/api/reviews/route.ts` — validate + forward to Apps Script.
-- `app/api/reviews/approved/route.ts` — public read endpoint used by the site.
-- `app/api/blog/[slug]/comments/route.ts` — GET approved comments / POST a new one (Pending).
-- `app/api/blog/[slug]/like/route.ts` — GET the like count / POST to increment it.
+- `app/api/contact/route.ts`, `app/api/reviews/route.ts`: validate + forward to Apps Script.
+- `app/api/reviews/approved/route.ts`: public read endpoint used by the site.
+- `app/api/blog/[slug]/comments/route.ts`: GET approved comments / POST a new one (Pending).
+- `app/api/blog/[slug]/like/route.ts`: GET the like count / POST to increment it.

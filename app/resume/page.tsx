@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Download } from "lucide-react";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Resume — Vivek Patel",
+  title: "Resume: Vivek Patel",
   description: "Resume and downloadable CV for Vivek Patel, Shopify Frontend Developer.",
   path: "/resume",
 });
@@ -34,7 +34,7 @@ export default function ResumePage() {
           {experience.map((job) => (
             <GlassPanel key={job.company} className="p-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-medium">{job.role} — {job.company}</h3>
+                <h3 className="font-medium">{job.role}, {job.company}</h3>
                 <span className="text-sm text-[var(--fg-muted)]">{job.period}</span>
               </div>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--fg-muted)]">

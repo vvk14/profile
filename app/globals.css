@@ -10,7 +10,7 @@
   --glass-bg: rgba(255, 255, 255, 0.55);
   --glass-border: rgba(10, 10, 10, 0.08);
 
-  /* #a16207 passes 4.5:1 against white — dark mode uses the lighter,
+  /* #a16207 passes 4.5:1 against white. Dark mode uses the lighter,
      more decorative gold since the backdrop is near-black instead. */
   --gold: #a16207;
   --gold-light: #c9a35a;

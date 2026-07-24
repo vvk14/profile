@@ -39,7 +39,7 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mx-auto mt-4 max-w-xl text-sm text-[var(--fg-muted)] md:mt-6 md:text-lg"
         >
-          I'm {siteConfig.fullName} — a Shopify theme developer crafting pixel-perfect Liquid
+          I'm {siteConfig.fullName}, a Shopify theme developer crafting pixel-perfect Liquid
           storefronts, custom sections, and Core Web Vitals-optimized experiences for DTC brands.
         </motion.p>
 

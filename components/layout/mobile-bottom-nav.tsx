@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Home, Layers, Sparkles, NotebookText, Mail } from "lucide-react";
 import { mobileNavLinks } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useHideOnScroll } from "@/lib/use-hide-on-scroll";
 
 const icons = {
   home: Home,
@@ -17,11 +18,15 @@ const icons = {
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const hidden = useHideOnScroll();
 
   return (
     <nav
       aria-label="Primary"
-      className="glass fixed inset-x-3 bottom-3 z-50 flex items-center justify-between rounded-[28px] px-2 py-2 md:hidden"
+      className={cn(
+        "glass fixed inset-x-3 bottom-3 z-50 flex items-center justify-between rounded-[28px] px-2 py-2 transition-transform duration-300 md:hidden",
+        hidden ? "translate-y-[calc(100%+24px)]" : "translate-y-0"
+      )}
     >
       {mobileNavLinks.map((link) => {
         const Icon = icons[link.icon];

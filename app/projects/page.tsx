@@ -4,7 +4,7 @@ import { projects } from "@/content/projects";
 import { ProjectCard } from "@/components/projects/project-card";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Projects — Shopify & Custom Website Work",
+  title: "Projects: Shopify & Custom Website Work",
   description: "Selected Shopify storefront builds and custom website projects, with results and technical breakdowns.",
   path: "/projects",
 });

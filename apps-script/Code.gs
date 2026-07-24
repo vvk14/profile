@@ -1,5 +1,5 @@
 /**
- * VVKDEV — Contact, Review, Comment & Like backend (Google Apps Script)
+ * VVKDEV: Contact, Review, Comment & Like backend (Google Apps Script)
  *
  * Paste this whole file into the Apps Script project bound to your Google
  * Sheet (Extensions → Apps Script). Full setup steps: see ../SETUP.md.
@@ -158,7 +158,7 @@ function handleContact_(body) {
   if (body.email) {
     MailApp.sendEmail({
       to: body.email,
-      subject: "Thanks for reaching out — VVKDEV",
+      subject: "Thanks for reaching out | VVKDEV",
       htmlBody: contactConfirmationTemplate_(body.name),
     });
   }
@@ -189,7 +189,7 @@ function handleReview_(body) {
   if (body.email) {
     MailApp.sendEmail({
       to: body.email,
-      subject: "Thank you for your review — VVKDEV",
+      subject: "Thank you for your review | VVKDEV",
       htmlBody: reviewThankYouTemplate_(body.name),
     });
   }
@@ -257,7 +257,7 @@ function escapeHtml_(str) {
     .replace(/>/g, "&gt;");
 }
 
-/* ---------- Email templates (inline CSS — required for email clients) ---------- */
+/* ---------- Email templates (inline CSS, required for email clients) ---------- */
 
 function emailShell_(preheader, bodyHtml) {
   return `
@@ -320,7 +320,7 @@ function contactConfirmationTemplate_(name) {
      <p style="margin:0 0 16px;color:#444;">I've received your message and will get back to you within 1–2 business days with next steps.</p>
      <p style="margin:0 0 20px;color:#444;">In the meantime, feel free to take a look at some recent work:</p>
      <a href="https://vvkdev.in/projects" style="display:inline-block;background:linear-gradient(90deg,#a16207,#c9a35a);color:#0a0a0a;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:999px;font-size:14px;">View Projects →</a>
-     <p style="margin:24px 0 0;color:#888;font-size:13px;">— Vivek Patel, VVKDEV</p>`
+     <p style="margin:24px 0 0;color:#888;font-size:13px;">Vivek Patel, VVKDEV</p>`
   );
 }
 
@@ -329,6 +329,6 @@ function reviewThankYouTemplate_(name) {
     "Thank you for your review",
     `<h2 style="margin:0 0 12px;font-size:20px;">Thank you, ${escapeHtml_(name)}!</h2>
      <p style="margin:0 0 16px;color:#444;">Your review means a lot. It's now pending a quick check and will appear on the site once approved.</p>
-     <p style="margin:24px 0 0;color:#888;font-size:13px;">— Vivek Patel, VVKDEV</p>`
+     <p style="margin:24px 0 0;color:#888;font-size:13px;">Vivek Patel, VVKDEV</p>`
   );
 }

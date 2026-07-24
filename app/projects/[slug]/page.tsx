@@ -25,7 +25,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   return buildMetadata({
-    title: `${project.title} — Case Study`,
+    title: `${project.title}: Case Study`,
     description: project.summary,
     path: `/projects/${project.slug}`,
     image: `${siteConfig.url}${project.coverImage}`,

@@ -22,7 +22,7 @@ export const testimonials: Testimonial[] = [
     name: "Raj K.",
     role: "Project Lead, Alian Software",
     quote:
-      "Excellent Shopify knowledge — especially with metafields and Liquid. Delivered exactly what we needed and was easy to communicate with. Would hire again.",
+      "Excellent Shopify knowledge, especially with metafields and Liquid. Delivered exactly what we needed and was easy to communicate with. Would hire again.",
     rating: 5,
   },
   {

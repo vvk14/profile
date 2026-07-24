@@ -9,7 +9,7 @@ import { GlassPanel } from "@/components/ui/glass-panel";
 import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About — Vivek Patel, Shopify Developer",
+  title: "About Vivek Patel, Shopify Developer",
   description: "3+ years building high-performance Shopify storefronts. Learn about my background, skills, and experience.",
   path: "/about",
 });
@@ -28,7 +28,7 @@ export default function AboutPage() {
         <div>
           <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">About Me</p>
           <h1 className="mt-2 font-display text-3xl font-semibold md:text-4xl">
-            Hi, I'm {siteConfig.fullName} — I build Shopify storefronts for a living.
+            Hi, I'm {siteConfig.fullName}. I build Shopify storefronts for a living.
           </h1>
           <p className="mt-4 text-[var(--fg-muted)]">{siteConfig.description}</p>
           <div className="mt-6">

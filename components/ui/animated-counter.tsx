@@ -5,8 +5,8 @@ import { useInView, useMotionValue, useSpring } from "framer-motion";
 
 /**
  * Renders the real final value in the initial markup (so crawlers and
- * no-JS users always see the correct number), then — only after mount —
- * resets to 0 and animates back up as a purely visual enhancement.
+ * no-JS users always see the correct number). Only after mount does it
+ * reset to 0 and animate back up, as a purely visual enhancement.
  */
 export function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);

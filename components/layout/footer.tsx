@@ -19,6 +19,26 @@ export function Footer() {
             >
               {siteConfig.email}
             </a>
+            <div className="mt-4 flex items-center gap-2">
+              <a
+                href={siteConfig.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Vivek Patel on LinkedIn"
+                className="flex size-8 items-center justify-center rounded-full border border-[var(--border)] text-xs font-semibold hover:border-[var(--gold)] hover:text-[var(--gold)]"
+              >
+                in
+              </a>
+              <a
+                href={siteConfig.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Vivek Patel on GitHub"
+                className="flex size-8 items-center justify-center rounded-full border border-[var(--border)] text-xs font-semibold hover:border-[var(--gold)] hover:text-[var(--gold)]"
+              >
+                gh
+              </a>
+            </div>
           </div>
 
           {Object.entries(footerLinks).map(([heading, links]) => (

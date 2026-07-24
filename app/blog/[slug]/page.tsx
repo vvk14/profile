@@ -39,8 +39,8 @@ export async function generateMetadata({
     image: post.coverImage.startsWith("http") ? post.coverImage : `${siteConfig.url}${post.coverImage}`,
   });
 
-  // A pillar-style post already ships a fully SEO-crafted title — skip the
-  // "— VVKDEV" site suffix so it isn't pushed past Google's ~60-char cutoff.
+  // A pillar-style post already ships a fully SEO-crafted title, so skip the
+  // "- VVKDEV" site suffix; it would push the title past Google's ~60-char cutoff.
   if (post.seoTitle) {
     meta.title = { absolute: post.seoTitle };
   }

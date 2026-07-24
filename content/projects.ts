@@ -20,19 +20,19 @@ export interface Project {
 }
 
 /**
- * Placeholder / real-title project data — see
+ * Placeholder / real-title project data. See
  * public/images/projects/_TEMPLATE/README.md for how to add or replace
  * a project without touching any component code.
  */
 export const projects: Project[] = [
   {
     slug: "m2m-store",
-    title: "M2M Store — Full Theme Redevelopment",
+    title: "M2M Store: Full Theme Redevelopment",
     client: "Missionary to Madame (AU)",
     category: "Shopify Redevelopment",
     period: "Dec 2023",
     summary:
-      "Full store redevelopment on Shopify Dawn — brand-aligned customization, complete product & metafield migration, and cross-browser QA.",
+      "Full store redevelopment on Shopify Dawn, with brand-aligned customization, complete product & metafield migration, and cross-browser QA.",
     coverImage: "/images/projects/m2m-store/cover.png",
     gallery: ["/images/projects/m2m-store/cover.png"],
     techStack: ["Shopify", "Dawn Theme", "Liquid", "Metafields", "Data Migration"],
@@ -57,7 +57,7 @@ export const projects: Project[] = [
   },
   {
     slug: "habibi-ny",
-    title: "Habibi NY — DTC Storefront Build",
+    title: "Habibi NY: DTC Storefront Build",
     client: "DTC Garage",
     category: "Shopify DTC Build",
     period: "Feb – Apr 2024",
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     client: "Add client name",
     category: "Shopify / Custom Website",
     period: "2026",
-    summary: "Replace this placeholder — see public/images/projects/_TEMPLATE/README.md for the exact steps.",
+    summary: "Replace this placeholder. See public/images/projects/_TEMPLATE/README.md for the exact steps.",
     coverImage: "/images/projects/_TEMPLATE/cover-placeholder.svg",
     gallery: [],
     techStack: ["Shopify", "Liquid"],
