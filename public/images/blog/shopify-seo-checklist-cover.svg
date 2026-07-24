@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#0a0a0a"/>
+  <defs>
+    <radialGradient id="g" cx="20%" cy="15%" r="75%">
+      <stop offset="0%" stop-color="#c9a35a" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="85%" cy="90%" r="60%">
+      <stop offset="0%" stop-color="#8a8f98" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect width="1600" height="900" fill="url(#g2)"/>
+  <text x="90" y="360" font-family="Arial, sans-serif" font-size="34" letter-spacing="4" fill="#c9a35a">VVKDEV · SEO GUIDE</text>
+  <text x="90" y="450" font-family="Georgia, serif" font-size="72" font-weight="700" fill="#f5f5f7">The Complete</text>
+  <text x="90" y="530" font-family="Georgia, serif" font-size="72" font-weight="700" fill="#f5f5f7">Shopify SEO Checklist</text>
+  <text x="90" y="600" font-family="Arial, sans-serif" font-size="32" fill="#b8bcc4">127 proven ways to rank higher on Google · 2026</text>
+</svg>

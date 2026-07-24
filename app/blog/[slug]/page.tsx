@@ -8,7 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
 import { getAllPosts, getPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { extractToc } from "@/lib/toc";
-import { buildMetadata, jsonLdScript, blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, jsonLdScript, blogPostingJsonLd, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 import { mdxComponents } from "@/components/blog/mdx-components";
@@ -30,12 +30,20 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  return buildMetadata({
+  const meta = buildMetadata({
     title: post.title,
     description: post.description,
     path: `/blog/${post.slug}`,
     image: post.coverImage.startsWith("http") ? post.coverImage : `${siteConfig.url}${post.coverImage}`,
   });
+
+  // A pillar-style post already ships a fully SEO-crafted title — skip the
+  // "— VVKDEV" site suffix so it isn't pushed past Google's ~60-char cutoff.
+  if (post.seoTitle) {
+    meta.title = { absolute: post.seoTitle };
+  }
+
+  return meta;
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -53,6 +61,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       { name: "Blog", path: "/blog" },
       { name: post.title, path: `/blog/${post.slug}` },
     ]),
+    ...(post.faqs && post.faqs.length > 0 ? [faqJsonLd(post.faqs)] : []),
   ];
 
   return (

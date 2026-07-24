@@ -5,15 +5,23 @@ import readingTime from "reading-time";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
+export interface PostFaq {
+  question: string;
+  answer: string;
+}
+
 export interface PostMeta {
   slug: string;
   title: string;
+  /** Overrides the templated `%s — VVKDEV` title tag when the post title is already fully SEO-crafted. */
+  seoTitle?: string;
   description: string;
   date: string;
   category: string;
   tags: string[];
   coverImage: string;
   readingTime: string;
+  faqs?: PostFaq[];
 }
 
 export interface Post extends PostMeta {
@@ -28,12 +36,14 @@ function readPostFile(fileName: string): Post {
   return {
     slug,
     title: data.title,
+    seoTitle: data.seoTitle,
     description: data.description,
     date: data.date,
     category: data.category ?? "General",
     tags: data.tags ?? [],
     coverImage: data.coverImage ?? "/images/og-default.svg",
     readingTime: readingTime(content).text,
+    faqs: data.faqs,
     content,
   };
 }
