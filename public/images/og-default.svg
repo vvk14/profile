@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <defs>
+    <radialGradient id="g" cx="25%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#c9a35a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#f5f5f7">VVKDEV</text>
+  <text x="80" y="360" font-family="Arial, sans-serif" font-size="28" fill="#c9a35a">Shopify Developer &amp; Ecommerce Frontend Engineer</text>
+</svg>

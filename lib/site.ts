@@ -1,0 +1,71 @@
+export const siteConfig = {
+  name: "VVKDEV",
+  fullName: "Vivek Patel",
+  title: "VVKDEV — Shopify Developer & Ecommerce Frontend Engineer",
+  role: "Shopify Frontend Developer",
+  tagline: "I build premium Shopify storefronts that load fast, rank well, and convert.",
+  description:
+    "Vivek Patel (VVKDEV) is a Shopify Theme Developer with 3+ years of experience building high-performance, SEO-optimized Shopify Plus storefronts, custom sections, and conversion-focused ecommerce UX for DTC brands.",
+  url: "https://vvkdev.com",
+  email: "vikupatel2001@gmail.com",
+  locale: "en_US",
+  keywords: [
+    "Shopify Developer",
+    "Shopify Theme Development",
+    "Shopify Liquid Developer",
+    "Shopify Plus Developer",
+    "Custom Shopify Sections",
+    "Ecommerce Frontend Engineer",
+    "Core Web Vitals Optimization",
+    "Figma to Shopify",
+    "Shopify SEO",
+  ],
+  social: {
+    github: "https://github.com/vvk14",
+    linkedin: "https://www.linkedin.com/",
+    twitter: "https://twitter.com/",
+  },
+  stats: [
+    { label: "Years Experience", value: 3, suffix: "+" },
+    { label: "Stores Delivered", value: 10, suffix: "+" },
+    { label: "Avg. PageSpeed Score", value: 95, suffix: "" },
+    { label: "Companies", value: 2, suffix: "" },
+  ],
+} as const;
+
+export const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
+
+export const mobileNavLinks = [
+  { label: "Home", href: "/", icon: "home" },
+  { label: "Projects", href: "/projects", icon: "layers" },
+  { label: "Services", href: "/services", icon: "sparkles" },
+  { label: "Blog", href: "/blog", icon: "notebook" },
+  { label: "Contact", href: "/contact", icon: "mail" },
+] as const;
+
+export const footerLinks = {
+  Explore: [
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Projects", href: "/projects" },
+    { label: "Case Studies", href: "/case-studies" },
+  ],
+  Resources: [
+    { label: "Blog", href: "/blog" },
+    { label: "Testimonials", href: "/testimonials" },
+    { label: "Leave a Review", href: "/reviews/submit" },
+    { label: "Resume", href: "/resume" },
+    { label: "FAQ", href: "/services#faq" },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Contact", href: "/contact" },
+  ],
+};

@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ffffff;
+  --bg-elevated: #f5f5f7;
+  --bg-inverse: #0a0a0a;
+  --fg: #0a0a0a;
+  --fg-muted: #6e6e73;
+  --border: rgba(10, 10, 10, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(10, 10, 10, 0.08);
+
+  /* #a16207 passes 4.5:1 against white — dark mode uses the lighter,
+     more decorative gold since the backdrop is near-black instead. */
+  --gold: #a16207;
+  --gold-light: #c9a35a;
+  --silver: #8a8f98;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --bg-elevated: #121212;
+  --bg-inverse: #ffffff;
+  --fg: #f5f5f7;
+  --fg-muted: #98989d;
+  --border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(18, 18, 18, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --gold: #c9a35a;
+  --gold-light: #e8c77e;
+  --silver: #b8bcc4;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-inverse: var(--bg-inverse);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-border: var(--border);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-silver: var(--silver);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
+  --font-mono: ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--gold);
+  color: #0a0a0a;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at 20% 20%, rgba(201,163,90,0.18), transparent 45%),
+              radial-gradient(circle at 80% 30%, rgba(184,188,196,0.12), transparent 40%),
+              radial-gradient(circle at 50% 90%, rgba(201,163,90,0.10), transparent 50%);
+  background-size: 200% 200%;
+  animation: gradient-shift 18s ease infinite;
+}
+
+.input {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  padding: 0.65rem 0.9rem;
+  font-size: 14px;
+  color: var(--fg);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--gold);
 }

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <rect width="1600" height="1000" fill="#0a0a0a"/>
+  <rect x="0" y="0" width="1600" height="1000" fill="url(#g)" opacity="0.5"/>
+  <defs>
+    <radialGradient id="g" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#c9a35a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <text x="800" y="500" font-family="Arial, sans-serif" font-size="42" fill="#c9a35a" text-anchor="middle" opacity="0.8">Project Image Coming Soon</text>
+</svg>
