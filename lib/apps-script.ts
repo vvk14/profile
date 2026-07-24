@@ -1,8 +1,8 @@
 /**
- * Talks to the Google Apps Script Web App that backs the contact form and
- * review system (see apps-script/Code.gs + SETUP.md). Until GOOGLE_SCRIPT_URL
- * and GOOGLE_SCRIPT_SECRET are set, calls log and no-op instead of throwing,
- * so the forms stay fully clickable during development.
+ * Talks to the Google Apps Script Web App that backs the contact form,
+ * review system, blog comments, and blog likes (see apps-script/Code.gs +
+ * SETUP.md). Until GOOGLE_SCRIPT_URL and GOOGLE_SCRIPT_SECRET are set, calls
+ * log and no-op instead of throwing, so forms stay fully clickable in dev.
  */
 
 const SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
@@ -12,10 +12,10 @@ function isConfigured() {
   return Boolean(SCRIPT_URL && SCRIPT_SECRET);
 }
 
-export async function postToAppsScript(action: "contact" | "review", payload: Record<string, unknown>) {
+export async function postToAppsScript(action: "contact" | "review" | "comment" | "like", payload: Record<string, unknown>) {
   if (!isConfigured()) {
     console.warn(`[apps-script:stub] Would POST action="${action}":`, payload);
-    return { stubbed: true };
+    return { stubbed: true, count: 1 };
   }
 
   const res = await fetch(SCRIPT_URL!, {
@@ -33,6 +33,19 @@ export async function postToAppsScript(action: "contact" | "review", payload: Re
   return data;
 }
 
+async function getFromAppsScript(action: string, params: Record<string, string> = {}, revalidate = 300) {
+  if (!SCRIPT_URL) return null;
+
+  try {
+    const query = new URLSearchParams({ action, ...params }).toString();
+    const res = await fetch(`${SCRIPT_URL}?${query}`, { next: { revalidate } });
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export interface ApprovedReview {
   name: string;
   company: string;
@@ -42,16 +55,22 @@ export interface ApprovedReview {
 }
 
 export async function getApprovedReviewsFromScript(): Promise<ApprovedReview[] | null> {
-  if (!SCRIPT_URL) return null;
+  const data = await getFromAppsScript("approvedReviews", {}, 3600);
+  return data?.reviews ?? null;
+}
 
-  try {
-    const res = await fetch(`${SCRIPT_URL}?action=approvedReviews`, {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.reviews ?? [];
-  } catch {
-    return null;
-  }
+export interface ApprovedComment {
+  name: string;
+  comment: string;
+  date: string;
+}
+
+export async function getApprovedComments(slug: string): Promise<ApprovedComment[]> {
+  const data = await getFromAppsScript("approvedComments", { slug }, 120);
+  return data?.comments ?? [];
+}
+
+export async function getLikeCount(slug: string): Promise<number> {
+  const data = await getFromAppsScript("likeCount", { slug }, 30);
+  return data?.count ?? 0;
 }

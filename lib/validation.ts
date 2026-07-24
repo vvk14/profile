@@ -25,3 +25,12 @@ export const reviewSchema = z.object({
 });
 
 export type ReviewFormValues = z.infer<typeof reviewSchema>;
+
+export const commentSchema = z.object({
+  slug: z.string().min(1).max(200),
+  name: z.string().min(2, "Please enter your name").max(100),
+  comment: z.string().min(3, "Comment is too short").max(1000),
+  company_website: z.string().max(0).optional().or(z.literal("")), // honeypot
+});
+
+export type CommentFormValues = z.infer<typeof commentSchema>;

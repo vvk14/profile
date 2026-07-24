@@ -16,6 +16,8 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { ShareButtons } from "@/components/blog/share-buttons";
 import { BlogCard } from "@/components/blog/blog-card";
+import { LikeButton } from "@/components/blog/like-button";
+import { CommentsSection } from "@/components/blog/comments-section";
 
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -86,12 +88,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <span>·</span>
             <span>{post.readingTime}</span>
           </div>
-          <ShareButtons slug={post.slug} title={post.title} />
+          <div className="flex items-center gap-3">
+            <LikeButton slug={post.slug} />
+            <ShareButtons slug={post.slug} title={post.title} />
+          </div>
         </div>
       </header>
 
       <div className="relative mt-10 aspect-[21/9] overflow-hidden rounded-[var(--radius-lg)]">
-        <Image src={post.coverImage} alt={post.title} fill sizes="100vw" className="object-cover" priority />
+        <Image src={post.coverImage} alt={post.coverImageAlt} fill sizes="100vw" className="object-cover" priority />
       </div>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_260px]">
@@ -111,6 +116,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <TableOfContents items={toc} />
         </aside>
       </div>
+
+      <CommentsSection slug={post.slug} />
 
       {related.length > 0 && (
         <div className="mt-10 md:mt-20">

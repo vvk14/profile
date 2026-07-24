@@ -12,7 +12,7 @@ export function BlogCard({ post }: { post: PostMeta }) {
         <div className="relative aspect-[16/9] overflow-hidden">
           <Image
             src={post.coverImage}
-            alt={post.title}
+            alt={post.coverImageAlt}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"

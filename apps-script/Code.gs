@@ -1,5 +1,5 @@
 /**
- * VVKDEV — Contact & Review backend (Google Apps Script)
+ * VVKDEV — Contact, Review, Comment & Like backend (Google Apps Script)
  *
  * Paste this whole file into the Apps Script project bound to your Google
  * Sheet (Extensions → Apps Script). Full setup steps: see ../SETUP.md.
@@ -7,11 +7,17 @@
  * Handles:
  *   - POST action=contact  → append row to "Contact Submissions", email you + auto-reply to the client
  *   - POST action=review   → append row to "Reviews" (Status=Pending), thank-you email to the reviewer
- *   - GET  action=approvedReviews → public JSON of rows where Status=Approved (for the live site)
+ *   - POST action=comment  → append row to "Blog Comments" (Status=Pending), notify you
+ *   - POST action=like     → increment the like counter for a blog post slug in "Blog Likes"
+ *   - GET  action=approvedReviews          → public JSON of rows where Status=Approved
+ *   - GET  action=approvedComments&slug=x  → public JSON of approved comments for one post
+ *   - GET  action=likeCount&slug=x         → current like count for one post
  */
 
 const CONTACT_SHEET = "Contact Submissions";
 const REVIEWS_SHEET = "Reviews";
+const COMMENTS_SHEET = "Blog Comments";
+const LIKES_SHEET = "Blog Likes";
 
 const CONTACT_HEADERS = [
   "Timestamp", "Name", "Email", "Phone", "Company",
@@ -20,6 +26,8 @@ const CONTACT_HEADERS = [
 const REVIEWS_HEADERS = [
   "Timestamp", "Name", "Company", "Rating", "Message", "PhotoUrl", "Status", "Email",
 ];
+const COMMENTS_HEADERS = ["Timestamp", "Slug", "Name", "Comment", "Status"];
+const LIKES_HEADERS = ["Slug", "Count"];
 
 function getSecret_() {
   return PropertiesService.getScriptProperties().getProperty("SHARED_SECRET");
@@ -64,6 +72,16 @@ function doPost(e) {
       return jsonResponse_({ ok: true });
     }
 
+    if (body.action === "comment") {
+      handleComment_(body);
+      return jsonResponse_({ ok: true });
+    }
+
+    if (body.action === "like") {
+      const count = handleLike_(body.slug);
+      return jsonResponse_({ ok: true, count: count });
+    }
+
     return jsonResponse_({ ok: false, error: "Unknown action" });
   } catch (err) {
     return jsonResponse_({ ok: false, error: String(err) });
@@ -87,6 +105,28 @@ function doGet(e) {
       }));
 
     return jsonResponse_({ reviews: approved });
+  }
+
+  if (e.parameter.action === "approvedComments") {
+    const slug = e.parameter.slug || "";
+    const sheet = getOrCreateSheet_(COMMENTS_SHEET, COMMENTS_HEADERS);
+    const rows = sheet.getDataRange().getValues();
+    const [, ...data] = rows;
+
+    const approved = data
+      .filter((row) => row[1] === slug && String(row[4]).toLowerCase() === "approved")
+      .map((row) => ({
+        name: row[2],
+        comment: row[3],
+        date: row[0],
+      }));
+
+    return jsonResponse_({ comments: approved });
+  }
+
+  if (e.parameter.action === "likeCount") {
+    const slug = e.parameter.slug || "";
+    return jsonResponse_({ count: getLikeCount_(slug) });
   }
 
   return jsonResponse_({ ok: false, error: "Unknown action" });
@@ -153,6 +193,61 @@ function handleReview_(body) {
       htmlBody: reviewThankYouTemplate_(body.name),
     });
   }
+}
+
+function handleComment_(body) {
+  const sheet = getOrCreateSheet_(COMMENTS_SHEET, COMMENTS_HEADERS);
+  sheet.appendRow([
+    new Date(),
+    body.slug || "",
+    body.name || "",
+    body.comment || "",
+    "Pending",
+  ]);
+
+  const notifyEmail = getNotifyEmail_();
+  if (notifyEmail) {
+    MailApp.sendEmail({
+      to: notifyEmail,
+      subject: `New comment from ${body.name} on "${body.slug}"`,
+      htmlBody: `<p><strong>${escapeHtml_(body.name)}</strong> commented on <strong>${escapeHtml_(body.slug)}</strong>:</p><p>${escapeHtml_(body.comment)}</p><p>Open the "${COMMENTS_SHEET}" tab and change Status to <strong>Approved</strong> to publish it.</p>`,
+    });
+  }
+}
+
+/**
+ * Increments the like counter for a slug. Uses a script lock so concurrent
+ * likes from different visitors don't overwrite each other's count.
+ */
+function handleLike_(slug) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getOrCreateSheet_(LIKES_SHEET, LIKES_HEADERS);
+    const rows = sheet.getDataRange().getValues();
+
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i][0] === slug) {
+        const newCount = (Number(rows[i][1]) || 0) + 1;
+        sheet.getRange(i + 1, 2).setValue(newCount);
+        return newCount;
+      }
+    }
+
+    sheet.appendRow([slug, 1]);
+    return 1;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getLikeCount_(slug) {
+  const sheet = getOrCreateSheet_(LIKES_SHEET, LIKES_HEADERS);
+  const rows = sheet.getDataRange().getValues();
+  for (let i = 1; i < rows.length; i++) {
+    if (rows[i][0] === slug) return Number(rows[i][1]) || 0;
+  }
+  return 0;
 }
 
 function escapeHtml_(str) {

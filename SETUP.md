@@ -84,18 +84,27 @@ Submit the contact form or `/reviews/submit`. You should see:
 If you see `[apps-script:stub]` in the server console instead, an env var is
 still missing or the dev server needs a restart to pick up `.env.local`.
 
-## 7. Approving reviews
+## 7. Approving reviews and comments
 
-Reviews always land in the **Reviews** tab with `Status = Pending` and never
-appear on the site in that state. To publish one, open the sheet and change
-that row's `Status` cell to exactly `Approved` (case-insensitive). The
-homepage and `/testimonials` page re-check every hour automatically.
+Reviews land in the **Reviews** tab, and blog comments land in the **Blog
+Comments** tab — both with `Status = Pending` and never shown on the site in
+that state. To publish one, open the sheet and change that row's `Status`
+cell to exactly `Approved` (case-insensitive). Reviews re-check hourly;
+comments re-check every ~2 minutes.
+
+Blog likes need no approval — every click on a post's like button increments
+that post's row in the **Blog Likes** tab directly.
 
 ## Redeploying after you edit Code.gs
 
 Apps Script Web Apps are versioned — editing the script does **not**
-update the live URL automatically. After any change:
+update the live URL automatically. After **any** change to `Code.gs`
+(including pulling in updates from this repo, like the comment/like support):
 **Deploy → Manage deployments → edit (pencil) → New version → Deploy**.
+
+If comments or likes return a "Failed to submit" error on the live site, this
+is almost always why — the deployed script is still an older version that
+doesn't recognize the `comment`/`like` actions yet.
 
 ## Where things live
 
@@ -105,3 +114,5 @@ update the live URL automatically. After any change:
   if the script isn't configured yet, or returns nothing).
 - `app/api/contact/route.ts`, `app/api/reviews/route.ts` — validate + forward to Apps Script.
 - `app/api/reviews/approved/route.ts` — public read endpoint used by the site.
+- `app/api/blog/[slug]/comments/route.ts` — GET approved comments / POST a new one (Pending).
+- `app/api/blog/[slug]/like/route.ts` — GET the like count / POST to increment it.

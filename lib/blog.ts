@@ -20,6 +20,7 @@ export interface PostMeta {
   category: string;
   tags: string[];
   coverImage: string;
+  coverImageAlt: string;
   readingTime: string;
   faqs?: PostFaq[];
 }
@@ -42,6 +43,7 @@ function readPostFile(fileName: string): Post {
     category: data.category ?? "General",
     tags: data.tags ?? [],
     coverImage: data.coverImage ?? "/images/og-default.svg",
+    coverImageAlt: data.coverImageAlt ?? data.title,
     readingTime: readingTime(content).text,
     faqs: data.faqs,
     content,
