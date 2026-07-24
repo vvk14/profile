@@ -29,7 +29,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
     await postToAppsScript("comment", data);
   } catch (err) {
     console.error("Comment → Apps Script failed:", err);
-    return NextResponse.json({ error: "Failed to submit. Please try again shortly." }, { status: 502 });
+    // TODO: remove `debug` once the Apps Script connection is confirmed working
+    return NextResponse.json(
+      { error: "Failed to submit. Please try again shortly.", debug: String(err) },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({ ok: true });

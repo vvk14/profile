@@ -15,6 +15,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
     return NextResponse.json({ ok: true, count: result.count });
   } catch (err) {
     console.error("Like → Apps Script failed:", err);
-    return NextResponse.json({ error: "Failed to like. Please try again shortly." }, { status: 502 });
+    // TODO: remove `debug` once the Apps Script connection is confirmed working
+    return NextResponse.json(
+      { error: "Failed to like. Please try again shortly.", debug: String(err) },
+      { status: 502 }
+    );
   }
 }

@@ -21,7 +21,11 @@ export async function POST(request: Request) {
     await postToAppsScript("contact", data);
   } catch (err) {
     console.error("Contact form → Apps Script failed:", err);
-    return NextResponse.json({ error: "Failed to submit. Please try again shortly." }, { status: 502 });
+    // TODO: remove `debug` once the Apps Script connection is confirmed working
+    return NextResponse.json(
+      { error: "Failed to submit. Please try again shortly.", debug: String(err) },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({ ok: true });
