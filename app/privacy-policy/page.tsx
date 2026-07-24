@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy",
-  description: "Privacy policy for vvkdev.com covering data collection via contact and review forms.",
+  description: "Privacy policy for vvkdev.in covering data collection via contact and review forms.",
   path: "/privacy-policy",
   noIndex: true,
 });

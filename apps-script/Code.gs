@@ -224,7 +224,7 @@ function contactConfirmationTemplate_(name) {
     `<h2 style="margin:0 0 12px;font-size:20px;">Thanks for reaching out, ${escapeHtml_(name)}!</h2>
      <p style="margin:0 0 16px;color:#444;">I've received your message and will get back to you within 1–2 business days with next steps.</p>
      <p style="margin:0 0 20px;color:#444;">In the meantime, feel free to take a look at some recent work:</p>
-     <a href="https://vvkdev.com/projects" style="display:inline-block;background:linear-gradient(90deg,#a16207,#c9a35a);color:#0a0a0a;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:999px;font-size:14px;">View Projects →</a>
+     <a href="https://vvkdev.in/projects" style="display:inline-block;background:linear-gradient(90deg,#a16207,#c9a35a);color:#0a0a0a;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:999px;font-size:14px;">View Projects →</a>
      <p style="margin:24px 0 0;color:#888;font-size:13px;">— Vivek Patel, VVKDEV</p>`
   );
 }

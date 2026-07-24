@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Service",
-  description: "Terms of service for engaging vvkdev.com for freelance Shopify and web development work.",
+  description: "Terms of service for engaging vvkdev.in for freelance Shopify and web development work.",
   path: "/terms",
   noIndex: true,
 });
