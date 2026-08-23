@@ -1,3 +1,7 @@
+// Bump this only if the actual start date of Vivek's Shopify experience changes.
+// Years Experience below is derived from it so it advances automatically every January.
+const CAREER_START_YEAR = 2023;
+
 export const siteConfig = {
   name: "VVKDEV",
   fullName: "Vivek Patel",
@@ -25,7 +29,7 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/vivek-patel-shopify/",
   },
   stats: [
-    { label: "Years Experience", value: 3, suffix: "+" },
+    { label: "Years Experience", value: new Date().getFullYear() - CAREER_START_YEAR, suffix: "+" },
     { label: "Stores Delivered", value: 10, suffix: "+" },
     { label: "Avg. PageSpeed Score", value: 95, suffix: "" },
     { label: "Companies", value: 2, suffix: "" },
@@ -37,6 +41,7 @@ export const navLinks = [
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
+  { label: "Tools", href: "/tools/shopify-theme-detector" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -57,6 +62,7 @@ export const footerLinks = {
   ],
   Resources: [
     { label: "Blog", href: "/blog" },
+    { label: "Shopify Theme Detector", href: "/tools/shopify-theme-detector" },
     { label: "Testimonials", href: "/testimonials" },
     { label: "Leave a Review", href: "/reviews/submit" },
     { label: "Resume", href: "/resume" },

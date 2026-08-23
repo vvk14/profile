@@ -34,3 +34,9 @@ export const commentSchema = z.object({
 });
 
 export type CommentFormValues = z.infer<typeof commentSchema>;
+
+export const themeDetectSchema = z.object({
+  url: z.string().min(3, "Please enter a URL").max(300),
+});
+
+export type ThemeDetectFormValues = z.infer<typeof themeDetectSchema>;

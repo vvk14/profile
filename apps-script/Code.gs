@@ -18,6 +18,7 @@ const CONTACT_SHEET = "Contact Submissions";
 const REVIEWS_SHEET = "Reviews";
 const COMMENTS_SHEET = "Blog Comments";
 const LIKES_SHEET = "Blog Likes";
+const THEME_CHECKS_SHEET = "Theme Detector Log";
 
 const CONTACT_HEADERS = [
   "Timestamp", "Name", "Email", "Phone", "Company",
@@ -28,6 +29,9 @@ const REVIEWS_HEADERS = [
 ];
 const COMMENTS_HEADERS = ["Timestamp", "Slug", "Name", "Comment", "Status"];
 const LIKES_HEADERS = ["Slug", "Count"];
+const THEME_CHECKS_HEADERS = [
+  "Timestamp", "Submitted URL", "Shop Handle", "Theme Name", "Schema Name", "Theme Store ID", "SEO Score", "Country",
+];
 
 function getSecret_() {
   return PropertiesService.getScriptProperties().getProperty("SHARED_SECRET");
@@ -82,6 +86,11 @@ function doPost(e) {
       return jsonResponse_({ ok: true, count: count });
     }
 
+    if (body.action === "themeDetect") {
+      handleThemeDetect_(body);
+      return jsonResponse_({ ok: true });
+    }
+
     return jsonResponse_({ ok: false, error: "Unknown action" });
   } catch (err) {
     return jsonResponse_({ ok: false, error: String(err) });
@@ -127,6 +136,28 @@ function doGet(e) {
   if (e.parameter.action === "likeCount") {
     const slug = e.parameter.slug || "";
     return jsonResponse_({ count: getLikeCount_(slug) });
+  }
+
+  if (e.parameter.action === "recentThemeChecks") {
+    const sheet = getOrCreateSheet_(THEME_CHECKS_SHEET, THEME_CHECKS_HEADERS);
+    const rows = sheet.getDataRange().getValues();
+    const [, ...data] = rows;
+
+    // Public endpoint: only non-sensitive fields, never the raw submitted URL.
+    const checks = data
+      .slice(-10)
+      .reverse()
+      .map((row) => ({
+        timestamp: row[0],
+        shopHandle: row[2],
+        themeName: row[3],
+        schemaName: row[4],
+        isThemeStore: row[5] !== "",
+        seoScore: Number(row[6]) || 0,
+        country: row[7],
+      }));
+
+    return jsonResponse_({ checks: checks });
   }
 
   return jsonResponse_({ ok: false, error: "Unknown action" });
@@ -213,6 +244,20 @@ function handleComment_(body) {
       htmlBody: `<p><strong>${escapeHtml_(body.name)}</strong> commented on <strong>${escapeHtml_(body.slug)}</strong>:</p><p>${escapeHtml_(body.comment)}</p><p>Open the "${COMMENTS_SHEET}" tab and change Status to <strong>Approved</strong> to publish it.</p>`,
     });
   }
+}
+
+function handleThemeDetect_(body) {
+  const sheet = getOrCreateSheet_(THEME_CHECKS_SHEET, THEME_CHECKS_HEADERS);
+  sheet.appendRow([
+    new Date(),
+    body.submittedUrl || "",
+    body.shopHandle || "",
+    body.themeName || "",
+    body.schemaName || "",
+    body.themeStoreId || "",
+    body.seoScore || 0,
+    body.country || "",
+  ]);
 }
 
 /**

@@ -1,0 +1,44 @@
+---
+title: "I Checked 17 Real Shopify Stores' Themes, Here's What Actually Ranks"
+description: "I built a free Shopify Theme Detector and ran it against 17 real Shopify stores across beauty, baby, and apparel. Here's what the data actually shows about themes, Dawn, and SEO."
+date: "2026-08-23"
+category: "SEO"
+tags: ["Shopify SEO", "Shopify Themes", "Core Web Vitals", "Shopify Theme Detector"]
+coverImage: "/images/og-default.svg"
+coverImageAlt: "Shopify theme SEO comparison across real stores"
+---
+
+Everyone assumes Dawn, Shopify's free default theme, is bad for SEO because it's free. I built a tool to check instead of guessing.
+
+## The Tool
+
+I built a [Shopify Theme Detector](/tools/shopify-theme-detector): paste any Shopify store URL and it tells you the exact theme it's running (name, schema version, whether it's a paid Theme Store theme or a custom build), plus a quick SEO health check, canonical tags, structured data, image alt coverage, and whether the above-fold image is hurting your LCP.
+
+## Method
+
+I ran the tool against 17 real, live Shopify stores across beauty, baby products, and apparel, picking well-known DTC brands rather than cherry-picking ones I expected to score well. Three additional stores I tried were excluded: two blocked the request with bot protection, and one had migrated to a headless storefront with no classic theme data to read.
+
+## Findings
+
+Out of 17 stores checked:
+
+- **Custom vs. Theme Store themes:** only **4 of 17 (24%)** were running an off-the-shelf paid Theme Store theme (Expanse, Split, and two Dawn-based Theme Store listings). The other **13 (76%)** were running fully custom or heavily forked themes.
+- **Missing schema:** **14 of 17 (82%)** had no `FAQPage` or `BreadcrumbList` structured data at all, even on stores with large marketing budgets.
+- **LCP image handling:** **8 of 17 (47%)** were lazy-loading their above-the-fold hero image, which actively delays Largest Contentful Paint. Almost half.
+- **Image alt coverage was the widest spread I saw.** One major beauty brand had alt text on just **6 of 50 images (12%)**. Another had **428 of 471 (91%)**. Same platform, wildly different discipline.
+
+## The Surprising Bit
+
+The 4 paid Theme Store themes in this sample averaged an **8.5/10** score. The 13 custom/forked themes averaged **8.8/10**, slightly *higher*. And the Dawn-based stores specifically (three of them, one running Dawn straight, two running heavily customized forks) averaged **8.3/10**, solidly mid-pack, not the SEO liability people assume.
+
+The real pattern wasn't the theme at all. It was **operational discipline**: stores that generate content fast and touch templates less often (rushed "launch" and promo-named theme versions, several literally titled things like "Fall Homepage" or a launch campaign) tended to skip alt text and schema. The theme is not what tanks a Shopify store's SEO. How consistently the team maintains it is.
+
+## Check Your Own Store
+
+Curious what your own store's theme and SEO score look like? Run it through the tool below.
+
+<ToolEmbed />
+
+## Want the Full Picture?
+
+The theme detector catches the basics. For a full technical, speed, and Core Web Vitals audit of your Shopify store, [get in touch](/contact).

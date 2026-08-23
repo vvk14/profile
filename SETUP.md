@@ -95,6 +95,13 @@ comments re-check every ~2 minutes.
 Blog likes need no approval, every click on a post's like button increments
 that post's row in the **Blog Likes** tab directly.
 
+Theme Detector lookups (`/tools/shopify-theme-detector`) log straight to the
+**Theme Detector Log** tab with no approval step, this is just a usage log
+and social-proof feed, not moderated content. The last 10 rows (shop handle,
+theme, score, country, no raw submitted URL) are shown publicly on the tool
+page. Rate-limited to 10 requests/minute per IP in the Next.js API route
+before it ever reaches Apps Script.
+
 ## Redeploying after you edit Code.gs
 
 Apps Script Web Apps are versioned, editing the script does **not**
@@ -116,3 +123,6 @@ doesn't recognize the `comment`/`like` actions yet.
 - `app/api/reviews/approved/route.ts`: public read endpoint used by the site.
 - `app/api/blog/[slug]/comments/route.ts`: GET approved comments / POST a new one (Pending).
 - `app/api/blog/[slug]/like/route.ts`: GET the like count / POST to increment it.
+- `app/api/detect-theme/route.ts`: the Shopify Theme Detector tool, fetches the target
+  store's HTML server-side, extracts theme/SEO info, and logs the result via Apps Script.
+- `lib/theme-detector.ts`: the actual scraping + SEO-check logic used by the route above.

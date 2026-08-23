@@ -64,7 +64,7 @@ export function MobileMenu() {
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="glass absolute inset-x-0 top-0 max-h-[85vh] overflow-y-auto rounded-b-[28px] px-5 pb-8 pt-5"
+              className="absolute inset-x-0 top-0 max-h-[85vh] overflow-y-auto rounded-b-[28px] border-b border-[var(--glass-border)] bg-[var(--bg)] px-5 pb-8 pt-5 shadow-2xl"
             >
               <div className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 font-display text-sm font-semibold tracking-tight">

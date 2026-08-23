@@ -165,6 +165,24 @@ export function serviceJsonLd(service: { title: string; summary: string; slug: s
   };
 }
 
+export function softwareApplicationJsonLd(app: {
+  name: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: app.name,
+    description: app.description,
+    url: `${siteConfig.url}${app.path}`,
+    applicationCategory: "SEO Application",
+    operatingSystem: "Web",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    creator: { "@type": "Person", name: siteConfig.fullName },
+  };
+}
+
 export function reviewsJsonLd(
   reviews: { name: string; message: string; rating: number }[]
 ) {

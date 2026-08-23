@@ -1,6 +1,8 @@
 import type { MDXComponents } from "mdx/types";
+import { ToolEmbed } from "./tool-embed";
 
 export const mdxComponents: MDXComponents = {
+  ToolEmbed,
   h2: (props) => (
     <h2 id={slugify(props.children)} className="mt-10 scroll-mt-32 font-display text-2xl font-semibold" {...props} />
   ),
@@ -12,7 +14,7 @@ export const mdxComponents: MDXComponents = {
   ol: (props) => <ol className="mt-4 list-decimal space-y-2 pl-5 text-[var(--fg-muted)]" {...props} />,
   a: (props) => <a className="text-[var(--gold)] underline underline-offset-2" {...props} />,
   code: (props) => (
-    <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px]" {...props} />
+    <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px] break-words" {...props} />
   ),
   pre: (props) => (
     <pre className="mt-4 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-elevated)] p-4 text-sm" {...props} />

@@ -12,7 +12,10 @@ function isConfigured() {
   return Boolean(SCRIPT_URL && SCRIPT_SECRET);
 }
 
-export async function postToAppsScript(action: "contact" | "review" | "comment" | "like", payload: Record<string, unknown>) {
+export async function postToAppsScript(
+  action: "contact" | "review" | "comment" | "like" | "themeDetect",
+  payload: Record<string, unknown>
+) {
   if (!isConfigured()) {
     console.warn(`[apps-script:stub] Would POST action="${action}":`, payload);
     return { stubbed: true, count: 1 };
@@ -73,4 +76,19 @@ export async function getApprovedComments(slug: string): Promise<ApprovedComment
 export async function getLikeCount(slug: string): Promise<number> {
   const data = await getFromAppsScript("likeCount", { slug }, 30);
   return data?.count ?? 0;
+}
+
+export interface RecentThemeCheck {
+  timestamp: string;
+  shopHandle: string;
+  themeName: string;
+  schemaName: string;
+  isThemeStore: boolean;
+  seoScore: number;
+  country: string;
+}
+
+export async function getRecentThemeChecks(): Promise<RecentThemeCheck[]> {
+  const data = await getFromAppsScript("recentThemeChecks", {}, 60);
+  return data?.checks ?? [];
 }
