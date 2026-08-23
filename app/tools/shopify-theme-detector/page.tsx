@@ -8,9 +8,9 @@ import { ThemeDetectorForm } from "@/components/tools/theme-detector-form";
 import { RecentThemeChecks } from "@/components/tools/recent-theme-checks";
 
 const TITLE = "Shopify Theme Detector";
-const SEO_TITLE = "Shopify Theme Detector (Free) | Find Any Store's Theme & SEO Score";
+const SEO_TITLE = "Free Shopify Theme Detector & Finder | What Shopify Theme Is That?";
 const DESCRIPTION =
-  "Free Shopify theme detector: paste any store URL to instantly find its theme name, schema version, and a quick SEO health check, canonical tags, structured data, image alt coverage, and more.";
+  "Free Shopify theme finder & detector: paste any store URL to instantly identify its theme name, schema version, and SEO health, structured data, canonical tags, image alt coverage, and more.";
 
 const FAQS = [
   {
@@ -38,6 +38,21 @@ const FAQS = [
     answer:
       "Yes, it's completely free with no signup. We log the store handle, detected theme, and SEO score to improve the tool and to power the \"recently checked\" list, never your personal information, and never anything beyond what's already publicly visible on the page you submitted.",
   },
+  {
+    question: "Can a Shopify store hide what theme it's using?",
+    answer:
+      "Not entirely. Classic Liquid themes expose the Shopify.theme object in their page source by design, which this tool reads. A store can obscure some details by heavily customizing or forking a theme (which shows as \"Custom\" here), but headless/Hydrogen storefronts are the main case where theme metadata isn't exposed at all.",
+  },
+  {
+    question: "How can I tell if a Shopify store is headless or using Hydrogen?",
+    answer:
+      "If this tool can't find a Shopify.theme object in the page source, that's a strong signal the store is either headless (built on the Storefront API/Hydrogen) or otherwise not using a standard Liquid theme.",
+  },
+  {
+    question: "How do I find a Shopify theme's ID?",
+    answer:
+      "The theme ID is included in the Shopify.theme JavaScript object in the page source. This tool extracts it automatically; manually, you'd view page source and search for \"Shopify.theme\".",
+  },
 ];
 
 export const metadata: Metadata = buildMetadata({
@@ -53,7 +68,7 @@ export default async function ShopifyThemeDetectorPage() {
     softwareApplicationJsonLd({ name: TITLE, description: DESCRIPTION, path: "/tools/shopify-theme-detector" }),
     breadcrumbJsonLd([
       { name: "Home", path: "/" },
-      { name: "Tools", path: "/tools/shopify-theme-detector" },
+      { name: "Tools", path: "/tools" },
       { name: TITLE, path: "/tools/shopify-theme-detector" },
     ]),
     faqJsonLd(FAQS),
@@ -69,7 +84,9 @@ export default async function ShopifyThemeDetectorPage() {
         <p className="text-sm font-medium uppercase tracking-wider text-[var(--gold)]">Free Tool</p>
         <h1 className="mt-2 font-display text-3xl font-semibold md:text-4xl">Shopify Theme Detector</h1>
         <p className="mt-4 text-[var(--fg-muted)]">
-          Paste any Shopify store URL to see what theme it&apos;s running and get a quick SEO health check.
+          Ever looked at a store and thought &quot;what Shopify theme is that?&quot; This free Shopify theme finder
+          identifies the exact theme, whether it&apos;s built on Dawn, a premium option like Impulse or Prestige, or
+          a fully custom build, and runs a quick SEO audit alongside it.
         </p>
       </Reveal>
 
@@ -85,20 +102,21 @@ export default async function ShopifyThemeDetectorPage() {
       <RecentThemeChecks checks={recentChecks} />
 
       <Reveal delay={0.1} className="mt-16">
-        <h2 className="font-display text-xl font-semibold">What This Tool Checks</h2>
+        <h2 className="font-display text-xl font-semibold">How to Find What Shopify Theme a Store Is Using</h2>
         <p className="mt-3 text-[var(--fg-muted)]">
-          Paste a Shopify store URL and the detector reads its public page source, the same data your browser
-          already loads, to identify:
+          This is exactly what the tool above does: it works as a Shopify theme checker, structured data validator,
+          and free SEO audit in one pass. Paste a Shopify store URL and it reads the public page source, the same
+          data your browser already loads, to identify:
         </p>
         <ul className="mt-4 list-disc space-y-2 pl-5 text-[var(--fg-muted)]">
-          <li>The theme name, schema name, and schema version currently installed</li>
+          <li><strong>Theme identifier:</strong> the theme name, schema name, and schema version currently installed</li>
           <li>Whether it&apos;s an official Shopify Theme Store theme (paid or free) or a custom/private build</li>
           <li>The store&apos;s handle, currency, country, and locale</li>
-          <li>JSON-LD structured data types present (Product, Organization, FAQPage, BreadcrumbList, etc.)</li>
-          <li>Whether a self-referencing canonical tag and meta description are present</li>
+          <li><strong>Structured data / schema markup validator:</strong> JSON-LD types present (Product, Organization, FAQPage, BreadcrumbList, etc.)</li>
+          <li><strong>Canonical tag checker:</strong> whether a self-referencing canonical tag and meta description are present</li>
           <li>Image alt text coverage across the page</li>
-          <li>Whether the above-fold hero image is lazy-loaded (a common Core Web Vitals mistake)</li>
-          <li>Whether <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px]">robots.txt</code> and <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px]">sitemap.xml</code> are reachable</li>
+          <li><strong>LCP hero image check:</strong> whether the above-fold image is lazy-loaded (a common Core Web Vitals mistake)</li>
+          <li><strong>robots.txt &amp; sitemap.xml tester:</strong> whether <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px]">robots.txt</code> and <code className="rounded bg-[var(--bg-elevated)] px-1.5 py-0.5 text-[13px]">sitemap.xml</code> are reachable</li>
         </ul>
       </Reveal>
 

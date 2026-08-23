@@ -41,7 +41,7 @@ export const navLinks = [
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
-  { label: "Tools", href: "/tools/shopify-theme-detector" },
+  { label: "Tools", href: "/tools" },
   { label: "Contact", href: "/contact" },
 ];
 
